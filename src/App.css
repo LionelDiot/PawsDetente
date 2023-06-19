@@ -1,0 +1,20 @@
+/* Use a higher specificity to override MUI styles */
+body .my-custom-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #1976d2;
+  color: white;
+  text-align: center;
+  padding-bottom: 0px !important;
+
+}
+
+@media (max-width: 200px) {
+  /* Use higher specificity here as well */
+  body .my-custom-footer {
+    font-size: 14px !important;
+        max-height: 100px; /* Adjust the max height value as per your needs */
+  }
+}
