@@ -9,28 +9,33 @@ import LogIn from "./Components/Users/login";
 import Register from "./Components/Users/register";
 import Navbar from "./Components/Navbar/Navbar";
 import Items from "./Components/Items";
-
+import Footer from "./Components/Footer/index"
+import ResetPassword from "./Components/Users/reset_password";
 import Home from "./Components/Home/Home";
 
 import "./App.css";
 
+
+
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Notifications />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/myprofile"
-            element={
-              <LoggedInRoute>
-                <MyProfile />
-              </LoggedInRoute>
-            }
-          />
-          {/* <Route
+      <BrowserRouter>
+        <Navbar />
+
+        <Notifications />
+
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/myprofile"
+              element={
+                <LoggedInRoute>
+                  <MyProfile />
+                </LoggedInRoute>
+              }
+            />
+            {/* <Route
             path="/articles/new"
             element={
               <LoggedInRoute>
@@ -38,6 +43,7 @@ function App() {
               </LoggedInRoute>
             }
           /> */}
+
           <Route
             path="/register"
             element={
@@ -56,10 +62,12 @@ function App() {
           />
           {/* <Route path="/articles" element={<Articles />} /> */}
           {/* <Route path="/article/:articleSlug" element={<ShowArticle />} /> */}
+          <Route path="/reset_password/:tokenSlug" element={<ResetPassword />} />
           <Route path="/404" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to="/404" />} />
         </Routes>
       </main>
+      <Footer />
     </BrowserRouter>
   );
 }
