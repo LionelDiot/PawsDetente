@@ -10,6 +10,7 @@ import Register from "./Components/Users/register";
 import Navbar from "./Components/Navbar/Navbar";
 import Items from "./Components/Items";
 import Footer from "./Components/Footer/index"
+import ResetPassword from "./Components/Users/reset_password";
 import Home from "./Components/Home/Home";
 
 import "./App.css";
@@ -42,32 +43,31 @@ function App() {
               </LoggedInRoute>
             }
           /> */}
-            <Route
-              path="/register"
-              element={
-                <LoggedOutRoute>
-                  <Register />
-                </LoggedOutRoute>
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <LoggedOutRoute>
-                  <LogIn />
-                </LoggedOutRoute>
-              }
-            />
-            {/* <Route path="/articles" element={<Articles />} /> */}
-            {/* <Route path="/article/:articleSlug" element={<ShowArticle />} /> */}
-            <Route path="/404" element={<PageNotFound />} />
-            <Route path="*" element={<Navigate to="/404" />} />
-          </Routes>
-        </main>
-        <div className="my-custom-footer">
-          <Footer />
-        </div>
-      </BrowserRouter>
+
+          <Route
+            path="/register"
+            element={
+              <LoggedOutRoute>
+                <Register />
+              </LoggedOutRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <LoggedOutRoute>
+                <LogIn />
+              </LoggedOutRoute>
+            }
+          />
+          {/* <Route path="/articles" element={<Articles />} /> */}
+          {/* <Route path="/article/:articleSlug" element={<ShowArticle />} /> */}
+          <Route path="/reset_password/:tokenSlug" element={<ResetPassword />} />
+          <Route path="/404" element={<PageNotFound />} />
+          <Route path="*" element={<Navigate to="/404" />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
   );
 }
 
