@@ -9,7 +9,7 @@ import LogIn from "./Components/Users/login";
 import Register from "./Components/Users/register";
 import Navbar from "./Components/Navbar/Navbar";
 import Items from "./Components/Items";
-
+import ResetPassword from "./Components/Users/reset_password";
 import Home from "./Components/Home/Home";
 
 import "./App.css";
@@ -56,6 +56,7 @@ function App() {
           />
           {/* <Route path="/articles" element={<Articles />} /> */}
           {/* <Route path="/article/:articleSlug" element={<ShowArticle />} /> */}
+          <Route path="/reset_password/:tokenSlug" element={<ResetPassword />} />
           <Route path="/404" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to="/404" />} />
         </Routes>
