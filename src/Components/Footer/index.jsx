@@ -5,8 +5,7 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
-
-import "/home/sbellotlecoq/THP/final/PawsDetente/src/App.css";
+import "../../App.css";
 
 export default function Footer() {
   return (
