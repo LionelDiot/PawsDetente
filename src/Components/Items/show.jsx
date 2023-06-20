@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import Item from "./item";
-// import { useAtomValue } from "jotai";
-// import { currentUserAtom } from "../../Atoms/currentuser";
-// import { UserIdAtom } from "../../Atoms/userid";
-// import { loggedInAtom } from "../../Atoms/loggedin";
 import { useParams } from "react-router-dom";
-import "../Style/ShowItem.css"
+import "../Style/ShowItem.css";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
@@ -29,20 +24,46 @@ const ShowItem = () => {
         setItem(responseData);
       } catch (error) {
         console.error("Error:", error);
-        setItem(
-          "Une erreur s'est produite lors de la récupération des données."
-        );
+        setItem("Une erreur s'est produite lors de la récupération des données.");
       }
     };
 
     fetchItemData();
   }, [itemSlug]);
 
+  useEffect(() => {
+    const container = document.getElementById("container");
+    const img = document.getElementsByClassName("zoom")[0];
+
+    const handleMouseMove = (e) => {
+      const x = e.clientX - e.target.offsetLeft;
+      const y = e.clientY - e.target.offsetTop;
+
+      img.style.transformOrigin = `${x}px ${y}px`;
+      img.style.transform = "scale(2)";
+    };
+
+    const handleMouseLeave = () => {
+      img.style.transform = "scale(1)";
+    };
+
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [item.image_url]);
+
   return (
     <div className="container">
       <div className="item-section1">
-        <img src={item.image_url} />
+        <div id="container">
+          <img src={item.image_url} className="zoom" alt="Item" />
+        </div>
       </div>
+
       <div className="item-section2">
         <h1>{item.title}</h1>
         <p>{item.price}€</p>
@@ -59,7 +80,7 @@ const ShowItem = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
