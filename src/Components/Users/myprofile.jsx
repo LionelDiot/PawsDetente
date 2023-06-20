@@ -11,7 +11,7 @@ export default function MyProfile() {
 
     useEffect(() => {
         if (loggedIn) {
-            fetch("http://localhost:3000/member-data", {
+            fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/member-data", {
                 method: "get",
                 headers: {
                     Authorization: `${user}`,
@@ -23,7 +23,7 @@ export default function MyProfile() {
                     const createdAt = new Date(responseData.user.createdAt).toLocaleString();
                     setMonprofil(`email: ${responseData.user.email}
                         id: ${responseData.user.id}
-                        username: ${responseData.user.username}
+                        
                         créé le: ${JSON.stringify(createdAt)}
                         all my data pas trié ? : ${JSON.stringify(responseData.user)}
                         mon token JOTAI : ${user}`);

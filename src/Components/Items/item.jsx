@@ -31,7 +31,7 @@ const Item = ({ item }) => {
               </IconButton>
             }
             title={<h3>{item.title}</h3>}
-            // subheader="September 14, 2016"
+            subheader="September 14, 2016"
           />
           <CardMedia
             component="img"

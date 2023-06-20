@@ -9,11 +9,8 @@ import { useParams } from "react-router-dom";
 
 const ShowItem = () => {
   const { itemSlug } = useParams();
-  const user = useAtomValue(currentUserAtom);
-  const userid = useAtomValue(UserIdAtom);
-  const loggedIn = useAtomValue(loggedInAtom);
   const [item, setItem] = useState({});
-  const [author, setAuthor] = useState(false);
+  
 
   useEffect(() => {
     const fetchItemData = async () => {
