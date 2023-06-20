@@ -46,7 +46,15 @@ export default function SignUp() {
         };
 
         try {
-            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users", {
+            // const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users", {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            //     body: JSON.stringify(data),
+            // });
+
+            const response = await fetch("http://localhost:3000/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -142,7 +150,6 @@ export default function SignUp() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
             </Container>
         </ThemeProvider>
     );

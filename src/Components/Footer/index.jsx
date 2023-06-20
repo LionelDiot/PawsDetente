@@ -9,19 +9,19 @@ import "../../App.css";
 
 function Copyright(props) {
   return (
-      <Typography
-          variant="body2"
-          color="text.secondary"
-          align="center"
-          {...props}
-      >
-          {"Copyright © "}
-          <Link color="inherit" href="https://mui.com/">
-              Your Website
-          </Link>{" "}
-          {new Date().getFullYear()}
-          {"."}
-      </Typography>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
   );
 }
 
@@ -32,6 +32,7 @@ export default function Footer() {
       sx={{
         backgroundColor: "#1976d2",
         p: 6,
+        mt: "auto",
       }}
     >
       <Container maxWidth="lg">
@@ -77,7 +78,7 @@ export default function Footer() {
             </Link>
           </Grid>
         </Grid>
-        
+
       </Container>
     </Box>
   );
