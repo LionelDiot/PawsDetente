@@ -12,7 +12,6 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
-import Avatar from "@mui/material/Avatar";
 import { useMediaQuery } from "@mui/material";
 
 // Jotai
@@ -23,7 +22,7 @@ import { loggedInAtom } from "../../Atoms/loggedin";
 
 
 
-const pages = ["Articles", "MyProfile"];
+const pages = ["Items", "MyProfile"];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -42,7 +41,7 @@ function Navbar() {
     };
 
     const handleLogout = () => {
-        fetch("http://localhost:3000/users/sign_out", {
+        fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/sign_out", {
             method: "delete",
             headers: {
                 Authorization: `${user}`,
@@ -50,11 +49,6 @@ function Navbar() {
             },
         })
             .then((response) => response.json())
-            .then((responseData) => {
-                console.log(
-                    ` all my data pas trié ? : ${JSON.stringify(responseData.user)}`
-                );
-            })
             .catch((error) => {
                 console.error("Error:", error);
             });

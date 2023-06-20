@@ -17,23 +17,7 @@ import { useAtom, useSetAtom } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { UserIdAtom } from "../../Atoms/userid";
 
-function Copyright(props) {
-    return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            {...props}
-        >
-            {"Copyright © "}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{" "}
-            {new Date().getFullYear()}
-            {"."}
-        </Typography>
-    );
-}
+
 
 const defaultTheme = createTheme();
 
@@ -42,12 +26,12 @@ export default function SignUp() {
     const [error, setError] = useState("");
     const setId = useSetAtom(UserIdAtom);
 
-    const saveProfile = async (event) => {
-        event.preventDefault();
-        const formEmail = event.target.elements.email.value;
-        const formPassword = event.target.elements.password.value;
+    const saveProfile = async (e) => {
+        e.preventDefault();
+        const formEmail = e.target.elements.email.value;
+        const formPassword = e.target.elements.password.value;
         const formPasswordVerification =
-            event.target.elements.passwordVerification.value;
+            e.target.elements.passwordVerification.value;
 
         if (formPassword !== formPasswordVerification) {
             setError("Passwords do not match");
@@ -62,7 +46,7 @@ export default function SignUp() {
         };
 
         try {
-            const response = await fetch("http://localhost:3000/users", {
+            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -71,9 +55,12 @@ export default function SignUp() {
             });
 
             if (response.ok) {
+                
+                const token = await response.headers.get("Authorization");
+                setUser(token);
                 const responseData = await response.json();
                 setId(responseData.user.id);
-                setUser(response.headers.get("Authorization"));
+                
             } else {
                 setError("Invalid credentials");
             }
@@ -158,7 +145,6 @@ export default function SignUp() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
             </Container>
         </ThemeProvider>
     );

@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Notifications from "./Components/Style/Notifications";
 import LoggedInRoute from "./Components/privateRoutes/loggedin_route";
@@ -8,34 +9,31 @@ import MyProfile from "./Components/MyProfile/index";
 import LogIn from "./Components/Users/login";
 import Register from "./Components/Users/register";
 import Navbar from "./Components/Navbar/Navbar";
-import Items from "./Components/Items";
-import Footer from "./Components/Footer/index"
+import Items from "./Components/Items/index";
+import Footer from "./Components/Footer/index";
 import ResetPassword from "./Components/Users/reset_password";
 import Home from "./Components/Home/Home";
-
+import ShowItem from "./Components/Items/show";
 import "./App.css";
-
-
 
 function App() {
   return (
-      <BrowserRouter>
-        <Navbar />
+    <BrowserRouter>
+      <Navbar />
+      <Notifications />
 
-        <Notifications />
-
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/myprofile"
-              element={
-                <LoggedInRoute>
-                  <MyProfile />
-                </LoggedInRoute>
-              }
-            />
-            {/* <Route
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/myprofile"
+            element={
+              <LoggedInRoute>
+                <MyProfile />
+              </LoggedInRoute>
+            }
+          />
+          {/* <Route
             path="/articles/new"
             element={
               <LoggedInRoute>
@@ -60,9 +58,12 @@ function App() {
               </LoggedOutRoute>
             }
           />
-          {/* <Route path="/articles" element={<Articles />} /> */}
-          {/* <Route path="/article/:articleSlug" element={<ShowArticle />} /> */}
-          <Route path="/reset_password/:tokenSlug" element={<ResetPassword />} />
+          <Route path="/items" element={<Items />} /> 
+          <Route path="/item/:itemSlug" element={<ShowItem />} /> 
+          <Route
+            path="/reset_password/:tokenSlug"
+            element={<ResetPassword />}
+          />
           <Route path="/404" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to="/404" />} />
         </Routes>
