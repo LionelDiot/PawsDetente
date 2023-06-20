@@ -5,26 +5,30 @@ import { Link } from "react-router-dom";
 import { Grid } from "@mui/material";
 
 
-// import PaginationComponent from "../../Tools/paginationComponent";
+// import PaginationComponent from "../../Tools/Pagination";
 
 const Items = () => {
     const [items, setItems] = useState([]);
-    // const [page, setPage] = useState(1);
-    // const articlesPerPage = 3;
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 3;
 
-    // const handleChange = (event, value) => {
-    //     setPage(value);
-    // };
+    const handleChange = (event, value) => {
+        setPage(value);
+    };
 
 
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await fetch("http://localhost:3000/items", {
+                const response = await fetch(
+                  "https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/items",
+                  {
+                    method: "GET",
                     headers: {
-                        "Content-Type": "application/json",
+                      "Content-Type": "application/json",
                     },
-                });
+                  }
+                );
                 const data = await response.json();
                 setItems(data);
             } catch (error) {
@@ -39,22 +43,22 @@ const Items = () => {
     // const endIndex = startIndex + itemsPerPage;
     // const displayedItems = items.slice(startIndex, endIndex);
 
-    // Calculate the total number of pages based on the total number of articles
+    // // Calculate the total number of pages based on the total number of articles
 
     // const pageCount = Math.ceil(items.length / itemsPerPage);
 
     return (
         <div>
-            <h1>Articles</h1>
+            <h1>Items</h1>
             <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
-                {/* {displayedItems.map((item) => (
+                {items.map((item) => (
                     <Grid item xs={2} sm={4} md={4} key={item.id}>
                         <Item item={item} />
-                        <Link to={`/article/${item.id}`}>
+                        <Link to={`/item/${item.id}`}>
                             <ShowButton />
                         </Link>
                     </Grid>
-                ))} */}
+                ))}
             </Grid>
             {/* <PaginationComponent page={page} pageCount={pageCount} handleChange={handleChange} /> */}
 

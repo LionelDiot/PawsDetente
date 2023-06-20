@@ -12,7 +12,6 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
-import Avatar from "@mui/material/Avatar";
 import { useMediaQuery } from "@mui/material";
 
 // Jotai
@@ -23,7 +22,7 @@ import { loggedInAtom } from "../../Atoms/loggedin";
 
 
 
-const pages = ["Articles", "MyProfile"];
+const pages = ["Items", "MyProfile"];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
