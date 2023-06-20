@@ -41,7 +41,7 @@ function Navbar() {
     };
 
     const handleLogout = () => {
-        fetch("http://localhost:3000/users/sign_out", {
+        fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/sign_out", {
             method: "delete",
             headers: {
                 Authorization: `${user}`,
@@ -49,11 +49,6 @@ function Navbar() {
             },
         })
             .then((response) => response.json())
-            .then((responseData) => {
-                console.log(
-                    ` all my data pas trié ? : ${JSON.stringify(responseData.user)}`
-                );
-            })
             .catch((error) => {
                 console.error("Error:", error);
             });
