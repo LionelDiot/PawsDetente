@@ -4,8 +4,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -46,7 +44,7 @@ export default function SignUp() {
         };
 
         try {
-            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users", {
+            const response = await fetch("http://127.0.0.1:3000/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
