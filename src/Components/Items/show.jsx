@@ -57,7 +57,7 @@ const ShowItem = () => {
   }, [item.image_url]);
 
   return (
-    <div className="container">
+    <div className="container-item">
       <div className="item-section1">
         <div id="container">
           <img src={item.image_url} className="zoom" alt="Item" />
