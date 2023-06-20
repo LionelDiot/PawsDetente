@@ -13,7 +13,6 @@ import Items from "./Components/Items";
 import Footer from "./Components/Footer/index";
 import ResetPassword from "./Components/Users/reset_password";
 import Home from "./Components/Home/Home";
-import Jumbotron from "./Components/Style/Jumbotron";
 
 import "./App.css";
 
@@ -21,7 +20,6 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <Jumbotron />
       <Notifications />
 
       <main>
