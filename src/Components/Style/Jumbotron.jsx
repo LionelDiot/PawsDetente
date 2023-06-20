@@ -2,28 +2,34 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-carousel-minimal';
 
 const captionStyle = {
-    fontSize: '2em',
-    fontWeight: 'bold',
+  fontSize: "2em",
+  fontWeight: "bold",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
 const slideNumberStyle = {
-    fontSize: '20px',
-    fontWeight: 'bold',
+  fontSize: "20px",
+  fontWeight: "bold",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
 const data = [
-    {
-        image: "chat.png",
-        caption: "Découvrez les articles CHACHAT"
-    },
-    {
-        image: "chien.png",
-        caption: "Plutôt wouf wouf que miaou ?"
-    },
-    {
-        image: "oiseau.png",
-        caption: "Ou alors un Piafabec à faire évoluer en Rapasdepic peut-être ?"
-    },
+  {
+    image: "chat2.png",
+    caption: "ARTICLES POUR MIAOUW",
+  },
+  {
+    image: "chien2.png",
+    caption: "ARTICLES POUR OUAF ?",
+  },
+  {
+    image: "oiseau2.png",
+    caption: "Ou alors un Piafabec à faire évoluer en Rapasdepic peut-être ?",
+  },
 ];
 
 const CarouselPictures = () => {
@@ -32,7 +38,7 @@ const CarouselPictures = () => {
             data={data}
             time={2300}
             width="100vw"
-            height="45vh"
+            height="65vh"
             captionStyle={captionStyle}
             slideNumber={true}
             slideNumberStyle={slideNumberStyle}

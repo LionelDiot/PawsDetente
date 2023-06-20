@@ -1,0 +1,7 @@
+.profile-container {
+  background-image: url("https://bdi.dlpdomain.com/serie/visuel/BDA_15116/1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.048); /* Définit l'opacité de l'image de fond */
+}

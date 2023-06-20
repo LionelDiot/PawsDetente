@@ -17,23 +17,7 @@ import { useAtom, useSetAtom } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { UserIdAtom } from "../../Atoms/userid";
 
-function Copyright(props) {
-    return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            {...props}
-        >
-            {"Copyright © "}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{" "}
-            {new Date().getFullYear()}
-            {"."}
-        </Typography>
-    );
-}
+
 
 const defaultTheme = createTheme();
 
@@ -62,7 +46,7 @@ export default function SignUp() {
         };
 
         try {
-            const response = await fetch("http://localhost:3000/users", {
+            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -158,7 +142,6 @@ export default function SignUp() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
             </Container>
         </ThemeProvider>
     );

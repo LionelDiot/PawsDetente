@@ -7,6 +7,24 @@ import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import "../../App.css";
 
+function Copyright(props) {
+  return (
+      <Typography
+          variant="body2"
+          color="text.secondary"
+          align="center"
+          {...props}
+      >
+          {"Copyright © "}
+          <Link color="inherit" href="https://mui.com/">
+              Your Website
+          </Link>{" "}
+          {new Date().getFullYear()}
+          {"."}
+      </Typography>
+  );
+}
+
 export default function Footer() {
   return (
     <Box
