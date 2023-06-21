@@ -14,6 +14,7 @@ import Footer from "./Components/Footer/index";
 import ResetPassword from "./Components/Users/reset_password";
 import Home from "./Components/Home/Home";
 import ShowItem from "./Components/Items/show";
+import Search from "./Components/Search/Search";
 import "./App.css";
 
 function App() {
@@ -66,6 +67,8 @@ function App() {
           />
           <Route path="/404" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to="/404" />} />
+                    <Route path="/search" element={<Search />} />
+
         </Routes>
       </main>
       <Footer />

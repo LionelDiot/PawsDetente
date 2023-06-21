@@ -12,16 +12,16 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
+import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import "../../App.css";
- 
+
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { UserIdAtom } from "../../Atoms/userid";
 import { loggedInAtom } from "../../Atoms/loggedin";
-
 
 const pages = ["Items", "MyProfile"];
 
@@ -44,7 +44,6 @@ function Navbar() {
 
   const handleLogout = () => {
     // Utilisez la valeur de recherche ici
-    console.log("Search value:", searchValue);
 
     fetch("http://localhost:3000/users/sign_out", {
       method: "delete",
@@ -170,7 +169,6 @@ function Navbar() {
             className="searchContainer"
           >
             {loggedIn ? (
-              // Render "Home" and "MyProfile" buttons when logged in
               pages.map((page) => (
                 <Button
                   key={page}
@@ -182,7 +180,6 @@ function Navbar() {
                 </Button>
               ))
             ) : (
-              // Render "Register" and "Login" buttons when not logged in
               <>
                 <Button
                   sx={{ my: 2, color: "white", display: "block" }}
@@ -201,14 +198,13 @@ function Navbar() {
               </>
             )}
 
-            <TextField
-              value={searchValue}
-              onChange={handleSearchChange}
-              placeholder="Rechercher"
-              variant="outlined"
-              size="small"
-              sx={{ marginLeft: 2, background: "white" }}
-            />
+            <IconButton
+              sx={{ my: 2, color: "white", display: "block" }}
+              component={Link}
+              to="/search"
+            >
+              <SearchIcon />
+            </IconButton>
           </Box>
 
           {loggedIn && (

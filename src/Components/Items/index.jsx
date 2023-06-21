@@ -4,6 +4,7 @@ import ShowButton from '../Buttons';
 import { Link } from "react-router-dom";
 import { Grid } from "@mui/material";
 import PaginationComponent from "../../Tools/Pagination";
+import Container from "@mui/material/Container";
 
 const Items = () => {
     const [items, setItems] = useState([]);
@@ -49,22 +50,24 @@ const Items = () => {
      const pageCount = Math.ceil(items.length / itemsPerPage);
 
     return (
-        <div>
-            <h1>Items</h1>
-            
-            <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
-                 {displayedItems.map((item) => (
-                    <Grid item xs={2} sm={4} md={4} key={item.id}>
-                        <Item item={item} />
-                        <Link to={`/item/${item.id}`}>
-                            Mon lien
-                        </Link>
-                    </Grid>
-                ))}
-            </Grid>
-             <PaginationComponent page={page} pageCount={pageCount} handleChange={handleChange} />
+      <div>
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
+            {displayedItems.map((item) => (
+              <Grid item xs={2} sm={4} md={4} key={item.id}>
+                <Item item={item} />
+                <Link to={`/item/${item.id}`}>Mon lien</Link>
+              </Grid>
+            ))}
+          </Grid>
+    </Container>
 
-        </div>
+        <PaginationComponent
+          page={page}
+          pageCount={pageCount}
+          handleChange={handleChange}
+        />
+      </div>
     );
 };
 
