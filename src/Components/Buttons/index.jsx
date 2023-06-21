@@ -24,12 +24,7 @@ const ShowButton = ({ handleClick }) => {
     );
 };
 
-const AddCartButton = ({ handleClick }) => {
-    return (
-        <button onClick={handleClick}>
-            Show
-        </button>
-    );
-};
 
-export default { DeleteButton, EditButton, ShowButton, AddCartButton }
+
+
+export default { DeleteButton, EditButton, ShowButton }

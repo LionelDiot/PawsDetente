@@ -14,6 +14,7 @@ import Footer from "./Components/Footer/index";
 import ResetPassword from "./Components/Users/reset_password";
 import Home from "./Components/Home/Home";
 import ShowItem from "./Components/Items/show";
+import Cart from "./Components/Cart/Cart";
 import "./App.css";
 
 function App() {
@@ -58,8 +59,9 @@ function App() {
               </LoggedOutRoute>
             }
           />
-          <Route path="/items" element={<Items />} /> 
-          <Route path="/item/:itemSlug" element={<ShowItem />} /> 
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/items" element={<Items />} />
+          <Route path="/item/:itemSlug" element={<ShowItem />} />
           <Route
             path="/reset_password/:tokenSlug"
             element={<ResetPassword />}

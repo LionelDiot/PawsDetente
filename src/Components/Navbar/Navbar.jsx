@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
 import { useMediaQuery } from "@mui/material";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
@@ -22,7 +23,7 @@ import { loggedInAtom } from "../../Atoms/loggedin";
 
 
 
-const pages = ["Items", "MyProfile"];
+const pages = ["Items", "MyProfile", "Cart"];
 
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -151,7 +152,6 @@ function Navbar() {
                     >
                         LOGO
                     </Typography>
-
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                         {loggedIn ? (
                             // Render "Home" and "MyProfile" buttons when logged in
@@ -185,7 +185,12 @@ function Navbar() {
                             </>
                         )}
                     </Box>
-
+                    <Link
+                        sx={{ my: 2, color: "white", display: "block" }}
+                        href="/cart"
+                    >
+                        <AddShoppingCartIcon />
+                    </Link>
                     {loggedIn && (
                         <Tooltip title="Logout">
                             <Button onClick={handleLogout} color="inherit">
