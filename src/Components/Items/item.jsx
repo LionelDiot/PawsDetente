@@ -35,10 +35,8 @@ const Item = ({ item }) => {
               {<p> Prix: {item.price}</p>}
             </Typography>
           </CardContent>
-        <CardActions>
-          <Link to={`/item/${item.id}`}>
-            <Button size="small">Voir</Button>
-          </Link>
+        <CardActions>  
+          <Button size="small" href={`/item/${item.id}`}>Voir</Button> 
         </CardActions>
         </Card>
       </>

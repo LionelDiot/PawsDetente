@@ -32,6 +32,6 @@ export default function CheckoutButton() {
 
   return (
   <Button onClick={handlePayment} color="inherit">
-                                Payer
+                                Payer avec Stripe !
                             </Button>
 )}
