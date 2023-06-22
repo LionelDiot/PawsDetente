@@ -30,8 +30,16 @@ function App() {
           <Route
             path="/myprofile"
             element={
-              <LoggedInRoute>
+              // <LoggedInRoute>
                 <MyProfile />
+              // </LoggedInRoute>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <LoggedInRoute>
+                <Cart />
               </LoggedInRoute>
             }
           />
