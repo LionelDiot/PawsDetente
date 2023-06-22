@@ -1,7 +1,5 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
-import CameraIcon from "@mui/icons-material/PhotoCamera";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,18 +8,21 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Jumbotron from "../Style/Jumbotron";
-
+import HandleAddToCart from "../../Tools/addToCart";
+import { useAtomValue } from "jotai";
+import { currentUserAtom } from "../../Atoms/currentuser";
+import { loggedInAtom } from "../../Atoms/loggedin";
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const defaultTheme = createTheme();
 
 export default function Home() {
+  const user = useAtomValue(currentUserAtom);
+  const loggedIn = useAtomValue(loggedInAtom);
   const [items, setItems] = React.useState([]);
 
   React.useEffect(() => {
@@ -30,7 +31,7 @@ export default function Home() {
       .then((data) => setItems(data))
       .catch((error) => console.log(error));
   }, []);
-  console.log(items);
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
@@ -103,8 +104,16 @@ export default function Home() {
                     <Typography>Prix : {item.price} € TTC</Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">Voir</Button>
-                    <Button size="small">Acheter</Button>
+                    <Button size="small" href={`/item/${item.id}`}>
+                      Voir
+                    </Button>
+                    {loggedIn && (<Button
+                      size="small"
+                      onClick={() => HandleAddToCart(item, user)}
+                      color="inherit"
+                    >
+                      Ajouter au panier
+                    </Button>)}
                   </CardActions>
                 </Card>
               </Grid>

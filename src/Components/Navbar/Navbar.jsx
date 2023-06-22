@@ -14,7 +14,6 @@ import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
 import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
-import TextField from "@mui/material/TextField";
 import "../../App.css";
 
 // Jotai
@@ -23,13 +22,13 @@ import { currentUserAtom } from "../../Atoms/currentuser";
 import { UserIdAtom } from "../../Atoms/userid";
 import { loggedInAtom } from "../../Atoms/loggedin";
 
-const pages = ["Items", "MyProfile"];
+const pages = ["Items"];
+const pagesloggedin = ["MyProfile", "Cart"]
+const pagesloggedout = ["Register", "Login"]
 
 function Navbar() {
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [searchValue, setSearchValue] = React.useState("");
-
   const loggedIn = useAtomValue(loggedInAtom);
   const user = useAtomValue(currentUserAtom);
   const setUser = useSetAtom(currentUserAtom);
@@ -62,10 +61,6 @@ function Navbar() {
       });
     setUser(null);
     setUserId(null);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
   };
 
   const isMobileScreen = useMediaQuery("(max-width: 960px)");
@@ -167,8 +162,31 @@ function Navbar() {
             }}
             className="searchContainer"
           >
+            { pages.map((page) => (
+              <Button
+                key={page}
+                sx={{ my: 2, color: "white", display: "block" }}
+                component={Link}
+                to={`/${page.toLowerCase()}`}
+              >
+                {page}
+              </Button>
+              )) 
+            }
             {loggedIn ? (
-              pages.map((page) => (
+              pagesloggedin.map((page) => (
+                <Button
+                  key={page}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                  component={Link}
+                  to={`/${page.toLowerCase()}`}
+                >
+                  {page}
+                </Button>
+            ))
+              
+            ) : (
+              pagesloggedout.map((page) => (
                 <Button
                   key={page}
                   sx={{ my: 2, color: "white", display: "block" }}
@@ -178,23 +196,6 @@ function Navbar() {
                   {page}
                 </Button>
               ))
-            ) : (
-              <>
-                <Button
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  component={Link}
-                  to="/register"
-                >
-                  Register
-                </Button>
-                <Button
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  component={Link}
-                  to="/login"
-                >
-                  Login
-                </Button>
-              </>
             )}
 
             <IconButton
@@ -213,13 +214,7 @@ function Navbar() {
               </Button>
             </Tooltip>
           )}
-          <Button
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  component={Link}
-                  to="/cart"
-                >
-                  Mon panier
-                </Button>
+          
         </Toolbar>
       </Container>
     </AppBar>

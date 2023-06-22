@@ -38,7 +38,7 @@ const Items = () => {
         };
 
         fetchItems();
-        console.log(items);
+        
     }, []);
 
     const startIndex = (page - 1) * itemsPerPage;
@@ -56,7 +56,6 @@ const Items = () => {
             {displayedItems.map((item) => (
               <Grid item xs={2} sm={4} md={4} key={item.id}>
                 <Item item={item} />
-                <Link to={`/item/${item.id}`}>Mon lien</Link>
               </Grid>
             ))}
           </Grid>
