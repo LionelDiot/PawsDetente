@@ -26,6 +26,7 @@ import { loggedInAtom } from "../../Atoms/loggedin";
 const pages = ["Items", "MyProfile"];
 
 function Navbar() {
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [searchValue, setSearchValue] = React.useState("");
 
@@ -218,6 +219,7 @@ function Navbar() {
       </Container>
     </AppBar>
   );
+
 }
 
 export default Navbar;
