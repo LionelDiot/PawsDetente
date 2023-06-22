@@ -55,9 +55,7 @@ function Navbar() {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(
-          ` all my data pas trié ? : ${JSON.stringify(responseData.user)}`
-        );
+        
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -215,6 +213,13 @@ function Navbar() {
               </Button>
             </Tooltip>
           )}
+          <Button
+                  sx={{ my: 2, color: "white", display: "block" }}
+                  component={Link}
+                  to="/cart"
+                >
+                  Mon panier
+                </Button>
         </Toolbar>
       </Container>
     </AppBar>
