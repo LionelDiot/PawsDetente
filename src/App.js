@@ -18,6 +18,7 @@ import Search from "./Components/Search/Search";
 import "./App.css";
 import SuccessPayment from "./Components/Checkout/successPayment";
 import FailPayment from "./Components/Checkout/failedPayment";
+import Cart from './Components/Cart/show';
 function App() {
   return (
     <BrowserRouter>
@@ -30,9 +31,17 @@ function App() {
           <Route
             path="/myprofile"
             element={
-              <LoggedInRoute>
+              // <LoggedInRoute>
                 <MyProfile />
-              </LoggedInRoute>
+              // </LoggedInRoute>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              // <LoggedInRoute>
+                <Cart />
+              // </LoggedInRoute>
             }
           />
           {/* <Route

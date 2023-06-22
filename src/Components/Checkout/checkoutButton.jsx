@@ -1,7 +1,7 @@
 import { loadStripe } from '@stripe/stripe-js';
 import Button from "@mui/material/Button";
 
-export default function checkoutButton() {
+export default function CheckoutButton() {
   const handlePayment = async () => {
   try {
     // Make the API request to create a checkout session
