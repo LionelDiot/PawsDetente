@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Item from "./item";
-
-import { useAtomValue } from "jotai";
-import { currentUserAtom } from "../../Atoms/currentuser";
-import { UserIdAtom } from "../../Atoms/userid";
-import { loggedInAtom } from "../../Atoms/loggedin";
 import { useParams } from "react-router-dom";
+import "../Style/ShowItem.css";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 
 const ShowItem = () => {
   const { itemSlug } = useParams();
   const [item, setItem] = useState({});
-  
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -20,27 +16,70 @@ const ShowItem = () => {
           {
             method: "get",
             headers: {
-                  "Content-Type": "application/json",
-                },
+              "Content-Type": "application/json",
+            },
           }
         );
         const responseData = await response.json();
         setItem(responseData);
       } catch (error) {
         console.error("Error:", error);
-        setItem(
-          "Une erreur s'est produite lors de la récupération des données."
-        );
+        setItem("Une erreur s'est produite lors de la récupération des données.");
       }
     };
 
-    fetchItemData(); 
+    fetchItemData();
   }, [itemSlug]);
-  
+
+  useEffect(() => {
+    const container = document.getElementById("container");
+    const img = document.getElementsByClassName("zoom")[0];
+
+    const handleMouseMove = (e) => {
+      const x = e.clientX - e.target.offsetLeft;
+      const y = e.clientY - e.target.offsetTop;
+
+      img.style.transformOrigin = `${x}px ${y}px`;
+      img.style.transform = "scale(2)";
+    };
+
+    const handleMouseLeave = () => {
+      img.style.transform = "scale(1)";
+    };
+
+    container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, [item.image_url]);
+
   return (
-    <div>
-      <h1>Show Item</h1>
-      <Item item={item} />
+    <div className="container-item">
+      <div className="item-section1">
+        <div id="container">
+          <img src={item.image_url} className="zoom" alt="Item" />
+        </div>
+      </div>
+
+      <div className="item-section2">
+        <h1>{item.title}</h1>
+        <p>{item.price}€</p>
+        <p>{item.description}</p>
+        <p>Ajouter quantité produits</p>
+        <div className="display-section2">
+          <button className="custom-button">
+            <FavoriteBorderRoundedIcon className="custom-icon" /> AJOUTER À MES FAVORIS
+          </button>
+          <div className="display-section2">
+            <button className="custom-button">
+              <AddShoppingCartIcon className="custom-icon" /> AJOUTER AU PANIER
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

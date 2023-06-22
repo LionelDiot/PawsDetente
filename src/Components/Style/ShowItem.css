@@ -1,0 +1,45 @@
+.container-item {
+  display: flex;
+  flex-direction: row;
+  margin-left: 200px;
+  margin-right: 200px;
+  gap: 40px;
+}
+
+.item-section1 {
+  width: 400px;
+  margin: 15px;
+}
+
+.custom-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: #eaeaea;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.custom-button:hover {
+  background: #c1c1c1; /* Change background color on hover */
+}
+
+.custom-icon {
+  margin-right: 5px;
+}
+
+#container {
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.zoom {
+  transform-origin: center;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}

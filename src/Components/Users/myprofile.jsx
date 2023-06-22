@@ -11,7 +11,7 @@ export default function MyProfile() {
 
     useEffect(() => {
         if (loggedIn) {
-            fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/member-data", {
+            fetch("http://api-paws-detente-6e0fafb6dbaa.herokuapp.com/member-data", {
                 method: "get",
                 headers: {
                     Authorization: `${user}`,

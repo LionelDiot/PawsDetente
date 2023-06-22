@@ -17,24 +17,6 @@ import { currentUserAtom } from "../../Atoms/currentuser";
 import { UserIdAtom } from "../../Atoms/userid";
 import { showToastSuccessLogin, showToastErrorLogin } from "../Style/Notifications";
 
-function Copyright(props) {
-    return (
-        <Typography
-            variant="body2"
-            color="text.secondary"
-            align="center"
-            {...props}
-        >
-            {"Copyright © "}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{" "}
-            {new Date().getFullYear()}
-            {"."}
-        </Typography>
-    );
-}
-
 const defaultTheme = createTheme();
 
 export default function SignIn() {
@@ -52,6 +34,7 @@ export default function SignIn() {
         };
 
         try {
+
             const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/sign_in", {
                 method: "POST",
                 headers: {
@@ -146,7 +129,6 @@ export default function SignIn() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
         </ThemeProvider>
     );
