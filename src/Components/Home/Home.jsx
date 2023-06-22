@@ -30,7 +30,7 @@ export default function Home() {
       .then((data) => setItems(data))
       .catch((error) => console.log(error));
   }, []);
-
+  console.log(items);
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />

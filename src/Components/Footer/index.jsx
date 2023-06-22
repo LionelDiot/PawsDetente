@@ -32,6 +32,7 @@ export default function Footer() {
       sx={{
         backgroundColor: "#1976d2",
         p: 6,
+        mt: "auto",
       }}
     >
       <Container maxWidth="lg">
@@ -77,7 +78,7 @@ export default function Footer() {
             </Link>
           </Grid>
         </Grid>
-        
+
       </Container>
     </Box>
   );

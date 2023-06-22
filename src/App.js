@@ -14,8 +14,10 @@ import Footer from "./Components/Footer/index";
 import ResetPassword from "./Components/Users/reset_password";
 import Home from "./Components/Home/Home";
 import ShowItem from "./Components/Items/show";
+import Search from "./Components/Search/Search";
 import "./App.css";
-
+import SuccessPayment from "./Components/Checkout/successPayment";
+import FailPayment from "./Components/Checkout/failedPayment";
 function App() {
   return (
     <BrowserRouter>
@@ -64,8 +66,12 @@ function App() {
             path="/reset_password/:tokenSlug"
             element={<ResetPassword />}
           />
+          <Route path="/payment-success" element={<SuccessPayment />} />
+          <Route path="/payment-failed" element={<FailPayment />} />
           <Route path="/404" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to="/404" />} />
+                    <Route path="/search" element={<Search />} />
+
         </Routes>
       </main>
       <Footer />
