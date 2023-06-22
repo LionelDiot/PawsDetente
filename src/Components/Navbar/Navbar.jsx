@@ -46,7 +46,7 @@ function Navbar() {
   const handleLogout = () => {
     // Utilisez la valeur de recherche ici
 
-    fetch("http://localhost:3000/users/sign_out", {
+    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/sign_out", {
       method: "delete",
       headers: {
         Authorization: `${user}`,
