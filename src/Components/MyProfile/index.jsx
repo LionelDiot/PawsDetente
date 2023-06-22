@@ -27,7 +27,7 @@ export default function MyProfile() {
       fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/member-data", {
         method: "get",
         headers: {
-          Authorization: `${user}`,
+          "Authorization": `${user}`,
           "Content-Type": "application/json",
         },
       })

@@ -1,22 +1,23 @@
 import React from "react";
 // import * as React from 'react';
-import { styled } from '@mui/material/styles';
+
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
+import HandleAddToCart from "../../Tools/addToCart";
+import { useAtomValue } from "jotai";
+import { currentUserAtom } from "../../Atoms/currentuser";
+import { loggedInAtom } from "../../Atoms/loggedin";
 
 const Item = ({ item }) => {
+  
+  const user = useAtomValue(currentUserAtom);
+  const loggedIn = useAtomValue(loggedInAtom);
+
     return (
       <>
         <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
@@ -35,10 +36,15 @@ const Item = ({ item }) => {
               {<p> Prix: {item.price}</p>}
             </Typography>
           </CardContent>
-        <CardActions>
-          <Link to={`/item/${item.id}`}>
-            <Button size="small">Voir</Button>
-          </Link>
+        <CardActions>  
+          <Button size="small" href={`/item/${item.id}`}>Voir</Button>
+          {loggedIn && (<Button
+                      size="small"
+                      onClick={() => HandleAddToCart(item, user)}
+                      color="inherit"
+                    >
+                      Ajouter au panier
+                    </Button>)} 
         </CardActions>
         </Card>
       </>

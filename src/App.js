@@ -31,17 +31,17 @@ function App() {
           <Route
             path="/myprofile"
             element={
-              // <LoggedInRoute>
+              <LoggedInRoute>
                 <MyProfile />
-              // </LoggedInRoute>
+              </LoggedInRoute>
             }
           />
           <Route
             path="/cart"
             element={
-              // <LoggedInRoute>
+              <LoggedInRoute>
                 <Cart />
-              // </LoggedInRoute>
+              </LoggedInRoute>
             }
           />
           {/* <Route
