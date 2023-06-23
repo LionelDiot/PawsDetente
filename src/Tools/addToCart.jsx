@@ -16,9 +16,11 @@ export default async function HandleAddToCart(item, user) {
     });
 
     if (response.ok) {
-      showToastSuccess(`L'article a été ajouté au panier`);
+      const responseData = await response.json();
+      showToastSuccess(responseData.message);
     } else {
-      showToastError(`Une erreur s'est produite`);
+      const errorData = await response.json();
+      showToastError(errorData.error);
     }
   } catch (error) {
     showToastError(`Une erreur s'est produite`);

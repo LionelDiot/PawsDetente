@@ -6,7 +6,6 @@ export default async function HandleDeleteFromCart(item_id, user) {
   };
 
   try {
-    console.log(item_id)
     const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/cart/", {
       method: "DELETE",
       headers: {
@@ -17,9 +16,11 @@ export default async function HandleDeleteFromCart(item_id, user) {
     });
 
     if (response.ok) {
-      showToastSuccess(`L'article a été supprimé au panier`);
+      const responseData = await response.json();
+      showToastSuccess(responseData.message);
     } else {
-      showToastError(`Une erreur s'est produite`);
+      const errorData = await response.json();
+      showToastError(errorData.error);
     }
   } catch (error) {
     showToastError(`Une erreur s'est produite`);
