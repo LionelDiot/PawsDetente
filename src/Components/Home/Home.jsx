@@ -84,6 +84,10 @@ export default function Home() {
               padding: "24px",
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
               borderRadius: "10%",
+              display: "none", // Hide the box by default
+              "@media (min-width: 600px)": {
+                display: "flex", // Show the box when screen size is 600px or larger
+              },
             }}
           >
             <Typography
