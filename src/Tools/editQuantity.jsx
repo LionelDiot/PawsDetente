@@ -11,13 +11,13 @@ export default async function EditQuantity(item_id, quantity, user) {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `${user}`, 
+        "Authorization": `${user}`,
       },
       body: JSON.stringify(data),
     });
 
     if (response.ok) {
-      showToastSuccess(`La quantité a bien été modifié`);
+      showToastSuccess(`La quantité a bien été modifiée`);
     } else {
       showToastError(`Une erreur s'est produite`);
     }
