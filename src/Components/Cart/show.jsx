@@ -1,3 +1,4 @@
+import CheckoutButton from "../Checkout/checkoutButton";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -6,31 +7,59 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Jumbotron from "../Style/Jumbotron";
-import HandleAddToCart from "../../Tools/addToCart";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+import HandleDeleteFromCart from "../../Tools/deleteFromCart";
+import EditQuantity from "../../Tools/editQuantity";
 const defaultTheme = createTheme();
 
-export default function Home() {
+export default function Cart() {
   const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
   const [items, setItems] = React.useState([]);
 
-  React.useEffect(() => {
-    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/items")
-      .then((response) => response.json())
-      .then((data) => setItems(data))
+  const handleQuantityChange = (itemId, newQuantity) => {
+    EditQuantity(itemId, newQuantity, user) // Call the imported function
+      .then(() => {
+        // After successful quantity update, update the list of items
+        fetchCartItems();
+      })
       .catch((error) => console.log(error));
+  };
+
+  const fetchCartItems = () => {
+    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/cart", {
+      method: "GET",
+      headers: {
+        Authorization: `${user}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setItems(data.line_items);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  React.useEffect(() => {
+    fetchCartItems();
   }, []);
+
+  const handleDeleteFromCart = (itemId) => {
+    HandleDeleteFromCart(itemId, user) // Call the imported function
+      .then(() => {
+        // After successful deletion, update the list of items
+        fetchCartItems();
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -44,39 +73,9 @@ export default function Home() {
             pb: 6,
           }}
         >
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
-              Paws détente
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="text.secondary"
-              paragraph
-            >
-              S'ils le pouvaient ils se lèveraient sur leurs petites pattes, et
-              iraient acheter Kwiskas. A la place de ça, ils passent leur temps
-              à jouer au babyfoot et dépenser notre argent, les chats c'est
-              vraiment des branleurs !
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button variant="contained">Action N°1</Button>
-              <Button variant="outlined">Action N°2</Button>
-            </Stack>
-          </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
+          <CheckoutButton />
           <Grid container spacing={4}>
             {items.map((item) => (
               <Grid item key={item.id} xs={12} sm={6} md={4}>
@@ -97,23 +96,38 @@ export default function Home() {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      <h3>{item.title}</h3>
+                      <h3>{item.item_title}</h3>
                     </Typography>
                     <Typography>{item.description}</Typography>
                     <br></br>
-                    <Typography>Prix : {item.price} € TTC</Typography>
+                    <Typography>Prix : {item.price} € / unité</Typography>
+                    <br></br>
+                    <form>
+        <label>
+          Quantité :
+          <select
+            value={item.quantity}
+            onChange={(event) =>
+              handleQuantityChange(item.item_id, event.target.value)
+            }
+          >
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+        </label>
+      </form>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" href={`/item/${item.id}`}>
-                      Voir
-                    </Button>
-                    {loggedIn && (<Button
+                  <Button
                       size="small"
-                      onClick={() => HandleAddToCart(item, user)}
+                      onClick={() => handleDeleteFromCart(item.item_id, user)}
                       color="inherit"
                     >
-                      Ajouter au panier
-                    </Button>)}
+                      Supprimer du panier
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>

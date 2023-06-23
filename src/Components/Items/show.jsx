@@ -3,8 +3,15 @@ import { useParams } from "react-router-dom";
 import "../Style/ShowItem.css";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import HandleAddToCart from "../../Tools/addToCart";
+import { useAtomValue } from "jotai";
+import { currentUserAtom } from "../../Atoms/currentuser";
+import { loggedInAtom } from "../../Atoms/loggedin";
+
 
 const ShowItem = () => {
+  const user = useAtomValue(currentUserAtom);
+  const loggedIn = useAtomValue(loggedInAtom);
   const { itemSlug } = useParams();
   const [item, setItem] = useState({});
 
@@ -74,9 +81,10 @@ const ShowItem = () => {
             <FavoriteBorderRoundedIcon className="custom-icon" /> AJOUTER À MES FAVORIS
           </button>
           <div className="display-section2">
-            <button className="custom-button">
+            
+            {loggedIn && (<button className="custom-button" onClick={() => HandleAddToCart(item, user)}>
               <AddShoppingCartIcon className="custom-icon" /> AJOUTER AU PANIER
-            </button>
+            </button>)}
           </div>
         </div>
       </div>

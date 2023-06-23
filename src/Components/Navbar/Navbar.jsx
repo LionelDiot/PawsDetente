@@ -14,7 +14,6 @@ import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
 import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
-import TextField from "@mui/material/TextField";
 import "../../App.css";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
@@ -24,12 +23,13 @@ import { currentUserAtom } from "../../Atoms/currentuser";
 import { UserIdAtom } from "../../Atoms/userid";
 import { loggedInAtom } from "../../Atoms/loggedin";
 
-const pages = ["Items", "MyProfile"];
+const pages = ["Items"];
+const pagesloggedin = ["MyProfile", "Cart"]
+const pagesloggedout = ["Register", "Login"]
 
 function Navbar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [searchValue, setSearchValue] = React.useState("");
 
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const loggedIn = useAtomValue(loggedInAtom);
   const user = useAtomValue(currentUserAtom);
   const setUser = useSetAtom(currentUserAtom);
@@ -46,7 +46,7 @@ function Navbar() {
   const handleLogout = () => {
     // Utilisez la valeur de recherche ici
 
-    fetch("http://localhost:3000/users/sign_out", {
+    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/sign_out", {
       method: "delete",
       headers: {
         Authorization: `${user}`,
@@ -55,19 +55,13 @@ function Navbar() {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        console.log(
-          ` all my data pas trié ? : ${JSON.stringify(responseData.user)}`
-        );
+        
       })
       .catch((error) => {
         console.error("Error:", error);
       });
     setUser(null);
     setUserId(null);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
   };
 
   const isMobileScreen = useMediaQuery("(max-width: 960px)");
@@ -168,8 +162,31 @@ function Navbar() {
             }}
             className="searchContainer"
           >
+            { pages.map((page) => (
+              <Button
+                key={page}
+                sx={{ my: 2, color: "white", display: "block" }}
+                component={Link}
+                to={`/${page.toLowerCase()}`}
+              >
+                {page}
+              </Button>
+              )) 
+            }
             {loggedIn ? (
-              pages.map((page) => (
+              pagesloggedin.map((page) => (
+                <Button
+                  key={page}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                  component={Link}
+                  to={`/${page.toLowerCase()}`}
+                >
+                  {page}
+                </Button>
+            ))
+              
+            ) : (
+              pagesloggedout.map((page) => (
                 <Button
                   key={page}
                   sx={{ my: 2, color: "white", display: "block" }}
@@ -179,23 +196,6 @@ function Navbar() {
                   {page}
                 </Button>
               ))
-            ) : (
-              <>
-                <Button
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  component={Link}
-                  to="/register"
-                >
-                  Register
-                </Button>
-                <Button
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  component={Link}
-                  to="/login"
-                >
-                  Login
-                </Button>
-              </>
             )}
 
             <IconButton
@@ -219,10 +219,12 @@ function Navbar() {
               </Button>
             </Tooltip>
           )}
+          
         </Toolbar>
       </Container>
     </AppBar>
   );
+
 }
 
 export default Navbar;

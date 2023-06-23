@@ -1,71 +1,55 @@
-# Getting Started with Create React App
+PAWS DÉTENTE
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Description
 
-## Available Scripts
+Ceci est un résumé de la présentation, la version complète se trouve en pdf dans un lien accessible en bas du readme.
 
-In the project directory, you can run:
+![On a transpiré, on a appris, on en re-demande ](https://assets.rbl.ms/10712482/980x.gif "La team")
 
-### `npm start`
+### 1)  Présentation : 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Le projet consiste en la mise en forme d'une plateforme E-commerce dédiée à la revente de produits pour animaux, nourriture et accessoires.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2)  Fonctionnalités :
 
-### `npm test`
+> Une page d'accueil générale présentant l'ensemble des produits avec la possibilité de mettre en avants des produits phares et une autre partie plus générique destinée à montrer le catalogue produit dans son ensemble.
+> La possibilité d'enregistrer des utilisateurs et de conserver les profils d'achats, les commandes passées.
+> Des catégories permettant une navigation par familles de produits
+> Une section commandes avec paniers, livraisons, paiements et retours de produits,
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 3). Parcours d'un utilisateur :
 
-### `npm run build`
+> Connexion à son compte, arrivée sur une page qui présente les produits "les plus vendus"
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> Navigation ensuite par catégories de produits
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> Création d'un panier de l'utilisateur, l'utilisateur peut avoir un panier et choisir autant de produits qu'il le souhaite, les quantités sont modifiable au sein du panier.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> L'utilisateur peut consulter sa page "Mon profil" afin de retrouver son email, il peut ensuite compléter ses informations en rajoutant ses noms, prénoms et adresses. Une photo de profil est affichée par défaut, il peut prendre une de ses photos et mettre à jour la photo de profil peut importe la taille cette photo redimmensionnée par l'application. 
 
-### `npm run eject`
+> Pour chaque panier l'utilisateur retrouvera les informations toujours au sein de sa page 'mon profil', chaque commande sera consultable indépendament du résumé proposé.
+ 
+### 4). En cours Parcours d'un administrateur :
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+> Connexion à son compte administrateur et accés à des champs que seul lui pourra voir, et ainsi procéder à des modifications d'informations, produits, catégories de produits et utilisateurs. Rajouter des produits, des catégories et supprimer des utilisateurs. (attention si commentaires et likes implémentés rajouter des actions)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 5)  Notre objectif :
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+> Proposer une expérience utilisateur simple avec une navigation fluide, non polluée par le marketing intrusif.
+> Mettre en avant une sélection de produits ciblés, pour éviter le côté « usine à gaz » de certains sites de E-commerce.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 6)  La TEAM :
 
-## Learn More
+![L’équipe est composée de 4 personnes : Lionel, Jordan et Samuel,](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZtcVKc5hv0luw8486Tdyn0i0veJ-8BI_Jpw&usqp=CAU "La team")
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 7)  Les liens :
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+> Le résumé complet avec en plus les descriptions des bases de données, le schéma Lucid chart qui nous à permis de coder ensuite les bases, une copie  des frames prévues qui nous ont guidés pour la création de l'environnement graphique codé en REACT @MUI et CSS.
 
-### Code Splitting
+résumé pdf : https://smallpdf.com/file#s=8f076fc4-8651-4a9d-a102-cb04e47767dd
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# PawsDetente
+Heroku : 
+> Lien Trello : https://trello.com/b/O5huVeOU/projetpaws
+> Lien GITHUB Front End : https://github.com/LionelDiot/PawsDetente
+> Lien GITHUB Back End : https://github.com/LionelDiot/API-Paws-Detente
+> lien VERSEL : https://paws-detente-kyqwo2dmu-lioneldiot.vercel.app/
