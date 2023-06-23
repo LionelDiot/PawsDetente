@@ -55,7 +55,7 @@ function Navbar() {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        
+
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -162,7 +162,7 @@ function Navbar() {
             }}
             className="searchContainer"
           >
-            { pages.map((page) => (
+            {pages.map((page) => (
               <Button
                 key={page}
                 sx={{ my: 2, color: "white", display: "block" }}
@@ -171,7 +171,7 @@ function Navbar() {
               >
                 {page}
               </Button>
-              )) 
+            ))
             }
             {loggedIn ? (
               pagesloggedin.map((page) => (
@@ -183,8 +183,8 @@ function Navbar() {
                 >
                   {page}
                 </Button>
-            ))
-              
+              ))
+
             ) : (
               pagesloggedout.map((page) => (
                 <Button
@@ -208,7 +208,7 @@ function Navbar() {
           </Box>
           <Link
             sx={{ my: 2, color: "white", display: "block" }}
-            href="/cart"
+            to="/cart"
           >
             <AddShoppingCartIcon />
           </Link>
@@ -219,7 +219,7 @@ function Navbar() {
               </Button>
             </Tooltip>
           )}
-          
+
         </Toolbar>
       </Container>
     </AppBar>

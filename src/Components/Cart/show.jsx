@@ -17,6 +17,9 @@ import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
 import HandleDeleteFromCart from "../../Tools/deleteFromCart";
 import EditQuantity from "../../Tools/editQuantity";
+import Divider from "../Divider/Divider";
+import SelectQuantity from "../Buttons/SelectQuantity"
+
 const defaultTheme = createTheme();
 
 export default function Cart() {
@@ -62,79 +65,131 @@ export default function Cart() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <CssBaseline />
-      <main>
-        <Jumbotron />
-        <Box
-          sx={{
-            bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
-          }}
-        >
-        </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
-          <CheckoutButton />
-          <Grid container spacing={4}>
-            {items.map((item) => (
-              <Grid item key={item.id} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <CardMedia
-                    component="div"
-                    sx={{
-                      // 16:9
-                      pt: "56.25%",
-                    }}
-                    image={item.image_url}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      <h3>{item.item_title}</h3>
-                    </Typography>
-                    <Typography>{item.description}</Typography>
-                    <br></br>
-                    <Typography>Prix : {item.price} € / unité</Typography>
-                    <br></br>
-                    <form>
-        <label>
-          Quantité :
-          <select
-            value={item.quantity}
-            onChange={(event) =>
-              handleQuantityChange(item.item_id, event.target.value)
-            }
+    <>
+      <h2 style={{ textAlign: 'center' }}>VOTRE PANIER</h2>
+      <Divider />
+      <Grid container spacing={5}>
+        <Grid item xs={3}>
+          <p>PRODUIT</p>
+          {items.map((item) => (
+            <CardMedia
+              component="div"
+              sx={{
+                // 16:9
+                pt: "56.25%",
+              }}
+              image={item.image_url}
+            />
+          ))}
+        </Grid>
+        <Grid item xs={3}>
+          <p>PRIX</p>
+          {items.map((item) => (
+            <Grid item key={item.id} xs={12} sm={6} md={4}>
+              <Typography>{item.price} €</Typography>
+            </Grid>
+          ))}
+        </Grid>
+        <Grid item xs={3}>
+          <p>QUANTITÉ</p>
+          <form>
+            <label>  {items.map((item) => (
+              <select
+                value={item.quantity}
+                onChange={(event) =>
+                  handleQuantityChange(item.item_id, event.target.value)
+                }
+              >
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
+            ))}
+            </label>
+          </form>
+        </Grid>
+        <Grid item xs={3}>
+          <p>TOTAL</p>
+        </Grid>
+      </Grid>
+      <CheckoutButton />
+
+      <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
+        <main>
+          <Jumbotron />
+          <Box
+            sx={{
+              bgcolor: "background.paper",
+              pt: 8,
+              pb: 6,
+            }}
           >
-            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
-        </label>
-      </form>
-                  </CardContent>
-                  <CardActions>
-                  <Button
-                      size="small"
-                      onClick={() => handleDeleteFromCart(item.item_id, user)}
-                      color="inherit"
-                    >
-                      Supprimer du panier
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </main>
-    </ThemeProvider>
+          </Box>
+          <Container sx={{ py: 8 }} maxWidth="md">
+            <CheckoutButton />
+            <Grid container spacing={4}>
+              {items.map((item) => (
+                <Grid item key={item.id} xs={12} sm={6} md={4}>
+                  <Card
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <CardMedia
+                      component="div"
+                      sx={{
+                        // 16:9
+                        pt: "56.25%",
+                      }}
+                      image={item.image_url}
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        <h3>{item.item_title}</h3>
+                      </Typography>
+                      <Typography>{item.description}</Typography>
+                      <br></br>
+                      <Typography>Prix : {item.price} € / unité</Typography>
+                      <br></br>
+                      <form>
+                        <label>
+                          Quantité :
+                          <select
+                            value={item.quantity}
+                            onChange={(event) =>
+                              handleQuantityChange(item.item_id, event.target.value)
+                            }
+                          >
+                            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
+                              <option key={value} value={value}>
+                                {value}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                      </form>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        size="small"
+                        onClick={() => handleDeleteFromCart(item.item_id, user)}
+                        color="inherit"
+                      >
+                        Supprimer du panier
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </main>
+      </ThemeProvider>
+    </>
   );
 }

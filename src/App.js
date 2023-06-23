@@ -15,11 +15,10 @@ import ResetPassword from "./Components/Users/reset_password";
 import Home from "./Components/Home/Home";
 import ShowItem from "./Components/Items/show";
 import Search from "./Components/Search/Search";
-import Cart from "./Components/Cart/Cart";
 import "./App.css";
 import SuccessPayment from "./Components/Checkout/successPayment";
 import FailPayment from "./Components/Checkout/failedPayment";
-import Cart from './Components/Cart/show';
+import Cart from "./Components/Cart/show";
 function App() {
   return (
     <BrowserRouter>
