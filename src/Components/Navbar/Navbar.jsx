@@ -85,7 +85,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            HOME
+            PAWS DETENTE
           </Typography>
 
           {isMobileScreen && (
