@@ -23,7 +23,7 @@ export default function Cart() {
   const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
   const [items, setItems] = React.useState([]);
-
+  const [total, setTotal] = React.useState(0);
   const handleQuantityChange = (itemId, newQuantity) => {
     EditQuantity(itemId, newQuantity, user) // Call the imported function
       .then(() => {
@@ -44,6 +44,7 @@ export default function Cart() {
       .then((response) => response.json())
       .then((data) => {
         setItems(data.line_items);
+        setTotal(data.total);
       })
       .catch((error) => console.log(error));
   };
@@ -75,7 +76,7 @@ export default function Cart() {
         >
         </Box>
         <Container sx={{ py: 8 }} maxWidth="md">
-          <CheckoutButton />
+          <CheckoutButton total={total}/>
           <Grid container spacing={4}>
             {items.map((item) => (
               <Grid item key={item.id} xs={12} sm={6} md={4}>
@@ -101,6 +102,8 @@ export default function Cart() {
                     <Typography>{item.description}</Typography>
                     <br></br>
                     <Typography>Prix : {item.price} € / unité</Typography>
+                    <br></br>
+                    <Typography>Prix : {item.line_item_price} € du lot</Typography>
                     <br></br>
                     <form>
         <label>
