@@ -46,7 +46,7 @@ function Navbar() {
   const handleLogout = () => {
     // Utilisez la valeur de recherche ici
 
-    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/sign_out", {
+    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/sign_out", {
       method: "delete",
       headers: {
         Authorization: `${user}`,
@@ -86,7 +86,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            HOME
+            PAWS DETENTE
           </Typography>
 
           {isMobileScreen && (

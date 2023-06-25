@@ -6,7 +6,6 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -17,15 +16,13 @@ import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
 import HandleDeleteFromCart from "../../Tools/deleteFromCart";
 import EditQuantity from "../../Tools/editQuantity";
-import Divider from "../Divider/Divider";
-
 const defaultTheme = createTheme();
 
 export default function Cart() {
   const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
   const [items, setItems] = React.useState([]);
-
+  const [total, setTotal] = React.useState(0);
   const handleQuantityChange = (itemId, newQuantity) => {
     EditQuantity(itemId, newQuantity, user) // Call the imported function
       .then(() => {
@@ -46,6 +43,7 @@ export default function Cart() {
       .then((response) => response.json())
       .then((data) => {
         setItems(data.line_items);
+        setTotal(data.total);
       })
       .catch((error) => console.log(error));
   };
@@ -64,75 +62,75 @@ export default function Cart() {
   };
 
   return (
-    <>
-      <h2 style={{ textAlign: 'center' }}>VOTRE PANIER</h2>
-      <Divider />
-      <Grid container spacing={5} style={{ textAlign: 'center' }}>
-        {/* <Grid item xs={3}>
-          <p>PRODUIT</p>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
+    <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+      <main>
+        <Jumbotron />
+        <Box
+          sx={{
+            bgcolor: "background.paper",
+            pt: 8,
+            pb: 6,
+          }}
+        >
+        </Box>
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <CheckoutButton />
+          <Grid container spacing={4}>
             {items.map((item) => (
-              <li key={item.id} style={{ marginBottom: '20px' }}>
-                <CardMedia
-                  component="div"
+              <Grid item key={item.id} xs={12} sm={6} md={4}>
+                <Card
                   sx={{
-                    // 16:9
-                    pt: "10%",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
                   }}
-                  image={item.image_url}
-                />
-              </li>
-            ))}
-          </ul>
-        </Grid> */}
-        <Grid item xs={3}>
-          <p>TITRE</p>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {items.map((item) => (
-              <li key={item.id} style={{ marginBottom: '20px' }}>
-                <p>{item.item_title}</p>
-              </li>
-            ))}
-          </ul>
-        </Grid>
-        <Grid item xs={3}>
-          <p>PRIX</p>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {items.map((item) => (
-              <li key={item.id} style={{ marginBottom: '20px' }}>
-                <Typography>{item.price} €</Typography>
-              </li>
-            ))}
-          </ul>
-        </Grid>
-        <Grid item xs={3}>
-          <p>QUANTITÉ</p>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {items.map((item) => (
-              <li key={item.id} style={{ marginBottom: '20px' }}>
-                <select
-                  value={item.quantity}
-                  onChange={(event) =>
-                    handleQuantityChange(item.item_id, event.target.value)
-                  }
                 >
-                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
-                    <option key={value} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-              </li>
-            ))}
-          </ul>
-        </Grid>
-        <Grid item xs={3}>
-          <p>TOTAL</p>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {items.map((item) => (
-              <li key={item.id} style={{ marginBottom: '20px' }}>
-                {/* Item total code here */}
-              </li>
+                  <CardMedia
+                    component="div"
+                    sx={{
+                      // 16:9
+                      pt: "56.25%",
+                    }}
+                    image={item.image_url}
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      <h3>{item.item_title}</h3>
+                    </Typography>
+                    <Typography>{item.description}</Typography>
+                    <br></br>
+                    <Typography>Prix : {item.price} € / unité</Typography>
+                    <br></br>
+                    <form>
+                      <label>
+                        Quantité :
+                        <select
+                          value={item.quantity}
+                          onChange={(event) =>
+                            handleQuantityChange(item.item_id, event.target.value)
+                          }
+                        >
+                          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
+                            <option key={value} value={value}>
+                              {value}
+                            </option>
+                          ))}
+                        </select>
+                      </label>
+                    </form>
+                  </CardContent>
+                  <CardActions>
+                    <Button
+                      size="small"
+                      onClick={() => handleDeleteFromCart(item.item_id, user)}
+                      color="inherit"
+                    >
+                      Supprimer du panier
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
             ))}
           </ul>
         </Grid>

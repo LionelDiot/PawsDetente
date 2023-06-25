@@ -16,9 +16,33 @@ import HandleAddToCart from "../../Tools/addToCart";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
+import "./Home.css";
+
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  typography: {
+    fontFamily: [
+      "Nunito",
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+    ].join(","),
+  },
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          maxWidth: "1200px",
+          "@media (min-width: 1200px)": {
+            maxWidth: "1200px",
+          },
+        },
+      },
+    },
+  },
+});
 
 export default function Home() {
   const user = useAtomValue(currentUserAtom);
@@ -36,90 +60,125 @@ export default function Home() {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <main>
-        <Jumbotron />
         <Box
           sx={{
-            bgcolor: "background.paper",
-            pt: 8,
-            pb: 6,
+            position: "relative",
+            backgroundColor: "#ccc",
           }}
         >
-          <Container maxWidth="sm">
+          <Jumbotron />
+          <Box
+            sx={{
+              position: "absolute",
+              top: "40%",
+              left: "25%",
+              transform: "translate(-50%, -50%)",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 1,
+              backgroundColor: "rgba(255, 255, 255, 0.2)",
+              width: "600px",
+              height: "400px",
+              padding: "24px",
+              boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+              borderRadius: "10%",
+              display: "none", // Hide the box by default
+              "@media (min-width: 600px)": {
+                display: "flex", // Show the box when screen size is 600px or larger
+              },
+            }}
+          >
             <Typography
               component="h1"
-              variant="h2"
+              variant="poster"
               align="center"
               color="text.primary"
               gutterBottom
             >
-              Paws détente
+              PAWS DÉTENTE
             </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="text.secondary"
-              paragraph
-            >
-              S'ils le pouvaient ils se lèveraient sur leurs petites pattes, et
-              iraient acheter Kwiskas. A la place de ça, ils passent leur temps
-              à jouer au babyfoot et dépenser notre argent, les chats c'est
-              vraiment des branleurs !
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-              <Button variant="contained">Action N°1</Button>
-              <Button variant="outlined">Action N°2</Button>
-            </Stack>
-          </Container>
-        </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
-          <Grid container spacing={4}>
-            {items.map((item) => (
-              <Grid item key={item.id} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6} md={6} lg={4}>
+                <img
+                  src={"https://i.postimg.cc/ZRby0gzg/logo-paws-detente.png"}
+                  alt="Your Image"
+                  style={{ width: "80%" }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={8}>
+                <Typography
+                  variant="h5"
+                  align="justify-content"
+                  color="text.secondary"
+                  paragraph
+                  style={{
+                    maxWidth: "100%",
+                    margin: "0 auto",
+                    fontSize: "1.5rem", // Default font size
+                    "@media (max-width: 600px)": {
+                      fontSize: "0.5rem", // Reduced font size for smaller screens
+                    },
                   }}
                 >
-                  <CardMedia
-                    component="div"
-                    sx={{
-                      // 16:9
-                      pt: "56.25%",
-                    }}
-                    image={item.image_url}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      <h3>{item.title}</h3>
-                    </Typography>
-                    <Typography>{item.description}</Typography>
-                    <br></br>
-                    <Typography>Prix : {item.price} € TTC</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" href={`/item/${item.id}`}>
-                      Voir
-                    </Button>
-                    {loggedIn && (<Button
-                      size="small"
-                      onClick={() => HandleAddToCart(item, user)}
-                      color="inherit"
-                    >
-                      Ajouter au panier
-                    </Button>)}
-                  </CardActions>
-                </Card>
+                  S'ils le pouvaient ils se lèveraient sur leurs petites pattes,
+                  et iraient acheter Kwiskas. A la place de ça, ils passent leur
+                  temps à jouer au babyfoot et dépenser notre argent, les chats
+                  c'est vraiment des branleurs !
+                </Typography>
               </Grid>
-            ))}
-          </Grid>
-        </Container>
+            </Grid>
+          </Box>
+        </Box>
+        <div className="container3">
+          <Container sx={{ py: 8 }} maxWidth="md">
+            <Grid container spacing={4}>
+              {items.map((item) => (
+                <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
+                  <Card
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <CardMedia
+                      component="div"
+                      sx={{
+                        // 16:9
+                        pt: "56.25%",
+                      }}
+                      image={item.image_url}
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        <h3>{item.title}</h3>
+                      </Typography>
+                      <Typography>{item.description}</Typography>
+                      <br />
+                      <Typography>Prix : {item.price} € TTC</Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small" href={`/item/${item.id}`}>
+                        Voir
+                      </Button>
+                      {loggedIn && (
+                        <Button
+                          size="small"
+                          onClick={() => HandleAddToCart(item, user)}
+                          color="inherit"
+                        >
+                          Ajouter au panier
+                        </Button>
+                      )}
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </div>
       </main>
     </ThemeProvider>
   );

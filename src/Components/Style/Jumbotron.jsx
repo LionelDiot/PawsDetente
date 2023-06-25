@@ -20,15 +20,14 @@ const slideNumberStyle = {
 const data = [
   {
     image: "chat2.png",
-    caption: "ARTICLES POUR MIAOUW",
+
   },
   {
     image: "chien2.png",
-    caption: "ARTICLES POUR OUAF ?",
+
   },
   {
-    image: "oiseau2.png",
-    caption: "Ou alors un Piafabec à faire évoluer en Rapasdepic peut-être ?",
+    image: "oiseau.jpg",
   },
 ];
 
@@ -38,7 +37,7 @@ const CarouselPictures = () => {
             data={data}
             time={2300}
             width="100vw"
-            height="65vh"
+            height="95vh"
             captionStyle={captionStyle}
             slideNumber={true}
             slideNumberStyle={slideNumberStyle}

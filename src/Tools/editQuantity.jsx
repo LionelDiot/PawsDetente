@@ -17,9 +17,11 @@ export default async function EditQuantity(item_id, quantity, user) {
     });
 
     if (response.ok) {
-      showToastSuccess(`La quantité a bien été modifiée`);
+      const responseData = await response.json();
+      showToastSuccess(responseData.message);
     } else {
-      showToastError(`Une erreur s'est produite`);
+      const errorData = await response.json();
+      showToastError(errorData.error);
     }
   } catch (error) {
     showToastError(`Une erreur s'est produite`);

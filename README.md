@@ -52,4 +52,4 @@ Heroku :
 > Lien Trello : https://trello.com/b/O5huVeOU/projetpaws
 > Lien GITHUB Front End : https://github.com/LionelDiot/PawsDetente
 > Lien GITHUB Back End : https://github.com/LionelDiot/API-Paws-Detente
-> lien VERSEL : https://paws-detente-kyqwo2dmu-lioneldiot.vercel.app/
+> lien VERSEL : https://paws-detente.vercel.app/
