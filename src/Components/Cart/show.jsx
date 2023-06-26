@@ -7,7 +7,6 @@ import HandleDeleteFromCart from "../../Tools/deleteFromCart";
 import EditQuantity from "../../Tools/editQuantity";
 import Divider from "../Divider/Divider";
 
-
 export default function Cart() {
   const user = useAtomValue(currentUserAtom);
   const [items, setItems] = React.useState([]);
@@ -30,13 +29,9 @@ export default function Cart() {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        console.log(response)
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         console.log(data)
-        console.log(data.total)
         setItems(data.line_items);
         setTotal(data.total);
       })
@@ -47,7 +42,6 @@ export default function Cart() {
     fetchCartItems();
   }, []);
 
-
   const handleDeleteFromCart = (itemId) => {
     HandleDeleteFromCart(itemId, user) // Call the imported function
       .then(() => {
@@ -56,6 +50,15 @@ export default function Cart() {
       })
       .catch((error) => console.log(error));
   };
+
+  // const handleDeleteCart = (cartId) => {
+  //   HandleDeleteCart(cartId, user) // Call the imported function
+  //     .then(() => {
+  //       // After successful deletion, update the list of items
+  //       fetchCartItems();
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
   return (
     <>
@@ -77,55 +80,63 @@ export default function Cart() {
       </Grid>
       <Divider />
 
-      {/* // TEST // */}
-
-      <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr', gridGap: '20px' }}>
-        {items.map((item) => (
-          <li key={item.id}>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', alignItems: 'center', gap: '10px', textAlign: 'center' }}>
-              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                {/* IMAGE */}
-                <img src={item.image_url} alt={item.item_title} style={{ marginLeft: '50px', width: '100px', borderRadius: '33%' }} />
-                {/* TITRE */}
-                <p style={{ marginLeft: '30px', textAlign: 'center' }}>{item.item_title}</p>
+      {items.length === 0 ? (
+        <p style={{ textAlign: 'center', padding: '10px' }}>Votre panier est vide.</p>
+      ) : (
+        <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr', gridGap: '20px' }}>
+          {items.map((item) => (
+            <li key={item.id}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', alignItems: 'center', gap: '10px', textAlign: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                  {/* IMAGE */}
+                  <img src={item.image_url} alt={item.item_title} style={{ marginLeft: '50px', width: '100px', borderRadius: '33%' }} />
+                  {/* TITRE */}
+                  <p style={{ marginLeft: '30px', textAlign: 'center' }}>{item.item_title}</p>
+                </div>
+                {/* PRIX */}
+                <p>{(item.price / 100).toFixed(2)} €</p>
+                {/* QUANTITÉ */}
+                <div>
+                  <select
+                    value={item.quantity}
+                    onChange={(event) => handleQuantityChange(item.item_id, event.target.value)}
+                  >
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
+                      <option key={value} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {/* SUBTOTAL PAR LIGNE */}
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                  <div>
+                    <p style={{ textAlign: 'center' }}>{(item.line_item_price / 100).toFixed(2)} €</p>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <button style={{ marginLeft: '30px', textAlign: 'center' }} onClick={() => handleDeleteFromCart(item.item_id)}>x</button>
+                  </div>
+                </div>
               </div>
-              {/* PRIX */}
-              <p>{(item.price / 100).toFixed(2)} €</p>
-              {/* QUANTITÉ */}
-              <div>
-                <select
-                  value={item.quantity}
-                  onChange={(event) =>
-                    handleQuantityChange(item.item_id, event.target.value)
-                  }
-                >
-                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
-                    <option key={value} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {/* SUBTOTAL PAR LIGNE */}
-              <div>
-                <ul style={{ listStyle: 'none', padding: 0 }}>
-                  <li key={item.id} style={{ marginBottom: '20px' }}>
-                    <p>{(item.line_item_price / 100).toFixed(2)} €</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      )}
       <Divider />
-      <Grid container spacing={5} style={{ textAlign: 'center' }}>
-        <Grid item xs={3}>
-          <p>GRAND TOTAL: {(total / 100).toFixed(2)} €</p>
-        </Grid>
-        <CheckoutButton />
-      </Grid>
+      {items.length !== 0 ? (
+        <div>
+          <p>GRAND TOTAL</p>
+          <div style={{ marginLeft: '80%' }}>
+            <p>{(total / 100).toFixed(2)} €</p>
+            <CheckoutButton />
+          </div>
+        </div>
+      ) : (
+        <>
+          <button href="/">Retourner aux produits</button>
+          {/* <button onClick={() => handleDeleteCart()}>Vider le panier</button> */}
+        </>
+      )}
     </>
   );
 }
