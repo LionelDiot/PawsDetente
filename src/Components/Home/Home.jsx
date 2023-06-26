@@ -17,6 +17,7 @@ import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
 import "./Home.css";
+import { BookmarkOutlined } from "@mui/icons-material";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -77,13 +78,13 @@ export default function Home() {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              zIndex: 1,
+              zIndex: 1, // seems to be working as a layer !!!
               backgroundColor: "rgba(255, 255, 255, 0.2)",
               width: "600px",
               height: "400px",
               padding: "24px",
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
-              borderRadius: "10%",
+              borderRadius: "10px 85px",
               display: "none", // Hide the box by default
               "@media (min-width: 600px)": {
                 display: "flex", // Show the box when screen size is 600px or larger
@@ -152,14 +153,34 @@ export default function Home() {
                       image={item.image_url}
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        <h3>{item.title}</h3>
-                      </Typography>
-                      <Typography>{item.description}</Typography>
-                      <br />
-                      <Typography>Prix : {(item.price / 100).toFixed(2)} € TTC</Typography>
+
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                          height: "100%",
+                        }}
+                      >
+                        <div>
+                          <Typography gutterBottom variant="h5" component="h2">
+                            <h3>{item.title}</h3>
+                          </Typography>
+                        </div>
+                        <div>
+                          <Typography sx={{ mb: 2 }}>
+                            {item.description}
+                          </Typography>
+                        </div>
+                        <div>
+                          <Typography sx={{ mt: 2, mb: 2, fontWeight: "bold" }}>
+                            Prix : {(item.price / 100).toFixed(2)} € TTC
+                          </Typography>
+                        </div>
+                      </Box>
+
                     </CardContent>
-                    <CardActions>
+                    <CardActions sx={{ mt: "auto" }}>
                       <Button size="small" href={`/item/${item.id}`}>
                         Voir
                       </Button>
