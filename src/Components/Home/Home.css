@@ -18,6 +18,6 @@ background-color: rgb(233, 232, 232);
 .card:hover {
   transform: scale(1.05);
   transition: transform 0.1s ease-in-out;
-  box-shadow: 5px 4px 4px 4px rgba(36, 36, 36, 0.904);
+  box-shadow: 2px 2px 3px 3px rgba(255, 94, 0, 0.192);
 }
 

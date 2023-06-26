@@ -18,7 +18,14 @@ const Item = ({ item }) => {
   return (
     <>
       <Card
-        sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          margin: "20px",
+          width: "280px", // Adjust the width as desired
+          height: "480px", // Adjust the height as desired
+        }}
         className="card"
       >
         <CardMedia
@@ -29,12 +36,16 @@ const Item = ({ item }) => {
           }}
           image={item.image_url}
         />
-        <CardContent sx={{ flexGrow: 1 }}>
-          <Typography gutterBottom variant="h5" component="h2">
-            <h3>{item.title}</h3>
-          </Typography>
-          <Typography sx={{ mb: 2 }}>{item.description}</Typography>
-          <Typography sx={{ mt: 2, mb: 2, fontWeight: "bold" }}>
+        <CardHeader
+          titleTypographyProps={{ variant: "h5" }}
+          title={item.title}
+          sx={{ pb: 0, mb: 0 }}
+        />
+        <CardContent
+          sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
+        >
+          <Typography sx={{ mt: "auto", mb: 2 }}>{item.description}</Typography>
+          <Typography sx={{ mt: "auto", mb: 2, fontWeight: "bold" }}>
             Prix : {(item.price / 100).toFixed(2)} € TTC
           </Typography>
         </CardContent>

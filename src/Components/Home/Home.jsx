@@ -143,6 +143,9 @@ export default function Home() {
                       height: "100%",
                       display: "flex",
                       flexDirection: "column",
+                      margin: "10px",
+                      width: "280px", // Adjust the width as desired
+                      height: "480px",
                     }}
                   >
                     <CardMedia
