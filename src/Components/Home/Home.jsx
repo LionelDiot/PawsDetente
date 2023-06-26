@@ -173,7 +173,7 @@ export default function Home() {
                         </div>
                         <div>
                           <Typography sx={{ mt: 2, mb: 2, fontWeight: "bold" }}>
-                            Prix : {item.price} € TTC
+                            Prix : {(item.price / 100).toFixed(2)} € TTC
                           </Typography>
                         </div>
                       </Box>

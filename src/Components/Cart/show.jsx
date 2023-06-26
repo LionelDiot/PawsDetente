@@ -91,7 +91,7 @@ export default function Cart() {
                 <p style={{ marginLeft: '30px', textAlign: 'center' }}>{item.item_title}</p>
               </div>
               {/* PRIX */}
-              <p>{item.price} €</p>
+              <p>{(item.price / 100).toFixed(2)} €</p>
               {/* QUANTITÉ */}
               <div>
                 <select
@@ -111,7 +111,7 @@ export default function Cart() {
               <div>
                 <ul style={{ listStyle: 'none', padding: 0 }}>
                   <li key={item.id} style={{ marginBottom: '20px' }}>
-                    <p>{item.line_item_price} €</p>
+                    <p>{(item.line_item_price / 100).toFixed(2)} €</p>
                   </li>
                 </ul>
               </div>
@@ -122,7 +122,7 @@ export default function Cart() {
       <Divider />
       <Grid container spacing={5} style={{ textAlign: 'center' }}>
         <Grid item xs={3}>
-          <p>GRAND TOTAL: {total} €</p>
+          <p>GRAND TOTAL: {(total / 100).toFixed(2)} €</p>
         </Grid>
         <CheckoutButton />
       </Grid>
