@@ -1,16 +1,22 @@
 import { loadStripe } from '@stripe/stripe-js';
 import Button from "@mui/material/Button";
+import { useAtomValue } from "jotai";
+import { currentUserAtom } from "../../Atoms/currentuser";
+import { loggedInAtom } from "../../Atoms/loggedin";
 
 export default function CheckoutButton({ total }) {
+  const user = useAtomValue(currentUserAtom);
+  const loggedIn = useAtomValue(loggedInAtom);
+
   const handlePayment = async () => {
-    try {
+    if (loggedIn) { try {
       // Make the API request to create a checkout session
       const response = await fetch('https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/checkout', {
-        method: 'POST',
+        method: 'GET',
         headers: {
+          "Authorization": `${user}`,
           'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ amount: total }), // Adjust the amount according to your needs
+        }
       });
 
       // Handle the API response
@@ -27,7 +33,7 @@ export default function CheckoutButton({ total }) {
       }
     } catch (error) {
       console.error('Error:', error);
-    }
+    }}
   };
 
   return (
