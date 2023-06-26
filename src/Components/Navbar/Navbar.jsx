@@ -15,6 +15,7 @@ import PetsIcon from "@mui/icons-material/Pets";
 import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
 import "../../App.css";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
@@ -54,7 +55,7 @@ function Navbar() {
     })
       .then((response) => response.json())
       .then((responseData) => {
-        
+
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -153,7 +154,6 @@ function Navbar() {
           >
             LOGO
           </Typography>
-
           <Box
             sx={{
               flexGrow: 1,
@@ -162,7 +162,7 @@ function Navbar() {
             }}
             className="searchContainer"
           >
-            { pages.map((page) => (
+            {pages.map((page) => (
               <Button
                 key={page}
                 sx={{ my: 2, color: "white", display: "block" }}
@@ -171,7 +171,7 @@ function Navbar() {
               >
                 {page}
               </Button>
-              )) 
+            ))
             }
             {loggedIn ? (
               pagesloggedin.map((page) => (
@@ -183,8 +183,8 @@ function Navbar() {
                 >
                   {page}
                 </Button>
-            ))
-              
+              ))
+
             ) : (
               pagesloggedout.map((page) => (
                 <Button
@@ -206,7 +206,12 @@ function Navbar() {
               <SearchIcon />
             </IconButton>
           </Box>
-
+          <Link
+            sx={{ my: 2, color: "white", display: "block" }}
+            to="/cart"
+          >
+            <AddShoppingCartIcon />
+          </Link>
           {loggedIn && (
             <Tooltip title="Logout">
               <Button onClick={handleLogout} color="inherit">
@@ -214,7 +219,7 @@ function Navbar() {
               </Button>
             </Tooltip>
           )}
-          
+
         </Toolbar>
       </Container>
     </AppBar>
