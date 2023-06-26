@@ -77,7 +77,7 @@ function App() {
             element={<ResetPassword />}
           />
           <Route path="/payment-success" element={<SuccessPayment />} />
-          <Route path="/payment-failed" element={<FailPayment />} />
+          <Route path="/payment-fail" element={<FailPayment />} />
           <Route path="/404" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to="/404" />} />
           <Route path="/search" element={<Search />} />
