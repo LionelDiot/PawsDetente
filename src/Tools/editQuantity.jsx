@@ -11,7 +11,7 @@ export default async function EditQuantity(item_id, quantity, user) {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `${user}`, 
+        "Authorization": `${user}`,
       },
       body: JSON.stringify(data),
     });

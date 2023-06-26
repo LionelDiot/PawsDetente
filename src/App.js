@@ -18,7 +18,7 @@ import Search from "./Components/Search/Search";
 import "./App.css";
 import SuccessPayment from "./Components/Checkout/successPayment";
 import FailPayment from "./Components/Checkout/failedPayment";
-import Cart from './Components/Cart/show';
+import Cart from "./Components/Cart/show";
 function App() {
   return (
     <BrowserRouter>
@@ -69,18 +69,18 @@ function App() {
               </LoggedOutRoute>
             }
           />
-          <Route path="/items" element={<Items />} /> 
-          <Route path="/item/:itemSlug" element={<ShowItem />} /> 
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/items" element={<Items />} />
+          <Route path="/item/:itemSlug" element={<ShowItem />} />
           <Route
             path="/reset_password/:tokenSlug"
             element={<ResetPassword />}
           />
           <Route path="/payment-success" element={<SuccessPayment />} />
-          <Route path="/payment-failed" element={<FailPayment />} />
+          <Route path="/payment-fail" element={<FailPayment />} />
           <Route path="/404" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to="/404" />} />
-                    <Route path="/search" element={<Search />} />
-
+          <Route path="/search" element={<Search />} />
         </Routes>
       </main>
       <Footer />

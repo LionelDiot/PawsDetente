@@ -1,0 +1,12 @@
+.divider-container {
+  display: flex;
+  justify-content: center;
+}
+
+.divider {
+  border: none;
+  height: 1px;
+  width: 75%;
+  background: linear-gradient(to right, black, gray, black);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
