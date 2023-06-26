@@ -29,7 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
-            path="/myprofile"
+            path="/profil"
             element={
               <LoggedInRoute>
                 <MyProfile />
@@ -37,7 +37,7 @@ function App() {
             }
           />
           <Route
-            path="/cart"
+            path="/panier"
             element={
               <LoggedInRoute>
                 <Cart />
@@ -54,7 +54,7 @@ function App() {
           /> */}
 
           <Route
-            path="/register"
+            path="/s'enregistrer"
             element={
               <LoggedOutRoute>
                 <Register />
@@ -69,8 +69,8 @@ function App() {
               </LoggedOutRoute>
             }
           />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/items" element={<Items />} />
+          <Route path="/panier" element={<Cart />} />
+          <Route path="/articles" element={<Items />} />
           <Route path="/item/:itemSlug" element={<ShowItem />} />
           <Route
             path="/reset_password/:tokenSlug"
@@ -80,7 +80,7 @@ function App() {
           <Route path="/payment-fail" element={<FailPayment />} />
           <Route path="/404" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to="/404" />} />
-          <Route path="/search" element={<Search />} />
+          <Route path="/rechercher" element={<Search />} />
         </Routes>
       </main>
       <Footer />

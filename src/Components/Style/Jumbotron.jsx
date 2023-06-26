@@ -35,7 +35,7 @@ const CarouselPictures = () => {
     return (
         <Carousel
             data={data}
-            time={2300}
+            time={4600}
             width="100vw"
             height="95vh"
             captionStyle={captionStyle}
