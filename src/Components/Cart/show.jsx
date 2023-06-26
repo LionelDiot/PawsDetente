@@ -8,7 +8,6 @@ import EditQuantity from "../../Tools/editQuantity";
 import Divider from "../Divider/Divider";
 import { NavLink } from "react-router-dom";
 
-
 export default function Cart() {
   const user = useAtomValue(currentUserAtom);
   const [items, setItems] = React.useState([]);
@@ -31,9 +30,7 @@ export default function Cart() {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         setItems(data.line_items);
         setTotal(data.total);
@@ -44,7 +41,6 @@ export default function Cart() {
   React.useEffect(() => {
     fetchCartItems();
   }, []);
-
 
   const handleDeleteFromCart = (itemId) => {
     HandleDeleteFromCart(itemId, user) // Call the imported function
@@ -81,7 +77,6 @@ export default function Cart() {
         <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr', gridGap: '20px' }}>
           {items.map((item) => (
             <li key={item.id}>
-
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', alignItems: 'center', gap: '10px', textAlign: 'center' }}>
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                   {/* IMAGE */}
@@ -90,14 +85,12 @@ export default function Cart() {
                   <p style={{ marginLeft: '30px', textAlign: 'center' }}>{item.item_title}</p>
                 </div>
                 {/* PRIX */}
-                <p>{item.price} €</p>
+                <p>{(item.price / 100).toFixed(2)} €</p>
                 {/* QUANTITÉ */}
                 <div>
                   <select
                     value={item.quantity}
-                    onChange={(event) =>
-                      handleQuantityChange(item.item_id, event.target.value)
-                    }
+                    onChange={(event) => handleQuantityChange(item.item_id, event.target.value)}
                   >
                     {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
                       <option key={value} value={value}>
@@ -107,13 +100,12 @@ export default function Cart() {
                   </select>
                 </div>
                 {/* SUBTOTAL PAR LIGNE */}
-                <div style={{ marginLeft: '75px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                  <div>
-                    <p style={{ textAlign: 'center' }}>{item.line_item_price} €</p>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <button style={{ marginLeft: '30px', textAlign: 'center' }} onClick={() => handleDeleteFromCart(item.item_id)}>x</button>
-                  </div>
+                <div>
+                  <ul style={{ listStyle: 'none', padding: 0 }}>
+                    <li key={item.id} style={{ marginBottom: '20px' }}>
+                      <p>{(item.line_item_price / 100).toFixed(2)} €</p>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </li>
@@ -121,20 +113,12 @@ export default function Cart() {
         </ul>
       )}
       <Divider />
-      {items.length !== 0 ? (
-        <div>
-          <p>GRAND TOTAL</p>
-          <div style={{ marginLeft: '80%' }}>
-            <p>{total} €</p>
-            <CheckoutButton />
-          </div>
-        </div>
-      ) : (
-        <>
-          <button to="/">Retourner aux produits</button>
-          <button onClick={() => handleDeleteFromCart()}>Vider le panier</button>
-        </>
-      )}
+      <Grid container spacing={5} style={{ textAlign: 'center' }}>
+        <Grid item xs={3}>
+          <p>GRAND TOTAL: {(total / 100).toFixed(2)} €</p>
+        </Grid>
+        <CheckoutButton />
+      </Grid>
     </>
   );
 }
