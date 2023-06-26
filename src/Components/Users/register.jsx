@@ -11,16 +11,16 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useAtom, useSetAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { UserIdAtom } from "../../Atoms/userid";
-
+import { showToastSuccess, showToastError } from "../Style/Notifications";
 
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-    const [user, setUser] = useAtom(currentUserAtom);
+    const setUser = useSetAtom(currentUserAtom);
     const [error, setError] = useState("");
     const setId = useSetAtom(UserIdAtom);
 
@@ -60,12 +60,14 @@ export default function SignUp() {
                 setUser(token);
                 const responseData = await response.json();
                 setId(responseData.user.id);
-                
+                showToastSuccess("Votre compte a bien été créé.");
             } else {
-                setError("Invalid credentials");
+                setError("Identifiants non conforme. (email déjà utilisé?)");
+                showToastError(error);
             }
         } catch (error) {
-            setError("An error occurred");
+            setError("Une erreur est survenue.");
+            showToastError(error);
         }
     };
 

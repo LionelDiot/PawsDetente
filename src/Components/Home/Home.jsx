@@ -153,6 +153,7 @@ export default function Home() {
                       image={item.image_url}
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
+
                       <Box
                         sx={{
                           display: "flex",
@@ -173,10 +174,11 @@ export default function Home() {
                         </div>
                         <div>
                           <Typography sx={{ mt: 2, mb: 2, fontWeight: "bold" }}>
-                            Prix : {item.price} € TTC
+                            Prix : {(item.price / 100).toFixed(2)} € TTC
                           </Typography>
                         </div>
                       </Box>
+
                     </CardContent>
                     <CardActions sx={{ mt: "auto" }}>
                       <Button size="small" href={`/item/${item.id}`}>
