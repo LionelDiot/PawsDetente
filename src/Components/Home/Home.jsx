@@ -78,13 +78,13 @@ export default function Home() {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              zIndex: 1,
+              zIndex: 1, // seems to be working as a layer !!!
               backgroundColor: "rgba(255, 255, 255, 0.2)",
               width: "600px",
               height: "400px",
               padding: "24px",
               boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
-              borderRadius: "10%",
+              borderRadius: "10px 85px",
               display: "none", // Hide the box by default
               "@media (min-width: 600px)": {
                 display: "flex", // Show the box when screen size is 600px or larger

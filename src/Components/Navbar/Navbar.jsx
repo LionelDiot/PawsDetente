@@ -23,8 +23,8 @@ import { currentUserAtom } from "../../Atoms/currentuser";
 import { UserIdAtom } from "../../Atoms/userid";
 import { loggedInAtom } from "../../Atoms/loggedin";
 
-const pagesloggedin = ["Items", "MyProfile", "Cart"];
-const pagesloggedout = ["Items", "Register", "Login"];
+const pagesloggedin = ["articles", "profil", "panier"];
+const pagesloggedout = ["articles", "s'enregistrer", "login"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -132,11 +132,11 @@ function Navbar() {
             ))}
             <MenuItem>
               <Link
-                to="/search"
+                to="/rechercher"
                 style={{ textDecoration: "none", color: "inherit" }}
                 onClick={handleCloseNavMenu}
               >
-                <Typography textAlign="center">Search</Typography>
+                <Typography textAlign="center">Rechercher</Typography>
               </Link>
             </MenuItem>
           </Menu>
@@ -145,8 +145,8 @@ function Navbar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href=""
+            component={Link} // Ajouter cette ligne
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -182,12 +182,12 @@ function Navbar() {
             <IconButton
               sx={{ my: 2, color: "white", display: "block" }}
               component={Link}
-              to="/search"
+              to="/rechercher"
             >
               <SearchIcon />
             </IconButton>
           </Box>
-          <Link sx={{ my: 2, color: "white", display: "block" }} to="/cart">
+          <Link sx={{ my: 2, color: "white", display: "block" }} to="/panier">
             <AddShoppingCartIcon />
           </Link>
           {loggedIn && (
