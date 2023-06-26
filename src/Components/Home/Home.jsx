@@ -17,6 +17,7 @@ import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
 import "./Home.css";
+import { BookmarkOutlined } from "@mui/icons-material";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -152,14 +153,32 @@ export default function Home() {
                       image={item.image_url}
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        <h3>{item.title}</h3>
-                      </Typography>
-                      <Typography>{item.description}</Typography>
-                      <br />
-                      <Typography>Prix : {item.price} € TTC</Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-between",
+                          height: "100%",
+                        }}
+                      >
+                        <div>
+                          <Typography gutterBottom variant="h5" component="h2">
+                            <h3>{item.title}</h3>
+                          </Typography>
+                        </div>
+                        <div>
+                          <Typography sx={{ mb: 2 }}>
+                            {item.description}
+                          </Typography>
+                        </div>
+                        <div>
+                          <Typography sx={{ mt: 2, mb: 2, fontWeight: "bold" }}>
+                            Prix : {item.price} € TTC
+                          </Typography>
+                        </div>
+                      </Box>
                     </CardContent>
-                    <CardActions>
+                    <CardActions sx={{ mt: "auto" }}>
                       <Button size="small" href={`/item/${item.id}`}>
                         Voir
                       </Button>
