@@ -6,7 +6,6 @@ import { currentUserAtom } from "../../Atoms/currentuser";
 import HandleDeleteFromCart from "../../Tools/deleteFromCart";
 import EditQuantity from "../../Tools/editQuantity";
 import Divider from "../Divider/Divider";
-import { NavLink } from "react-router-dom";
 
 export default function Cart() {
   const user = useAtomValue(currentUserAtom);
@@ -32,6 +31,7 @@ export default function Cart() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         setItems(data.line_items);
         setTotal(data.total);
       })
@@ -50,6 +50,15 @@ export default function Cart() {
       })
       .catch((error) => console.log(error));
   };
+
+  // const handleDeleteCart = (cartId) => {
+  //   HandleDeleteCart(cartId, user) // Call the imported function
+  //     .then(() => {
+  //       // After successful deletion, update the list of items
+  //       fetchCartItems();
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
   return (
     <>
@@ -85,7 +94,7 @@ export default function Cart() {
                   <p style={{ marginLeft: '30px', textAlign: 'center' }}>{item.item_title}</p>
                 </div>
                 {/* PRIX */}
-                <p>{((item.price / 100).toFixed(2) / 100).toFixed(2)} €</p>
+                <p>{(item.price / 100).toFixed(2)} €</p>
                 {/* QUANTITÉ */}
                 <div>
                   <select
@@ -100,12 +109,13 @@ export default function Cart() {
                   </select>
                 </div>
                 {/* SUBTOTAL PAR LIGNE */}
-                <div>
-                  <ul style={{ listStyle: 'none', padding: 0 }}>
-                    <li key={item.id} style={{ marginBottom: '20px' }}>
-                      <p>{((item.line_item_price / 100).toFixed(2) / 100).toFixed(2)} €</p>
-                    </li>
-                  </ul>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                  <div>
+                    <p style={{ textAlign: 'center' }}>{(item.line_item_price / 100).toFixed(2)} €</p>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <button style={{ marginLeft: '30px', textAlign: 'center' }} onClick={() => handleDeleteFromCart(item.item_id)}>x</button>
+                  </div>
                 </div>
               </div>
             </li>
@@ -113,12 +123,20 @@ export default function Cart() {
         </ul>
       )}
       <Divider />
-      <Grid container spacing={5} style={{ textAlign: 'center' }}>
-        <Grid item xs={3}>
-          <p>GRAND TOTAL: {(total / 100).toFixed(2)} €</p>
-        </Grid>
-        <CheckoutButton />
-      </Grid>
+      {items.length !== 0 ? (
+        <div>
+          <p>GRAND TOTAL</p>
+          <div style={{ marginLeft: '80%' }}>
+            <p>{(total / 100).toFixed(2)} €</p>
+            <CheckoutButton />
+          </div>
+        </div>
+      ) : (
+        <>
+          <button href="/">Retourner aux produits</button>
+          {/* <button onClick={() => handleDeleteCart()}>Vider le panier</button> */}
+        </>
+      )}
     </>
   );
 }
