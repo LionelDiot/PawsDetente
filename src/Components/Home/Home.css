@@ -15,3 +15,8 @@ background-color: rgb(233, 232, 232);
     U+2215, U+FEFF, U+FFFD;
 }
 
+.card:hover {
+  transform: scale(1.05); /* Increase the size by 2% */
+  transition: transform 0.4s ease-in-out; /* Add a smooth transition effect */
+}
+
