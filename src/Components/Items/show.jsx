@@ -73,7 +73,7 @@ const ShowItem = () => {
 
       <div className="item-section2">
         <h1>{item.title}</h1>
-        <p>{item.price}€</p>
+        <p>{(item.price / 100).toFixed(2)}€</p>
         <p>{item.description}</p>
         <p>Ajouter quantité produits</p>
         <div className="display-section2">

@@ -157,7 +157,7 @@ export default function Home() {
                       </Typography>
                       <Typography>{item.description}</Typography>
                       <br />
-                      <Typography>Prix : {item.price} € TTC</Typography>
+                      <Typography>Prix : {(item.price / 100).toFixed(2)} € TTC</Typography>
                     </CardContent>
                     <CardActions>
                       <Button size="small" href={`/item/${item.id}`}>

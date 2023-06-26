@@ -33,7 +33,7 @@ const Item = ({ item }) => {
               {<p>{item.description}</p>}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {<p> Prix: {item.price}</p>}
+              {<p> Prix: {(item.price / 100).toFixed(2)}</p>}
             </Typography>
           </CardContent>
         <CardActions>  
