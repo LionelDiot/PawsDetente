@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -11,10 +11,18 @@ import HandleAddToCart from "../../Tools/addToCart";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
+import handleAddToFavorites from "../../Tools/addToFavorites";
+import "../../App.css"; // Import CSS file for custom styles
 
 const CardItem = ({ item }) => {
   const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleSwitch = (item, user) => {
+    handleAddToFavorites(item, user);
+    setIsFavorite(!isFavorite);
+  };
 
   return (
     <Card
@@ -74,7 +82,11 @@ const CardItem = ({ item }) => {
           </Button>
         )}
         {loggedIn && (
-          <IconButton aria-label="add to favorites" color="primary">
+          <IconButton
+            aria-label="add to favorites"
+            className={isFavorite ? "favorite-icon active" : "favorite-icon"} // Apply custom CSS class
+            onClick={() => handleSwitch(item, user)}
+          >
             <FavoriteIcon />
           </IconButton>
         )}
