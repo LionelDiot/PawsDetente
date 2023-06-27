@@ -62,6 +62,7 @@ export default function Cart() {
 
   return (
     <>
+
       <h2 style={{ textAlign: 'center' }}>VOTRE PANIER</h2>
       <Divider />
       <Grid container spacing={5} style={{ textAlign: 'center' }}>
