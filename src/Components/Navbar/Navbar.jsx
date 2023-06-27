@@ -15,7 +15,7 @@ import PetsIcon from "@mui/icons-material/Pets";
 import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
 import "../../App.css";
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
@@ -23,12 +23,10 @@ import { currentUserAtom } from "../../Atoms/currentuser";
 import { UserIdAtom } from "../../Atoms/userid";
 import { loggedInAtom } from "../../Atoms/loggedin";
 
-const pages = ["Items"];
-const pagesloggedin = ["MyProfile", "Cart"]
-const pagesloggedout = ["Register", "Login"]
+const pagesloggedin = ["articles", "profil", "panier"];
+const pagesloggedout = ["articles", "s'enregistrer", "login"];
 
 function Navbar() {
-
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const loggedIn = useAtomValue(loggedInAtom);
   const user = useAtomValue(currentUserAtom);
@@ -44,19 +42,18 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    // Utilisez la valeur de recherche ici
-
-    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/sign_out", {
-      method: "delete",
-      headers: {
-        Authorization: `${user}`,
-        "Content-Type": "application/json",
-      },
-    })
+    fetch(
+      "https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/sign_out",
+      {
+        method: "delete",
+        headers: {
+          Authorization: `${user}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
-      .then((responseData) => {
-
-      })
+      .then((responseData) => {})
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -122,7 +119,7 @@ function Navbar() {
               display: { xs: "block", md: "none" },
             }}
           >
-            {pages.map((page) => (
+            {(loggedIn ? pagesloggedin : pagesloggedout).map((page) => (
               <MenuItem key={page}>
                 <Link
                   to={`/${page.toLowerCase()}`}
@@ -133,14 +130,23 @@ function Navbar() {
                 </Link>
               </MenuItem>
             ))}
+            <MenuItem>
+              <Link
+                to="/rechercher"
+                style={{ textDecoration: "none", color: "inherit" }}
+                onClick={handleCloseNavMenu}
+              >
+                <Typography textAlign="center">Rechercher</Typography>
+              </Link>
+            </MenuItem>
           </Menu>
 
           <PetsIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href=""
+            component={Link} // Ajouter cette ligne
+            to="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -152,7 +158,7 @@ function Navbar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            HOME
           </Typography>
           <Box
             sx={{
@@ -162,7 +168,7 @@ function Navbar() {
             }}
             className="searchContainer"
           >
-            {pages.map((page) => (
+            {(loggedIn ? pagesloggedin : pagesloggedout).map((page) => (
               <Button
                 key={page}
                 sx={{ my: 2, color: "white", display: "block" }}
@@ -171,45 +177,17 @@ function Navbar() {
               >
                 {page}
               </Button>
-            ))
-            }
-            {loggedIn ? (
-              pagesloggedin.map((page) => (
-                <Button
-                  key={page}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  component={Link}
-                  to={`/${page.toLowerCase()}`}
-                >
-                  {page}
-                </Button>
-              ))
-
-            ) : (
-              pagesloggedout.map((page) => (
-                <Button
-                  key={page}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                  component={Link}
-                  to={`/${page.toLowerCase()}`}
-                >
-                  {page}
-                </Button>
-              ))
-            )}
+            ))}
 
             <IconButton
               sx={{ my: 2, color: "white", display: "block" }}
               component={Link}
-              to="/search"
+              to="/rechercher"
             >
               <SearchIcon />
             </IconButton>
           </Box>
-          <Link
-            sx={{ my: 2, color: "white", display: "block" }}
-            to="/cart"
-          >
+          <Link sx={{ my: 2, color: "white", display: "block" }} to="/panier">
             <AddShoppingCartIcon />
           </Link>
           {loggedIn && (
@@ -219,12 +197,10 @@ function Navbar() {
               </Button>
             </Tooltip>
           )}
-
         </Toolbar>
       </Container>
     </AppBar>
   );
-
 }
 
 export default Navbar;

@@ -25,26 +25,33 @@ function App() {
       <Navbar />
       <Notifications />
 
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/myprofile"
-            element={
-              <LoggedInRoute>
-                <MyProfile />
-              </LoggedInRoute>
-            }
-          />
-          <Route
-            path="/cart"
-            element={
-              <LoggedInRoute>
-                <Cart />
-              </LoggedInRoute>
-            }
-          />
-          {/* <Route
+      <div
+        style={{
+          minHeight: "calc(100vh - 275px)",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/profil"
+              element={
+                <LoggedInRoute>
+                  <MyProfile />
+                </LoggedInRoute>
+              }
+            />
+            <Route
+              path="/panier"
+              element={
+                <LoggedInRoute>
+                  <Cart />
+                </LoggedInRoute>
+              }
+            />
+            {/* <Route
             path="/articles/new"
             element={
               <LoggedInRoute>
@@ -53,36 +60,37 @@ function App() {
             }
           /> */}
 
-          <Route
-            path="/register"
-            element={
-              <LoggedOutRoute>
-                <Register />
-              </LoggedOutRoute>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <LoggedOutRoute>
-                <LogIn />
-              </LoggedOutRoute>
-            }
-          />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/items" element={<Items />} />
-          <Route path="/item/:itemSlug" element={<ShowItem />} />
-          <Route
-            path="/reset_password/:tokenSlug"
-            element={<ResetPassword />}
-          />
-          <Route path="/payment-success" element={<SuccessPayment />} />
-          <Route path="/payment-fail" element={<FailPayment />} />
-          <Route path="/404" element={<PageNotFound />} />
-          <Route path="*" element={<Navigate to="/404" />} />
-          <Route path="/search" element={<Search />} />
-        </Routes>
-      </main>
+            <Route
+              path="/s'enregistrer"
+              element={
+                <LoggedOutRoute>
+                  <Register />
+                </LoggedOutRoute>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <LoggedOutRoute>
+                  <LogIn />
+                </LoggedOutRoute>
+              }
+            />
+            <Route path="/panier" element={<Cart />} />
+            <Route path="/articles" element={<Items />} />
+            <Route path="/item/:itemSlug" element={<ShowItem />} />
+            <Route
+              path="/reset_password/:tokenSlug"
+              element={<ResetPassword />}
+            />
+            <Route path="/payment-success" element={<SuccessPayment />} />
+            <Route path="/payment-fail" element={<FailPayment />} />
+            <Route path="/404" element={<PageNotFound />} />
+            <Route path="*" element={<Navigate to="/404" />} />
+            <Route path="/rechercher" element={<Search />} />
+          </Routes>
+        </main>
+      </div>
       <Footer />
     </BrowserRouter>
   );
