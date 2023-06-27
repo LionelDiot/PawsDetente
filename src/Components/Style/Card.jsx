@@ -5,6 +5,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import HandleAddToCart from "../../Tools/addToCart";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
@@ -66,10 +68,15 @@ const CardItem = ({ item }) => {
           <Button
             size="small"
             onClick={() => HandleAddToCart(item, user)}
-            color="inherit"
+            color="primary"
           >
             Ajouter au panier
           </Button>
+        )}
+        {loggedIn && (
+          <IconButton aria-label="add to favorites" color="primary">
+            <FavoriteIcon />
+          </IconButton>
         )}
       </CardActions>
     </Card>
