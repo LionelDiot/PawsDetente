@@ -32,7 +32,7 @@ function Navbar() {
   const user = useAtomValue(currentUserAtom);
   const setUser = useSetAtom(currentUserAtom);
   const setUserId = useSetAtom(UserIdAtom);
-
+  const userid = useAtomValue(UserIdAtom);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -193,9 +193,10 @@ function Navbar() {
           {loggedIn && (
             <Tooltip title="Logout">
               <Button onClick={handleLogout} color="inherit">
-                Se déconnecter
+              {userid}
               </Button>
             </Tooltip>
+            
           )}
         </Toolbar>
       </Container>
