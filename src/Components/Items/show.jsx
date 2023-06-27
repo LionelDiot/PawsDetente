@@ -81,7 +81,7 @@ const ShowItem = () => {
             <FavoriteBorderRoundedIcon className="custom-icon" /> AJOUTER À MES FAVORIS
           </button>
           <div className="display-section2">
-            
+
             {loggedIn && (<button className="custom-button" onClick={() => HandleAddToCart(item, user)}>
               <AddShoppingCartIcon className="custom-icon" /> AJOUTER AU PANIER
             </button>)}
