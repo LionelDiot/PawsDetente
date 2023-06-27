@@ -35,7 +35,6 @@ const Items = () => {
   const [page, setPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const itemsPerPage = 6;
-  
 
   const handleChange = (event, value) => {
     setPage(value);
