@@ -19,6 +19,7 @@ import "./App.css";
 import SuccessPayment from "./Components/Checkout/successPayment";
 import FailPayment from "./Components/Checkout/failedPayment";
 import Cart from "./Components/Cart/show";
+import Favs from "./Components/Home/Favs";
 function App() {
   return (
     <BrowserRouter>
@@ -78,6 +79,7 @@ function App() {
           />
           <Route path="/payment-success" element={<SuccessPayment />} />
           <Route path="/payment-fail" element={<FailPayment />} />
+          <Route path="/favs" element={<Favs />} />
           <Route path="/404" element={<PageNotFound />} />
           <Route path="*" element={<Navigate to="/404" />} />
           <Route path="/rechercher" element={<Search />} />
