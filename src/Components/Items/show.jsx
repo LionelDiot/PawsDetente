@@ -38,7 +38,9 @@ const ShowItem = () => {
         );
         const responseData = await response.json();
         setItem(responseData);
-        console.log(responseData)
+        if (responseData.favorite == true) {
+          setIsFavoriteButton('Retirer de mes favoris')
+        }
       } catch (error) {
         console.error("Error:", error);
         setItem("Une erreur s'est produite lors de la récupération des données.");
@@ -73,6 +75,15 @@ const ShowItem = () => {
     };
   }, [item.image_url]);
 
+  const handleSwitch = (item, user) => {
+    handleAddToFavorites(item, user);
+    if (isFavoriteButton == `Ajouter à mes favoris`) {
+      setIsFavoriteButton(`Retirer de mes favoris`);
+    } else {
+      setIsFavoriteButton(`Ajouter à mes favoris`);
+    }
+  }
+
   return (
     <div className="container-item">
       <div className="item-section1">
@@ -87,7 +98,7 @@ const ShowItem = () => {
         <p>{item.description}</p>
         <p>Ajouter quantité produits</p>
         <div className="display-section2">
-          {loggedIn && <button className="custom-button" onClick={() => handleAddToFavorites(item, user)}>
+          {loggedIn && <button className="custom-button" onClick={() => handleSwitch(item, user)}>
             <FavoriteBorderRoundedIcon className="custom-icon" /> {isFavoriteButton}
           </button>}
           <div className="display-section2">
