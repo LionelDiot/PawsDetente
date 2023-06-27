@@ -46,7 +46,7 @@ const ShowItem = () => {
     };
 
     fetchItemData();
-  }, [itemSlug]);
+  }, [itemSlug, loggedIn]);
 
   useEffect(() => {
     const container = document.getElementById("container");
