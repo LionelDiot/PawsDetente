@@ -16,20 +16,29 @@ const ShowItem = () => {
   const { itemSlug } = useParams();
   const [item, setItem] = useState({});
 
+  const [isFavoriteButton, setIsFavoriteButton] = useState(`Ajouter à mes favoris`)
+
   useEffect(() => {
     const fetchItemData = async () => {
       try {
+        const headers = {
+          "Content-Type": "application/json",
+        };
+
+        if (loggedIn) {
+          headers["Authorization"] = user;
+        }
+
         const response = await fetch(
           `https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/items/${itemSlug}`,
           {
-            method: "get",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            method: "GET",
+            headers: headers,
           }
         );
         const responseData = await response.json();
         setItem(responseData);
+        console.log(responseData)
       } catch (error) {
         console.error("Error:", error);
         setItem("Une erreur s'est produite lors de la récupération des données.");
@@ -79,7 +88,7 @@ const ShowItem = () => {
         <p>Ajouter quantité produits</p>
         <div className="display-section2">
           {loggedIn && <button className="custom-button" onClick={() => handleAddToFavorites(item, user)}>
-            <FavoriteBorderRoundedIcon className="custom-icon" /> AJOUTER À MES FAVORIS
+            <FavoriteBorderRoundedIcon className="custom-icon" /> {isFavoriteButton}
           </button>}
           <div className="display-section2">
 
