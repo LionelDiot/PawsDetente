@@ -7,6 +7,7 @@ import HandleAddToCart from "../../Tools/addToCart";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
+import handleAddToFavorites from "../../Tools/addToFavorites";
 
 
 const ShowItem = () => {
@@ -77,9 +78,9 @@ const ShowItem = () => {
         <p>{item.description}</p>
         <p>Ajouter quantité produits</p>
         <div className="display-section2">
-          <button className="custom-button">
+          {loggedIn && <button className="custom-button" onClick={() => handleAddToFavorites(item, user)}>
             <FavoriteBorderRoundedIcon className="custom-icon" /> AJOUTER À MES FAVORIS
-          </button>
+          </button>}
           <div className="display-section2">
 
             {loggedIn && (<button className="custom-button" onClick={() => HandleAddToCart(item, user)}>
