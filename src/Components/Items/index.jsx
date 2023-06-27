@@ -33,6 +33,7 @@ const defaultTheme = createTheme({
 const Items = () => {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const itemsPerPage = 6;
 
   const handleChange = (event, value) => {
@@ -170,7 +171,8 @@ const Items = () => {
           handleChange={handleChange}
         />
       </div>
-      );
+    </ThemeProvider>
+  );
 };
 
-      export default Items;
+export default Items;
