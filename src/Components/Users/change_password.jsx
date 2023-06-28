@@ -9,33 +9,36 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { showToastSuccessLogin, showToastErrorLogin } from "../Style/Notifications";
-import { useParams } from "react-router-dom";
+import { showToastSuccess, showToastErrorLogin } from "../Style/Notifications";
+import { useAtomValue } from "jotai";
+import { currentUserAtom } from "../../Atoms/currentuser";
 
 const defaultTheme = createTheme();
 
 export default function ChangePassword() {
-    const { tokenSlug } = useParams();
+
+    const usertoken = useAtomValue(currentUserAtom);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const userPassword = event.currentTarget.current_password.value;
-        const newPassword = event.target.elements.new_password.value;
-        if (formPassword !== formPasswordVerification) {
 
-            return;
-        }
+        const newPassword = event.target.elements.password.value;
+        const passwordConfirmation = event.target.elements.password_confirmation.value;
+        const userPassword = event.currentTarget.current_password.value;
+
         const data = {
             user: {
                 password: newPassword,
-                password_confirmation: newPassword,
-                current_password: userPassword
+                password_confirmation: passwordConfirmation,
+                current_password: userPassword,
             },
         };
-
+        console.log(usertoken);
         try {
-            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/password", {
-                method: "PUT",
+            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/new-password", {
+                method: "POST",
                 headers: {
+                    "Authorization": usertoken,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
@@ -44,7 +47,7 @@ export default function ChangePassword() {
             if (response.ok) {
                 const responseData = await response.json();
 
-                showToastSuccessLogin()
+                showToastSuccess(responseData)
             } else {
                 showToastErrorLogin()
             }
@@ -82,11 +85,10 @@ export default function ChangePassword() {
                         <TextField
                             required
                             fullWidth
-                            name="currentPassword"
+                            name="current_password"
                             label="Mot de passe actuel"
                             type="password"
                             id="currentPassword"
-                            autoComplete="new-password"
                         />
 
                         <TextField
@@ -96,18 +98,16 @@ export default function ChangePassword() {
                             label="Nouveau mot de passe"
                             type="password"
                             id="password"
-                            autoComplete="new-password"
                         />
 
 
                         <TextField
                             required
                             fullWidth
-                            name="passwordVerification"
+                            name="password_confirmation"
                             label="Confirmation mot de passe"
                             type="password"
                             id="passwordVerification"
-                            autoComplete="new-password"
                         />
 
 
@@ -116,7 +116,6 @@ export default function ChangePassword() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={showToastSuccessLogin}
                         >
                             Enregistrer le nouveau mot de passe
                         </Button>
