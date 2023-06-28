@@ -6,7 +6,6 @@ import { showToastError } from "../Style/Notifications";
 const LoggedInRoute = ({ children }) => {
     const loggedIn = useAtomValue(loggedInAtom);
     if (!loggedIn) {
-        showToastError(`Vous devez être connecté pour voir cette page.`);
         return <Navigate to="/login" replace />;
     }
     return children;
