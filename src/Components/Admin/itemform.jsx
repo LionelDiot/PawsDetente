@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, Select, MenuItem, FormControl, InputLabel, Box } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import {
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Box,
+} from "@mui/material";
 
 const ItemForm = ({ item, onSubmit }) => {
-  const [imageUrl, setImageUrl] = useState('');
-  const [title, setTitle] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
     if (item) {
@@ -22,14 +30,16 @@ const ItemForm = ({ item, onSubmit }) => {
     event.preventDefault();
 
     // Create an item object with the form data
-    const updatedItem = {
-      id: item.id,
-      image_url: imageUrl,
-      title: title,
-      price: parseInt(price),
-      description: description,
-      category: category.charAt(0).toUpperCase() + category.slice(1),
-    };
+    if (item) {
+      const updatedItem = {
+        id: item.id,
+        image_url: imageUrl,
+        title: title,
+        price: parseInt(price),
+        description: description,
+        category: category.charAt(0).toUpperCase() + category.slice(1),
+      };
+    }
 
     // Call the onSubmit callback with the updated item object
     onSubmit(updatedItem);
@@ -75,7 +85,10 @@ const ItemForm = ({ item, onSubmit }) => {
         />
         <FormControl fullWidth required margin="normal">
           <InputLabel>Category</InputLabel>
-          <Select value={category} onChange={(event) => setCategory(event.target.value)}>
+          <Select
+            value={category}
+            onChange={(event) => setCategory(event.target.value)}
+          >
             <MenuItem value="autre">Autre</MenuItem>
             <MenuItem value="chien">Chien</MenuItem>
             <MenuItem value="chat">Chat</MenuItem>
@@ -83,7 +96,7 @@ const ItemForm = ({ item, onSubmit }) => {
           </Select>
         </FormControl>
         <Button variant="contained" color="primary" type="submit">
-        {item ? 'Modifier l\'article' : 'Créer un article'}
+          {item ? "Modifier l'article" : "Créer un article"}
         </Button>
       </form>
     </Box>
