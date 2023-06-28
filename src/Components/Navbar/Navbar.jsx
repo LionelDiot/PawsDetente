@@ -12,13 +12,16 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
-import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
 import "../../App.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import { useState, useEffect } from "react";
+
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
 
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
@@ -173,11 +176,11 @@ function Navbar() {
             ))}
             <MenuItem>
               <Link
-                to="/rechercher"
+                to="/favoris"
                 style={{ textDecoration: "none", color: "inherit" }}
                 onClick={handleCloseNavMenu}
               >
-                <Typography textAlign="center">Rechercher</Typography>
+                <Typography textAlign="center">Favoris</Typography>
               </Link>
             </MenuItem>
           </Menu>
@@ -219,15 +222,8 @@ function Navbar() {
                 {page}
               </Button>
             ))}
-
-            <IconButton
-              sx={{ my: 2, color: "white", display: "block" }}
-              component={Link}
-              to="/rechercher"
-            >
-              <SearchIcon />
-            </IconButton>
           </Box>
+
           <StyledBadge badgeContent={cartItemCount} color="secondary">
             <IconButton
               sx={{ my: 2, color: "white", display: "block" }}
@@ -236,6 +232,15 @@ function Navbar() {
               <AddShoppingCartIcon />
             </IconButton>
           </StyledBadge>
+
+          <IconButton
+            sx={{ my: 2, color: "white", display: "block" }}
+            component={Link}
+            to="/favoris"
+          >
+            <FavoriteIcon />
+          </IconButton>
+
           {loggedIn && (
             <Tooltip title="Logout">
               <Button onClick={handleLogout} color="inherit">
