@@ -12,10 +12,10 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
-import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
 import "../../App.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
@@ -132,11 +132,11 @@ function Navbar() {
             ))}
             <MenuItem>
               <Link
-                to="/rechercher"
+                to="/favoris"
                 style={{ textDecoration: "none", color: "inherit" }}
                 onClick={handleCloseNavMenu}
               >
-                <Typography textAlign="center">Rechercher</Typography>
+                <Typography textAlign="center">Favoris</Typography>
               </Link>
             </MenuItem>
           </Menu>
@@ -178,19 +178,19 @@ function Navbar() {
                 {page}
               </Button>
             ))}
-
-            <IconButton
-              sx={{ my: 2, color: "white", display: "block" }}
-              component={Link}
-              to="/rechercher"
-            >
-              <SearchIcon />
-            </IconButton>
           </Box>
           <IconButton
             sx={{ my: 2, color: "white", display: "block" }}
             component={Link}
-            to="/panier">
+            to="/favoris"
+          >
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton
+            sx={{ my: 2, color: "white", display: "block" }}
+            component={Link}
+            to="/panier"
+          >
             <AddShoppingCartIcon />
           </IconButton>
           {loggedIn && (

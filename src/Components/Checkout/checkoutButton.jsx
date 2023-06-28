@@ -37,8 +37,8 @@ export default function CheckoutButton({ total }) {
   };
 
   return (
-    <Button onClick={handlePayment} color="inherit">
-      Payer avec Stripe !
+    <Button variant="outlined" onClick={handlePayment} color="inherit">
+      Valider la commande
     </Button>
-  )
+  );
 }

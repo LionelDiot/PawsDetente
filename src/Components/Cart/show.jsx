@@ -180,8 +180,17 @@ export default function Cart() {
       <Divider />
       {items.length !== 0 ? (
         <div>
-          <p>GRAND TOTAL</p>
-          <div style={{ marginLeft: "80%" }}>
+
+          <div style={{ 
+            marginLeft: "80%", 
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            
+            }}>
+            <p>GRAND TOTAL</p>
+
             <p>{(total / 100).toFixed(2)} €</p>
             <CheckoutButton />
           </div>
