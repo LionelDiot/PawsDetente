@@ -53,7 +53,7 @@ function Navbar() {
       }
     )
       .then((response) => response.json())
-      .then((responseData) => {})
+      .then((responseData) => { })
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -187,9 +187,12 @@ function Navbar() {
               <SearchIcon />
             </IconButton>
           </Box>
-          <Link sx={{ my: 2, color: "white", display: "block" }} to="/panier">
+          <IconButton
+            sx={{ my: 2, color: "white", display: "block" }}
+            component={Link}
+            to="/panier">
             <AddShoppingCartIcon />
-          </Link>
+          </IconButton>
           {loggedIn && (
             <Tooltip title="Logout">
               <Button onClick={handleLogout} color="inherit">

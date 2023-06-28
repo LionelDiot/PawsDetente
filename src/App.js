@@ -29,9 +29,8 @@ import { currentUserAtom } from "./Atoms/currentuser";
 import { UserIdAtom } from "./Atoms/userid";
 import { loggedInAtom } from "./Atoms/loggedin";
 
-
+import Favs from "./Components/Home/Favs";
 function App() {
-
   const loggedIn = useAtomValue(loggedInAtom);
   const user = useAtomValue(currentUserAtom);
   const setUser = useSetAtom(currentUserAtom);
@@ -43,64 +42,73 @@ function App() {
       <Navbar />
       <Notifications />
 
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/profil"
-            element={
-              <LoggedInRoute>
-                <MyProfile />
-              </LoggedInRoute>
-            }
-          />
-          <Route
-            path="/panier"
-            element={
-              <LoggedInRoute>
-                <Cart />
-              </LoggedInRoute>
-            }
-          />
-          <Route
-            path="/admin/dashboard"
-            element={
-              <AdminRoute>
-                <Dashboard />
-              </AdminRoute>
-            }
-          />
+      <div
+        style={{
+          minHeight: "calc(100vh - 275px)",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/profil"
+              element={
+                <LoggedInRoute>
+                  <MyProfile />
+                </LoggedInRoute>
+              }
+            />
+            <Route
+              path="/panier"
+              element={
+                <LoggedInRoute>
+                  <Cart />
+                </LoggedInRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard"
+              element={
+                <AdminRoute>
+                  <Dashboard />
+                </AdminRoute>
+              }
+            />
 
-          <Route
-            path="/s'enregistrer"
-            element={
-              <LoggedOutRoute>
-                <Register />
-              </LoggedOutRoute>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <LoggedOutRoute>
-                <LogIn />
-              </LoggedOutRoute>
-            }
-          />
-          <Route path="/panier" element={<Cart />} />
-          <Route path="/articles" element={<Items />} />
-          <Route path="/item/:itemSlug" element={<ShowItem />} />
-          <Route
-            path="/reset_password/:tokenSlug"
-            element={<ResetPassword />}
-          />
-          <Route path="/payment-success" element={<SuccessPayment />} />
-          <Route path="/payment-fail" element={<FailPayment />} />
-          <Route path="/404" element={<PageNotFound />} />
-          <Route path="*" element={<Navigate to="/404" />} />
-          <Route path="/rechercher" element={<Search />} />
-        </Routes>
-      </main>
+            <Route
+              path="/s'enregistrer"
+              element={
+                <LoggedOutRoute>
+                  <Register />
+                </LoggedOutRoute>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <LoggedOutRoute>
+                  <LogIn />
+                </LoggedOutRoute>
+              }
+            />
+            <Route path="/panier" element={<Cart />} />
+            <Route path="/articles" element={<Items />} />
+            <Route path="/item/:itemSlug" element={<ShowItem />} />
+            <Route
+              path="/reset_password/:tokenSlug"
+              element={<ResetPassword />}
+            />
+            <Route path="/payment-success" element={<SuccessPayment />} />
+            <Route path="/payment-fail" element={<FailPayment />} />
+            <Route path="/favs" element={<Favs />} />
+            <Route path="/404" element={<PageNotFound />} />
+            <Route path="*" element={<Navigate to="/404" />} />
+            <Route path="/rechercher" element={<Search />} />
+          </Routes>
+        </main>
+      </div>
       <Footer />
     </BrowserRouter>
   );

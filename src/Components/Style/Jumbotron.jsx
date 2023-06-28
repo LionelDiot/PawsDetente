@@ -32,24 +32,23 @@ const data = [
 ];
 
 const CarouselPictures = () => {
-    return (
-        <Carousel
-            data={data}
-            time={4600}
-            width="100vw"
-            height="95vh"
-            captionStyle={captionStyle}
-            slideNumber={true}
-            slideNumberStyle={slideNumberStyle}
-            captionPosition="bottom"
-            automatic={true}
-            dots={true}
-            pauseIconColor="white"
-            pauseIconSize="40px"
-            slideBackgroundColor="darkgrey"
-            slideImageFit="cover"
-        />
-    );
+  return (
+    <Carousel
+      data={data}
+      time={4600}
+      width="100vw"
+      height="95vh"
+      captionStyle={captionStyle}
+      slideNumberStyle={slideNumberStyle}
+      captionPosition="bottom"
+      automatic={true}
+      dots={true}
+      pauseIconColor="white"
+      pauseIconSize="40px"
+      slideBackgroundColor="darkgrey"
+      slideImageFit="cover"
+    />
+  );
 };
 
 export default CarouselPictures;

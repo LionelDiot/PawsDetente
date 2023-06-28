@@ -6,6 +6,7 @@ import { currentUserAtom } from "../../Atoms/currentuser";
 import HandleDeleteFromCart from "../../Tools/deleteFromCart";
 import EditQuantity from "../../Tools/editQuantity";
 import Divider from "../Divider/Divider";
+import { HomeButton } from "../Buttons";
 
 export default function Cart() {
   const user = useAtomValue(currentUserAtom);
@@ -62,6 +63,7 @@ export default function Cart() {
 
   return (
     <>
+
       <h2 style={{ textAlign: 'center' }}>VOTRE PANIER</h2>
       <Divider />
       <Grid container spacing={5} style={{ textAlign: 'center' }}>
@@ -133,7 +135,7 @@ export default function Cart() {
         </div>
       ) : (
         <>
-          <button href="/">Retourner aux produits</button>
+          <HomeButton />
           {/* <button onClick={() => handleDeleteCart()}>Vider le panier</button> */}
         </>
       )}

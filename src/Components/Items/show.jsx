@@ -7,6 +7,7 @@ import HandleAddToCart from "../../Tools/addToCart";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
+import handleAddToFavorites from "../../Tools/addToFavorites";
 
 
 const ShowItem = () => {
@@ -15,20 +16,31 @@ const ShowItem = () => {
   const { itemSlug } = useParams();
   const [item, setItem] = useState({});
 
+  const [isFavoriteButton, setIsFavoriteButton] = useState(`Ajouter à mes favoris`)
+
   useEffect(() => {
     const fetchItemData = async () => {
       try {
+        const headers = {
+          "Content-Type": "application/json",
+        };
+
+        if (loggedIn) {
+          headers["Authorization"] = user;
+        }
+
         const response = await fetch(
           `https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/items/${itemSlug}`,
           {
-            method: "get",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            method: "GET",
+            headers: headers,
           }
         );
         const responseData = await response.json();
         setItem(responseData);
+        if (responseData.favorite == true) {
+          setIsFavoriteButton('Retirer de mes favoris')
+        }
       } catch (error) {
         console.error("Error:", error);
         setItem("Une erreur s'est produite lors de la récupération des données.");
@@ -36,7 +48,7 @@ const ShowItem = () => {
     };
 
     fetchItemData();
-  }, [itemSlug]);
+  }, [itemSlug, loggedIn]);
 
   useEffect(() => {
     const container = document.getElementById("container");
@@ -63,6 +75,15 @@ const ShowItem = () => {
     };
   }, [item.image_url]);
 
+  const handleSwitch = (item, user) => {
+    handleAddToFavorites(item, user);
+    if (isFavoriteButton == `Ajouter à mes favoris`) {
+      setIsFavoriteButton(`Retirer de mes favoris`);
+    } else {
+      setIsFavoriteButton(`Ajouter à mes favoris`);
+    }
+  }
+
   return (
     <div className="container-item">
       <div className="item-section1">
@@ -77,9 +98,9 @@ const ShowItem = () => {
         <p>{item.description}</p>
         <p>Ajouter quantité produits</p>
         <div className="display-section2">
-          <button className="custom-button">
-            <FavoriteBorderRoundedIcon className="custom-icon" /> AJOUTER À MES FAVORIS
-          </button>
+          {loggedIn && <button className="custom-button" onClick={() => handleSwitch(item, user)}>
+            <FavoriteBorderRoundedIcon className="custom-icon" /> {isFavoriteButton}
+          </button>}
           <div className="display-section2">
 
             {loggedIn && (<button className="custom-button" onClick={() => HandleAddToCart(item, user)}>
