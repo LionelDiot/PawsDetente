@@ -13,6 +13,7 @@ export default function MyProfile() {
     const [monprofil, setMonprofil] = useState("");
     const [responseData, setResponseData] = useState(null);
     const [userData, setUserData] = useState(null);
+    
     const [favorites, setFavorites] = useState(null);
     const user = useAtomValue(currentUserAtom);
     const loggedIn = useAtomValue(loggedInAtom);
