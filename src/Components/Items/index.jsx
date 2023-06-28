@@ -6,6 +6,10 @@ import CardItem from "../Style/Card";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SearchBar from "../Search/Search"; // Import the SearchBar component
 
+import { currentUserAtom } from "../../Atoms/currentuser";
+import { loggedInAtom } from "../../Atoms/loggedin";
+import { useAtomValue } from "jotai";
+
 const defaultTheme = createTheme({
   typography: {
     fontFamily: [
@@ -34,8 +38,10 @@ const Items = () => {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const itemsPerPage = 6;
-  
+  const itemsPerPage = 8;
+
+    const user = useAtomValue(currentUserAtom);
+    const loggedIn = useAtomValue(loggedInAtom);
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -75,26 +81,35 @@ const Items = () => {
   };
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchItemData = async () => {
       try {
+        const headers = {
+          "Content-Type": "application/json",
+        };
+
+        if (loggedIn) {
+          headers["Authorization"] = user;
+        }
+
         const response = await fetch(
-          "https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/items",
+          `https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/items/`,
           {
             method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: headers,
           }
         );
-        const data = await response.json();
-        setItems(data);
+        const responseData = await response.json();
+        setItems(responseData);
+
       } catch (error) {
-        console.log(error);
+        console.error("Error:", error);
+
       }
     };
 
-    fetchItems();
-  }, []);
+    fetchItemData();
+  }, [loggedIn]);
+
 
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -158,12 +173,13 @@ const Items = () => {
           </div>
 
           <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
-            {displayedItems.map((item) => (
-              <Grid item xs={2} sm={4} md={3} key={item.id}>
-                <CardItem item={item} />
-              </Grid>
-            ))}
+            { displayedItems.map((item) => (
+                <Grid item xs={2} sm={4} md={3} key={item.id}>
+                  <CardItem item={item} />
+                </Grid>
+              ))}
           </Grid>
+
         </Container>
 
         <PaginationComponent

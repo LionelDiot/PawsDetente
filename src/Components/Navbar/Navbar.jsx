@@ -12,10 +12,16 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
-import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
 import "../../App.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+import { useState, useEffect } from "react";
+
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
 
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
@@ -32,6 +38,7 @@ function Navbar() {
   const user = useAtomValue(currentUserAtom);
   const setUser = useSetAtom(currentUserAtom);
   const setUserId = useSetAtom(UserIdAtom);
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -40,6 +47,15 @@ function Navbar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      right: 5,
+      top: 20,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "0 4px",
+    },
+  }));
 
   const handleLogout = () => {
     fetch(
@@ -53,7 +69,7 @@ function Navbar() {
       }
     )
       .then((response) => response.json())
-      .then((responseData) => {})
+      .then((responseData) => { })
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -62,6 +78,34 @@ function Navbar() {
   };
 
   const isMobileScreen = useMediaQuery("(max-width: 960px)");
+
+  // Fetch the cart item count from the API
+  const fetchCartItemCount = () => {
+    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/cart", {
+      method: "GET",
+      headers: {
+        Authorization: `${user}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const quantities = data.line_items.map((item) => item.quantity);
+        const totalQuantity = quantities.reduce(
+          (accumulator, current_quantity) =>
+            accumulator + current_quantity, 0
+        );
+        setCartItemCount(totalQuantity);
+        console.log(totalQuantity);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    if (loggedIn) {
+      fetchCartItemCount(); // Fetch the cart item count if the user is logged in
+    }
+  }, [loggedIn, cartItemCount]);
 
   return (
     <AppBar position="static">
@@ -132,11 +176,11 @@ function Navbar() {
             ))}
             <MenuItem>
               <Link
-                to="/rechercher"
+                to="/favoris"
                 style={{ textDecoration: "none", color: "inherit" }}
                 onClick={handleCloseNavMenu}
               >
-                <Typography textAlign="center">Rechercher</Typography>
+                <Typography textAlign="center">Favoris</Typography>
               </Link>
             </MenuItem>
           </Menu>
@@ -178,18 +222,25 @@ function Navbar() {
                 {page}
               </Button>
             ))}
+          </Box>
 
+          <StyledBadge badgeContent={cartItemCount} color="secondary">
             <IconButton
               sx={{ my: 2, color: "white", display: "block" }}
               component={Link}
-              to="/rechercher"
-            >
-              <SearchIcon />
+              to="/panier">
+              <AddShoppingCartIcon />
             </IconButton>
-          </Box>
-          <Link sx={{ my: 2, color: "white", display: "block" }} to="/panier">
-            <AddShoppingCartIcon />
-          </Link>
+          </StyledBadge>
+
+          <IconButton
+            sx={{ my: 2, color: "white", display: "block" }}
+            component={Link}
+            to="/favoris"
+          >
+            <FavoriteIcon />
+          </IconButton>
+
           {loggedIn && (
             <Tooltip title="Logout">
               <Button onClick={handleLogout} color="inherit">

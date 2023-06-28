@@ -1,22 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import HandleAddToCart from "../../Tools/addToCart";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
+import handleAddToFavorites from "../../Tools/addToFavorites";
+import "../../App.css"; // Import CSS file for custom styles
 
 const CardItem = ({ item }) => {
   const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
+  const [isFavorite, setIsFavorite] = useState(item.favorite);
+
+  useEffect(() => {
+   
+  }, []);
+
+  const handleSwitch = (item, user) => {
+    handleAddToFavorites(item, user);
+    setIsFavorite(!isFavorite);
+  };
 
   return (
     <Card
-      className="card"
+      className={`card ${isFavorite ? "pink" : ""}`}
       sx={{
         height: "100%",
         display: "flex",
@@ -66,10 +80,19 @@ const CardItem = ({ item }) => {
           <Button
             size="small"
             onClick={() => HandleAddToCart(item, user)}
-            color="inherit"
+            color="primary"
           >
             Ajouter au panier
           </Button>
+        )}
+        {loggedIn && (
+          <IconButton
+            aria-label="add to favorites"
+            className={`favorite-icon ${isFavorite ? "active" : "favorite-icon"}`}
+            onClick={() => handleSwitch(item, user)}
+          >
+            <FavoriteIcon />
+          </IconButton>
         )}
       </CardActions>
     </Card>
