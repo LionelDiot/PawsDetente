@@ -3,39 +3,29 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useSetAtom } from "jotai";
-import { currentUserAtom } from "../../Atoms/currentuser";
-import { UserIdAtom } from "../../Atoms/userid";
-import { showToastSuccessLogin, showToastErrorLogin } from "../Style/Notifications";
+import { showToastSuccess, showToastError } from "../Style/Notifications";
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-    const setUser = useSetAtom(currentUserAtom);
-    const setId = useSetAtom(UserIdAtom);
+export default function ForgottenPassword() {
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formUsername = event.currentTarget.email.value;
-        const formPassword = event.currentTarget.password.value;
         const data = {
             user: {
                 email: formUsername,
-                password: formPassword,
             },
         };
 
         try {
 
-            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/sign_in", {
+            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/password", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -45,13 +35,12 @@ export default function SignIn() {
 
             if (response.ok) {
                 const responseData = await response.json();
-                const token = await response.headers.get("Authorization");
-                console.log(`mon token est ${token}`);
-                setId(responseData.user.id);
-                setUser(response.headers.get("Authorization"));
-                showToastSuccessLogin()
+
+                console.log(`responseData: ${responseData}`);
+
+                showToastSuccess("email envoyé")
             } else {
-                showToastErrorLogin()
+                showToastError("email non valide")
             }
         } catch (error) {
             // Handle error
@@ -75,7 +64,7 @@ export default function SignIn() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Login
+                        Recevoir un email pour réinitialiser mon mot de passe :
                     </Typography>
                     <Box
                         component="form"
@@ -93,40 +82,14 @@ export default function SignIn() {
                             autoComplete="email"
                             autoFocus
                         />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Confirmer
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="/forgotten-password" variant="body2">
-                                    Mot de passe oublié ? 
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="/register" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid>
                     </Box>
                 </Box>
             </Container>
