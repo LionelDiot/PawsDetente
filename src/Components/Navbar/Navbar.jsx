@@ -27,6 +27,9 @@ import { useSetAtom } from "jotai";
 import { UserIdAtom } from "../../Atoms/userid";
 import { useAtom } from "jotai";
 import { cartAtom } from "../../Atoms/cart";
+import { useAtomValue } from "jotai";
+import { loggedInAtom } from "../../Atoms/loggedin"
+import { currentUserAtom } from "../../Atoms/currentuser";
 
 const pagesloggedin = ["articles", "profil", "panier"];
 const pagesloggedout = ["articles", "s'enregistrer", "login"];
@@ -37,7 +40,8 @@ function Navbar() {
   const user = useAtomValue(currentUserAtom);
   const setUser = useSetAtom(currentUserAtom);
   const setUserId = useSetAtom(UserIdAtom);
-  const [cartItemCount, setCartItemCount] = useState(0);
+  const userid = useAtomValue(UserIdAtom);
+  const [isAdmin, setIsAdmin] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -253,13 +257,6 @@ function Navbar() {
                 to="/favoris"
               >
                 <FavoriteIcon />
-              </IconButton>
-              <IconButton
-                sx={{ my: 2, color: "white", display: "block" }}
-                component={Link}
-                to="/panier"
-              >
-                <AddShoppingCartIcon />
               </IconButton>
               <Tooltip title="Logout">
                 <Button onClick={handleLogout} color="inherit">
