@@ -15,9 +15,10 @@ const ItemForm = ({ item, onSubmit }) => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-
+  const [id, setId] = useState(0);
   useEffect(() => {
     if (item) {
+      setId(item.id);
       setImageUrl(item.image_url);
       setTitle(item.title);
       setPrice(item.price.toString());
@@ -30,24 +31,16 @@ const ItemForm = ({ item, onSubmit }) => {
     event.preventDefault();
 
     // Create an item object with the form data
-    if (item) {
+
       const updatedItem = {
-        id: item.id,
+        id: id,
         image_url: imageUrl,
         title: title,
         price: parseInt(price),
         description: description,
         category: category.charAt(0).toUpperCase() + category.slice(1),
       };
-    } else {
-      const updatedItem = {
-        image_url: imageUrl,
-        title: title,
-        price: parseInt(price),
-        description: description,
-        category: category.charAt(0).toUpperCase() + category.slice(1),
-      };
-    }
+
 
     // Call the onSubmit callback with the updated item object
     onSubmit(updatedItem);
