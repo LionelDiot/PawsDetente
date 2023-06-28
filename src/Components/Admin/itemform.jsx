@@ -29,7 +29,17 @@ const ItemForm = ({ item, onSubmit }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Create an item object with the form data 
+    // Create an item object with the form data
+    if (item) {
+      const updatedItem = {
+        id: item.id,
+        image_url: imageUrl,
+        title: title,
+        price: parseInt(price),
+        description: description,
+        category: category.charAt(0).toUpperCase() + category.slice(1),
+      };
+    } else {
       const updatedItem = {
         image_url: imageUrl,
         title: title,
@@ -37,7 +47,7 @@ const ItemForm = ({ item, onSubmit }) => {
         description: description,
         category: category.charAt(0).toUpperCase() + category.slice(1),
       };
-    
+    }
 
     // Call the onSubmit callback with the updated item object
     onSubmit(updatedItem);
