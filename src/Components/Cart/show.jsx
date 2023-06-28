@@ -32,7 +32,7 @@ export default function Cart() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        console.log(data);
         setItems(data.line_items);
         setTotal(data.total);
       })
@@ -63,10 +63,9 @@ export default function Cart() {
 
   return (
     <>
-
-      <h2 style={{ textAlign: 'center' }}>VOTRE PANIER</h2>
+      <h2 style={{ textAlign: "center" }}>VOTRE PANIER</h2>
       <Divider />
-      <Grid container spacing={5} style={{ textAlign: 'center' }}>
+      <Grid container spacing={5} style={{ textAlign: "center" }}>
         <Grid item xs={3}>
           <p>TITRE</p>
         </Grid>
@@ -83,17 +82,51 @@ export default function Cart() {
       <Divider />
 
       {items.length === 0 ? (
-        <p style={{ textAlign: 'center', padding: '10px' }}>Votre panier est vide.</p>
+        <p style={{ textAlign: "center", padding: "10px" }}>
+          Votre panier est vide.
+        </p>
       ) : (
-        <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gridTemplateColumns: '1fr', gridGap: '20px' }}>
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0,
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gridGap: "20px",
+          }}
+        >
           {items.map((item) => (
             <li key={item.id}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', alignItems: 'center', gap: '10px', textAlign: 'center' }}>
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(4, 1fr)",
+                  alignItems: "center",
+                  gap: "10px",
+                  textAlign: "center",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
                   {/* IMAGE */}
-                  <img src={item.image_url} alt={item.item_title} style={{ marginLeft: '50px', width: '100px', borderRadius: '33%' }} />
+                  <img
+                    src={item.image_url}
+                    alt={item.item_title}
+                    style={{
+                      marginLeft: "50px",
+                      width: "100px",
+                      borderRadius: "33%",
+                    }}
+                  />
                   {/* TITRE */}
-                  <p style={{ marginLeft: '30px', textAlign: 'center' }}>{item.item_title}</p>
+                  <p style={{ marginLeft: "30px", textAlign: "center" }}>
+                    {item.item_title}
+                  </p>
                 </div>
                 {/* PRIX */}
                 <p>{(item.price / 100).toFixed(2)} €</p>
@@ -101,9 +134,15 @@ export default function Cart() {
                 <div>
                   <select
                     value={item.quantity}
-                    onChange={(event) => handleQuantityChange(item.item_id, event.target.value)}
+                    onChange={(event) =>
+                      handleQuantityChange(item.item_id, event.target.value)
+                    }
                   >
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
+                    {[
+                      ...Array(
+                        item.quantity < 9 ? 10 : item.quantity + 1
+                      ).keys(),
+                    ].map((value) => (
                       <option key={value} value={value}>
                         {value}
                       </option>
@@ -111,12 +150,26 @@ export default function Cart() {
                   </select>
                 </div>
                 {/* SUBTOTAL PAR LIGNE */}
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <div>
-                    <p style={{ textAlign: 'center' }}>{(item.line_item_price / 100).toFixed(2)} €</p>
+                    <p style={{ textAlign: "center" }}>
+                      {(item.line_item_price / 100).toFixed(2)} €
+                    </p>
                   </div>
-                  <div style={{ textAlign: 'center' }}>
-                    <button style={{ marginLeft: '30px', textAlign: 'center' }} onClick={() => handleDeleteFromCart(item.item_id)}>x</button>
+                  <div style={{ textAlign: "center" }}>
+                    <button
+                      style={{ marginLeft: "30px", textAlign: "center" }}
+                      onClick={() => handleDeleteFromCart(item.item_id)}
+                    >
+                      x
+                    </button>
                   </div>
                 </div>
               </div>
@@ -128,7 +181,7 @@ export default function Cart() {
       {items.length !== 0 ? (
         <div>
           <p>GRAND TOTAL</p>
-          <div style={{ marginLeft: '80%' }}>
+          <div style={{ marginLeft: "80%" }}>
             <p>{(total / 100).toFixed(2)} €</p>
             <CheckoutButton />
           </div>
