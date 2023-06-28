@@ -193,7 +193,7 @@ function Navbar() {
           {loggedIn && (
             <Tooltip title="Logout">
               <Button onClick={handleLogout} color="inherit">
-              {userid}
+              Se déconnecter
               </Button>
             </Tooltip>
             

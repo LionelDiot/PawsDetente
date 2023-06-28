@@ -16,7 +16,7 @@ import { useSetAtom } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { UserIdAtom } from "../../Atoms/userid";
 import { showToastSuccessLogin, showToastErrorLogin } from "../Style/Notifications";
-
+import { Navigate } from 'react-router-dom';
 const defaultTheme = createTheme();
 
 export default function SignIn() {
@@ -50,6 +50,8 @@ export default function SignIn() {
                 setId(responseData.user.id);
                 setUser(response.headers.get("Authorization"));
                 showToastSuccessLogin()
+                return <Navigate to="/" replace />;
+                
             } else {
                 showToastErrorLogin()
             }
@@ -75,7 +77,7 @@ export default function SignIn() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Login
+                        Se connecter
                     </Typography>
                     <Box
                         component="form"
@@ -105,7 +107,7 @@ export default function SignIn() {
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
+                            label="S'en souvenir"
                         />
                         <Button
                             type="submit"
@@ -113,17 +115,17 @@ export default function SignIn() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Se connecter
                         </Button>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="/reset-password" variant="body2">
-                                    Forgot password?
+                                    Mot de passe oublié?
                                 </Link>
                             </Grid>
                             <Grid item>
                                 <Link href="/register" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                    {"Vous n'avez pas de compte? S'inscrire."}
                                 </Link>
                             </Grid>
                         </Grid>

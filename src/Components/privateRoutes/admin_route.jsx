@@ -1,15 +1,39 @@
-import React from 'react';
-import { Navigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAtomValue } from 'jotai';
-import { adminAtom } from '../../Atoms/admin';
+import computeIsAdmin from '../../Tools/isAdmin';
 import { UserIdAtom } from '../../Atoms/userid';
-import { showToastError } from "../Style/Notifications";
+import { showToastError } from '../Style/Notifications';
+
 const AdminRoute = ({ children }) => {
-  const admin = useAtomValue(adminAtom);
-    if (!admin) {
-        showToastError(`Vous devez être administrateur pour voir cette page.`);
-        return <Navigate to="/" replace />;
-    }
-    return children;
+  const userId = useAtomValue(UserIdAtom);
+  const [isAdmin, setIsAdmin] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchIsAdmin = async () => {
+      const isAdmin = await computeIsAdmin(userId);
+      setIsAdmin(isAdmin);
+      setIsLoading(false);
+    };
+
+    // Simulate a timeout of 1.5 seconds
+    const timeoutId = setTimeout(fetchIsAdmin, 1000);
+
+    return () => clearTimeout(timeoutId);
+  }, [userId]);
+
+  if (isLoading) {
+    // Render a loading state or placeholder while waiting for the isAdmin value
+    return <div>Loading...</div>;
+  }
+
+  if (!isAdmin) {
+    showToastError('Vous devez être administrateur pour voir cette page.');
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
 };
+
 export default AdminRoute;
