@@ -18,17 +18,17 @@ export default function ChangePassword() {
     const { tokenSlug } = useParams();
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formPassword = event.currentTarget.password.value;
-        const formPasswordVerification = event.target.elements.passwordVerification.value;
+        const userPassword = event.currentTarget.current_password.value;
+        const newPassword = event.target.elements.new_password.value;
         if (formPassword !== formPasswordVerification) {
 
             return;
         }
         const data = {
             user: {
-                password: new_password,
-                password_confirmation: new_password,
-                current_password: current_password
+                password: newPassword,
+                password_confirmation: newPassword,
+                current_password: userPassword
             },
         };
 
