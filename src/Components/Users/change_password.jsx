@@ -9,7 +9,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { showToastSuccess, showToastErrorLogin } from "../Style/Notifications";
+import { showToastSuccess, showToastError } from "../Style/Notifications";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 
@@ -47,9 +47,9 @@ export default function ChangePassword() {
             if (response.ok) {
                 const responseData = await response.json();
 
-                showToastSuccess(responseData)
+                showToastSuccess("Mot de passe modifié !")
             } else {
-                showToastErrorLogin()
+                showToastError("Mot de passe actuel ou de confirmation erroné")
             }
         } catch (error) {
             // Handle error
