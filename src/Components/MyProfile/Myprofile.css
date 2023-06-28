@@ -1,7 +1,14 @@
-.profile-container {
-  background-image: url("https://i.postimg.cc/J0qqVn5k/157964copie.jpg");
+.containerbg {
+  background-image: url("/home/sbellotlecoq/THP/final/PawsDetente/public/kawai.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: rgba(0, 0, 0, 0.048); /* Définit l'opacité de l'image de fond */
+  /* background-color: rgba(148, 66, 28, 0.048); */
+  min-Height: 73vh;
+  justify-Content: center;
+  align-Items: center;
+}
+
+.boxbg {
+  /* background-color: rgba(50, 186, 240, 0.466); Définit l'opacité de l'image de fond */
 }

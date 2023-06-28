@@ -2,18 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
-import {
-  Typography,
-  Container,
-  Card,
-  Box,
-  Stack,
-  IconButton,
-  Divider,
-  Chip,
-  Switch,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Typography, Container, Box, Grid } from "@mui/material";
 import "./Myprofile.css";
 
 export default function MyProfile() {
@@ -27,7 +16,7 @@ export default function MyProfile() {
       fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/member-data", {
         method: "get",
         headers: {
-          "Authorization": `${user}`,
+          Authorization: `${user}`,
           "Content-Type": "application/json",
         },
       })
@@ -45,7 +34,7 @@ export default function MyProfile() {
                           responseData.user
                         )}
                         mon token JOTAI : ${user}`);
-          console.log(responseData);
+          console.log(responseData.orders);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -59,71 +48,54 @@ export default function MyProfile() {
   }, [user, loggedIn]);
 
   return (
-    <Box
-      className="profile-container"
-      sx={{
-        minHeight: "71vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Container maxWidth="sm">
-        <Typography variant="h4" align="center" gutterBottom></Typography>
-        <Card elevation={3} sx={{ padding: "1rem" }}>
-          <Box sx={{ p: 2 }}>
-            <Stack spacing={0.5}>
-              <Typography fontWeight={700}>Profil de l'utilisateur</Typography>
-
-              <Typography fontWeight={700} color="text.secondary">
-                {monprofil && (
-                  <>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      component="span"
-                    >
-                      email:{" "}
-                    </Typography>
-                    {responseData && responseData.user.email}
-                    <br />
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      component="span"
-                    >
-                      id:{" "}
-                    </Typography>
-                    {responseData && responseData.user.id}
-                    <br />
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      component="span"
-                    >
-                      username:{" "}
-                    </Typography>
-                    {responseData && responseData.user.username}
-                  </>
-                )}
+    <div className="containerbg">
+      <Container maxWidth="md">
+        <Box textAlign="center">
+          <Typography variant="h4" marginTop={4}>
+            Bienvenue sur la page profil
+          </Typography>
+        </Box>
+        <Box my={4}>
+          <Box className="boxbg" border={2} borderRadius={2} p={2} my={2}>
+            <Typography variant="h5" component="h3">
+              Informations utilisateurs
+            </Typography>
+            <Box my={2}>
+              <Typography variant="h6" component="h3">
+                email: {responseData && responseData.user.email}
               </Typography>
-            </Stack>
-            <IconButton>
-              <EditIcon sx={{ fontSize: 14 }} />
-            </IconButton>
+              <Typography variant="h6" component="h3">
+                User ID: {responseData && responseData.user.id}
+              </Typography>
+            </Box>
           </Box>
-          <Divider />
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={{ px: 2, py: 1, bgcolor: "background.default" }}
-          >
-            <Chip label="Active account" />
-            <Switch />
-          </Stack>
-        </Card>
+        </Box>
+
+        <Box my={4}>
+          <Box className="boxbg" border={2} borderRadius={2} p={2} my={2}>
+            <Typography variant="h5" component="h3">
+              Synthèse de vos commandes
+            </Typography>
+            {responseData &&
+              responseData.orders &&
+              responseData.orders.map((order) => (
+                <Box
+                  key={order.id}
+                  my={2}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  <Typography>
+                    Date et heure: {new Date(order.created_at).toLocaleString()}
+                  </Typography>
+                  <Typography>
+                    Montant Total: {order.total / 100} € TTC
+                  </Typography>
+                </Box>
+              ))}
+          </Box>
+        </Box>
       </Container>
-    </Box>
+    </div>
   );
 }
