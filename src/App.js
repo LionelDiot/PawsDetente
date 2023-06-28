@@ -21,6 +21,7 @@ import SuccessPayment from "./Components/Checkout/successPayment";
 import FailPayment from "./Components/Checkout/failedPayment";
 import Cart from "./Components/Cart/show";
 import Favs from "./Components/Home/Favs";
+import ChangePassword from "./Components/Users/change_password";
 
 function App() {
   return (
@@ -54,14 +55,14 @@ function App() {
                 </LoggedInRoute>
               }
             />
-            {/* <Route
-            path="/articles/new"
-            element={
-              <LoggedInRoute>
-                <NewArticle />
-              </LoggedInRoute>
-            }
-          /> */}
+            <Route
+              path="/edit-password"
+              element={
+                // <LoggedInRoute>
+                <ChangePassword />
+                // </LoggedInRoute>
+              }
+            />
 
             <Route
               path="/s'enregistrer"
