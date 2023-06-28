@@ -26,15 +26,15 @@ export default function ChangePassword() {
         }
         const data = {
             user: {
-                password: formPassword,
-                password_confirmation: formPasswordVerification,
-                reset_password_token: tokenSlug
+                password: new_password,
+                password_confirmation: new_password,
+                current_password: current_password
             },
         };
 
         try {
             const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/password", {
-                method: "PATCH",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
