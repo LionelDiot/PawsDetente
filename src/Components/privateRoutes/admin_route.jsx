@@ -4,7 +4,7 @@ import { useAtomValue } from 'jotai';
 import computeIsAdmin from '../../Tools/isAdmin';
 import { UserIdAtom } from '../../Atoms/userid';
 import { showToastError } from '../Style/Notifications';
-
+import LoadingComponent from '../Loading/loading';
 const AdminRoute = ({ children }) => {
   const userId = useAtomValue(UserIdAtom);
   const [isAdmin, setIsAdmin] = useState(null);
@@ -18,14 +18,14 @@ const AdminRoute = ({ children }) => {
     };
 
     // Simulate a timeout of 1.5 seconds
-    const timeoutId = setTimeout(fetchIsAdmin, 1000);
+    const timeoutId = setTimeout(fetchIsAdmin, 1200);
 
     return () => clearTimeout(timeoutId);
   }, [userId]);
 
   if (isLoading) {
     // Render a loading state or placeholder while waiting for the isAdmin value
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   if (!isAdmin) {

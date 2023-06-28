@@ -16,7 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
 import "../../App.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-
+import computeIsAdmin from "../../Tools/isAdmin";
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
@@ -53,7 +53,7 @@ function Navbar() {
       }
     )
       .then((response) => response.json())
-      .then((responseData) => { })
+      .then((responseData) => {})
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -187,19 +187,22 @@ function Navbar() {
               <SearchIcon />
             </IconButton>
           </Box>
-          <IconButton
-            sx={{ my: 2, color: "white", display: "block" }}
-            component={Link}
-            to="/panier">
-            <AddShoppingCartIcon />
-          </IconButton>
+
           {loggedIn && (
-            <Tooltip title="Logout">
-              <Button onClick={handleLogout} color="inherit">
-              Se déconnecter
-              </Button>
-            </Tooltip>
-            
+            <>
+              <IconButton
+                sx={{ my: 2, color: "white", display: "block" }}
+                component={Link}
+                to="/panier"
+              >
+                <AddShoppingCartIcon />
+              </IconButton>
+              <Tooltip title="Logout">
+                <Button onClick={handleLogout} color="inherit">
+                  Se déconnecter
+                </Button>
+              </Tooltip>
+            </>
           )}
         </Toolbar>
       </Container>
