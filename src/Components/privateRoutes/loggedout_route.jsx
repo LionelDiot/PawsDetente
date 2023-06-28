@@ -6,7 +6,7 @@ import { showToastError } from "../Style/Notifications";
 const LoggedOutRoute = ({ children }) => {
     const loggedIn = useAtomValue(loggedInAtom);
     if (loggedIn) {
-        showToastError(`Vous êtes déjà connecté !`);
+
         return <Navigate to="/" replace />;
     }
     return children;

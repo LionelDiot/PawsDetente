@@ -32,7 +32,7 @@ export default function Cart() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        console.log(data);
         setItems(data.line_items);
         setTotal(data.total);
       })
@@ -138,7 +138,11 @@ export default function Cart() {
                       handleQuantityChange(item.item_id, event.target.value)
                     }
                   >
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
+                    {[
+                      ...Array(
+                        item.quantity < 9 ? 10 : item.quantity + 1
+                      ).keys(),
+                    ].map((value) => (
                       <option key={value} value={value}>
                         {value}
                       </option>
@@ -176,6 +180,7 @@ export default function Cart() {
       <Divider />
       {items.length !== 0 ? (
         <div>
+
           <div style={{ 
             marginLeft: "80%", 
             display: "flex",
