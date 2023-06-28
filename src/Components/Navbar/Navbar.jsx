@@ -15,14 +15,12 @@ import PetsIcon from "@mui/icons-material/Pets";
 import { useMediaQuery } from "@mui/material";
 import "../../App.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-
-import Badge from '@mui/material/Badge';
-import { styled } from '@mui/material/styles';
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import computeIsAdmin from "../../Tools/isAdmin";
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
 import { useState, useEffect } from "react";
-
 import FavoriteIcon from "@mui/icons-material/Favorite";
-
-
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
@@ -38,6 +36,8 @@ function Navbar() {
   const user = useAtomValue(currentUserAtom);
   const setUser = useSetAtom(currentUserAtom);
   const setUserId = useSetAtom(UserIdAtom);
+  const userid = useAtomValue(UserIdAtom);
+  const [isAdmin, setIsAdmin] = React.useState(null);
   const [cartItemCount, setCartItemCount] = useState(0);
 
   const handleOpenNavMenu = (event) => {
@@ -69,7 +69,7 @@ function Navbar() {
       }
     )
       .then((response) => response.json())
-      .then((responseData) => { })
+      .then((responseData) => {})
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -79,6 +79,9 @@ function Navbar() {
 
   const isMobileScreen = useMediaQuery("(max-width: 960px)");
 
+  React.useEffect(() => {
+    setIsAdmin(computeIsAdmin(userid));
+  }, [userid]);
   // Fetch the cart item count from the API
   const fetchCartItemCount = () => {
     fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/cart", {
@@ -92,8 +95,8 @@ function Navbar() {
       .then((data) => {
         const quantities = data.line_items.map((item) => item.quantity);
         const totalQuantity = quantities.reduce(
-          (accumulator, current_quantity) =>
-            accumulator + current_quantity, 0
+          (accumulator, current_quantity) => accumulator + current_quantity,
+          0
         );
         setCartItemCount(totalQuantity);
         console.log(totalQuantity);
@@ -129,7 +132,6 @@ function Navbar() {
           >
             PAWS DETENTE
           </Typography>
-
           {isMobileScreen && (
             <Tooltip title="Open navigation menu">
               <IconButton
@@ -144,7 +146,6 @@ function Navbar() {
               </IconButton>
             </Tooltip>
           )}
-
           <Menu
             id="menu-appbar"
             anchorEl={anchorElNav}
@@ -184,7 +185,6 @@ function Navbar() {
               </Link>
             </MenuItem>
           </Menu>
-
           <PetsIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -223,30 +223,48 @@ function Navbar() {
               </Button>
             ))}
           </Box>
-
           <StyledBadge badgeContent={cartItemCount} color="secondary">
             <IconButton
               sx={{ my: 2, color: "white", display: "block" }}
               component={Link}
-              to="/panier">
+              to="/panier"
+            >
               <AddShoppingCartIcon />
             </IconButton>
           </StyledBadge>
-
-          <IconButton
-            sx={{ my: 2, color: "white", display: "block" }}
-            component={Link}
-            to="/favoris"
-          >
-            <FavoriteIcon />
-          </IconButton>
+          {/* Add the AdminDashboardIcon component */}
+          {isAdmin && (
+            <IconButton
+              sx={{ my: 2, color: "white", display: "block" }}
+              component={Link}
+              to="/admin/dashboard"
+            >
+              <DashboardIcon />
+            </IconButton>
+          )}
 
           {loggedIn && (
-            <Tooltip title="Logout">
-              <Button onClick={handleLogout} color="inherit">
-                Se déconnecter
-              </Button>
-            </Tooltip>
+            <>
+              <IconButton
+                sx={{ my: 2, color: "white", display: "block" }}
+                component={Link}
+                to="/favoris"
+              >
+                <FavoriteIcon />
+              </IconButton>
+              <IconButton
+                sx={{ my: 2, color: "white", display: "block" }}
+                component={Link}
+                to="/panier"
+              >
+                <AddShoppingCartIcon />
+              </IconButton>
+              <Tooltip title="Logout">
+                <Button onClick={handleLogout} color="inherit">
+                  Se déconnecter
+                </Button>
+              </Tooltip>
+            </>
           )}
         </Toolbar>
       </Container>
