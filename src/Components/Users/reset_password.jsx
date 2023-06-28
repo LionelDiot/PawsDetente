@@ -9,12 +9,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { showToastSuccessLogin, showToastErrorLogin } from "../Style/Notifications";
 import { useParams } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
 const defaultTheme = createTheme();
 
 export default function ResetPassword() {
+    const navigate = useNavigate();
     const { tokenSlug } = useParams();
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -42,11 +42,10 @@ export default function ResetPassword() {
             });
 
             if (response.ok) {
-                const responseData = await response.json();
-                
-                showToastSuccessLogin()
+              const responseData = await response.json();
+              navigate('/login', { replace: true });
             } else {
-                showToastErrorLogin()
+
             }
         } catch (error) {
             // Handle error

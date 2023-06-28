@@ -12,6 +12,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import Items from "./Components/Items/index";
 import Footer from "./Components/Footer/index";
 import ResetPassword from "./Components/Users/reset_password";
+import ForgottenPassword from "./Components/Users/forgotten_password";
 import Home from "./Components/Home/Home";
 import ShowItem from "./Components/Items/show";
 import Search from "./Components/Search/Search";
@@ -20,6 +21,7 @@ import SuccessPayment from "./Components/Checkout/successPayment";
 import FailPayment from "./Components/Checkout/failedPayment";
 import Cart from "./Components/Cart/show";
 import Favs from "./Components/Home/Favs";
+
 function App() {
   return (
     <BrowserRouter>
@@ -90,6 +92,7 @@ function App() {
             <Route path="/404" element={<PageNotFound />} />
             <Route path="*" element={<Navigate to="/404" />} />
             <Route path="/rechercher" element={<Search />} />
+            <Route path="/forgotten-password" element={<ForgottenPassword />} />
           </Routes>
         </main>
       </div>
