@@ -16,6 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
 import "../../App.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import computeIsAdmin from "../../Tools/isAdmin";
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
@@ -33,6 +34,8 @@ function Navbar() {
   const setUser = useSetAtom(currentUserAtom);
   const setUserId = useSetAtom(UserIdAtom);
   const userid = useAtomValue(UserIdAtom);
+  const [isAdmin, setIsAdmin] = React.useState(null);
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -63,6 +66,9 @@ function Navbar() {
 
   const isMobileScreen = useMediaQuery("(max-width: 960px)");
 
+  React.useEffect(() => {
+    setIsAdmin(computeIsAdmin(userid));
+  }, [userid]);
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -187,7 +193,16 @@ function Navbar() {
               <SearchIcon />
             </IconButton>
           </Box>
-
+          {/* Add the AdminDashboardIcon component */}
+          {isAdmin && (
+            <IconButton
+              sx={{ my: 2, color: "white", display: "block" }}
+              component={Link}
+              to="/admin/dashboard"
+            >
+              <DashboardIcon />
+            </IconButton>
+          )}
           {loggedIn && (
             <>
               <IconButton
