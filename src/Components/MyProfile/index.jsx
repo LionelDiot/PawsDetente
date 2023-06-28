@@ -19,7 +19,7 @@ import "./Myprofile.css";
 export default function MyProfile() {
   const [monprofil, setMonprofil] = useState("");
   const [responseData, setResponseData] = useState(null);
-    
+  const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
 
   useEffect(() => {
