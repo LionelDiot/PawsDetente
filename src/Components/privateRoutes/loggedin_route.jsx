@@ -39,6 +39,11 @@ const LoggedInRoute = ({ children }) => {
 
   console.log('LoggedInRoute - Rendering - Logged in');
   return children;
+  // const loggedIn = useAtomValue(loggedInAtom);
+  // if (!loggedIn) {
+  //     return <Navigate to="/login" replace />;
+  // }
+  // return children;
 };
 
 export default LoggedInRoute;

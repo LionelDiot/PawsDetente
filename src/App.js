@@ -14,6 +14,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import Items from "./Components/Items/index";
 import Footer from "./Components/Footer/index";
 import ResetPassword from "./Components/Users/reset_password";
+import ForgottenPassword from "./Components/Users/forgotten_password";
 import Home from "./Components/Home/Home";
 import ShowItem from "./Components/Items/show";
 import Search from "./Components/Search/Search";
@@ -30,6 +31,8 @@ import { UserIdAtom } from "./Atoms/userid";
 import { loggedInAtom } from "./Atoms/loggedin";
 
 import Favs from "./Components/Home/Favs";
+import ChangePassword from "./Components/Users/change_password";
+
 function App() {
   const loggedIn = useAtomValue(loggedInAtom);
   const user = useAtomValue(currentUserAtom);
@@ -76,6 +79,14 @@ function App() {
                 </AdminRoute>
               }
             />
+            <Route
+              path="/edit-password"
+              element={
+                // <LoggedInRoute>
+                <ChangePassword />
+                // </LoggedInRoute>
+              }
+            />
 
             <Route
               path="/s'enregistrer"
@@ -102,10 +113,11 @@ function App() {
             />
             <Route path="/payment-success" element={<SuccessPayment />} />
             <Route path="/payment-fail" element={<FailPayment />} />
-            <Route path="/favs" element={<Favs />} />
+            <Route path="/favoris" element={<Favs />} />
             <Route path="/404" element={<PageNotFound />} />
             <Route path="*" element={<Navigate to="/404" />} />
             <Route path="/rechercher" element={<Search />} />
+            <Route path="/forgotten-password" element={<ForgottenPassword />} />
           </Routes>
         </main>
       </div>

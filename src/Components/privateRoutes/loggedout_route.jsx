@@ -25,6 +25,12 @@ const LoggedOutRoute = ({ children }) => {
   }
 
   return children;
+  // const loggedIn = useAtomValue(loggedInAtom);
+  // if (loggedIn) {
+
+  //     return <Navigate to="/" replace />;
+  // }
+  // return children;
 };
 
 export default LoggedOutRoute;

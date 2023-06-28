@@ -12,12 +12,15 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import PetsIcon from "@mui/icons-material/Pets";
-import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQuery } from "@mui/material";
 import "../../App.css";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import computeIsAdmin from "../../Tools/isAdmin";
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+import { useState, useEffect } from "react";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
@@ -35,6 +38,7 @@ function Navbar() {
   const setUserId = useSetAtom(UserIdAtom);
   const userid = useAtomValue(UserIdAtom);
   const [isAdmin, setIsAdmin] = React.useState(null);
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -43,6 +47,15 @@ function Navbar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      right: 5,
+      top: 20,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "0 4px",
+    },
+  }));
 
   const handleLogout = () => {
     fetch(
@@ -69,6 +82,34 @@ function Navbar() {
   React.useEffect(() => {
     setIsAdmin(computeIsAdmin(userid));
   }, [userid]);
+  // Fetch the cart item count from the API
+  const fetchCartItemCount = () => {
+    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/cart", {
+      method: "GET",
+      headers: {
+        Authorization: `${user}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const quantities = data.line_items.map((item) => item.quantity);
+        const totalQuantity = quantities.reduce(
+          (accumulator, current_quantity) => accumulator + current_quantity,
+          0
+        );
+        setCartItemCount(totalQuantity);
+        console.log(totalQuantity);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    if (loggedIn) {
+      fetchCartItemCount(); // Fetch the cart item count if the user is logged in
+    }
+  }, [loggedIn, cartItemCount]);
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -91,7 +132,6 @@ function Navbar() {
           >
             PAWS DETENTE
           </Typography>
-
           {isMobileScreen && (
             <Tooltip title="Open navigation menu">
               <IconButton
@@ -106,7 +146,6 @@ function Navbar() {
               </IconButton>
             </Tooltip>
           )}
-
           <Menu
             id="menu-appbar"
             anchorEl={anchorElNav}
@@ -138,15 +177,14 @@ function Navbar() {
             ))}
             <MenuItem>
               <Link
-                to="/rechercher"
+                to="/favoris"
                 style={{ textDecoration: "none", color: "inherit" }}
                 onClick={handleCloseNavMenu}
               >
-                <Typography textAlign="center">Rechercher</Typography>
+                <Typography textAlign="center">Favoris</Typography>
               </Link>
             </MenuItem>
           </Menu>
-
           <PetsIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -184,15 +222,16 @@ function Navbar() {
                 {page}
               </Button>
             ))}
-
+          </Box>
+          <StyledBadge badgeContent={cartItemCount} color="secondary">
             <IconButton
               sx={{ my: 2, color: "white", display: "block" }}
               component={Link}
-              to="/rechercher"
+              to="/panier"
             >
-              <SearchIcon />
+              <AddShoppingCartIcon />
             </IconButton>
-          </Box>
+          </StyledBadge>
           {/* Add the AdminDashboardIcon component */}
           {isAdmin && (
             <IconButton
@@ -203,8 +242,16 @@ function Navbar() {
               <DashboardIcon />
             </IconButton>
           )}
+
           {loggedIn && (
             <>
+              <IconButton
+                sx={{ my: 2, color: "white", display: "block" }}
+                component={Link}
+                to="/favoris"
+              >
+                <FavoriteIcon />
+              </IconButton>
               <IconButton
                 sx={{ my: 2, color: "white", display: "block" }}
                 component={Link}

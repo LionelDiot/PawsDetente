@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -6,12 +6,11 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Jumbotron from "../Style/Jumbotron";
-import { useAtomValue } from "jotai";
+import "../../App.css";
+import CardItem from "../Style/Card";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
-import "../../App.css"
-import CardItem from "../Style/Card";
-
+import { useAtomValue } from "jotai";
 
 const defaultTheme = createTheme({
   typography: {
@@ -42,12 +41,33 @@ export default function Home() {
   const loggedIn = useAtomValue(loggedInAtom);
   const [items, setItems] = React.useState([]);
 
-  React.useEffect(() => {
-    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/items")
-      .then((response) => response.json())
-      .then((data) => setItems(data))
-      .catch((error) => console.log(error));
-  }, []);
+  useEffect(() => {
+    const fetchItemData = async () => {
+      try {
+        const headers = {
+          "Content-Type": "application/json",
+        };
+
+        if (loggedIn) {
+          headers["Authorization"] = user;
+        }
+
+        const response = await fetch(
+          `https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/items/`,
+          {
+            method: "GET",
+            headers: headers,
+          }
+        );
+        const responseData = await response.json();
+        setItems(responseData);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchItemData();
+  }, [loggedIn]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -119,7 +139,6 @@ export default function Home() {
                   et iraient acheter Kwiskas. A la place de ça, ils passent leur
                   temps à jouer au babyfoot et dépenser notre argent, les chats
                   c'est vraiment des branleurs !
-
                 </Typography>
               </Grid>
             </Grid>

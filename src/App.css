@@ -42,3 +42,6 @@ background-color: rgb(233, 232, 232);
   box-shadow: 2px 2px 3px 3px rgba(255, 94, 0, 0.192);
 }
 
+.favorite-icon.active {
+  color: #ff4081;
+}
