@@ -33,6 +33,18 @@ export default function Dashboard() {
     setShowOrderList(false);
   };
   const generateNewItem = (item) =>{
+    const categoryMapping = {
+      Autre: 0,
+      Chien: 1,
+      Chat: 2,
+      Oiseau: 3,
+    };
+    
+    const updatedItemToSend = {
+      ...item,
+      category: categoryMapping[item.category],
+    };
+
     const fetchItemData = async () => {
       try {
         const headers = {
@@ -45,7 +57,7 @@ export default function Dashboard() {
           {
             method: "POST",
             headers: headers,
-            body: JSON.stringify(item),
+            body: JSON.stringify(updatedItemToSend),
           }
         );
         const responseData = await response.json();
