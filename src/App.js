@@ -22,6 +22,7 @@ import FailPayment from "./Components/Checkout/failedPayment";
 import Cart from "./Components/Cart/show";
 import Favs from "./Components/Home/Favs";
 import ChangePassword from "./Components/Users/change_password";
+import ChangeEmail from "./Components/Users/change_email";
 
 function App() {
   return (
@@ -60,6 +61,14 @@ function App() {
               element={
                 // <LoggedInRoute>
                 <ChangePassword />
+                // </LoggedInRoute>
+              }
+            />
+            <Route
+              path="/edit-email"
+              element={
+                // <LoggedInRoute>
+                <ChangeEmail />
                 // </LoggedInRoute>
               }
             />
