@@ -3,40 +3,38 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useSetAtom } from "jotai";
-import { currentUserAtom } from "../../Atoms/currentuser";
-import { UserIdAtom } from "../../Atoms/userid";
 import { showToastSuccessLogin, showToastErrorLogin } from "../Style/Notifications";
+import { useParams } from "react-router-dom";
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-    const setUser = useSetAtom(currentUserAtom);
-    const setId = useSetAtom(UserIdAtom);
+export default function ChangePassword() {
+    const { tokenSlug } = useParams();
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formUsername = event.currentTarget.email.value;
         const formPassword = event.currentTarget.password.value;
+        const formPasswordVerification = event.target.elements.passwordVerification.value;
+        if (formPassword !== formPasswordVerification) {
+
+            return;
+        }
         const data = {
             user: {
-                email: formUsername,
                 password: formPassword,
+                password_confirmation: formPasswordVerification,
+                reset_password_token: tokenSlug
             },
         };
 
         try {
-
-            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/sign_in", {
-                method: "POST",
+            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/password", {
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -45,10 +43,7 @@ export default function SignIn() {
 
             if (response.ok) {
                 const responseData = await response.json();
-                const token = await response.headers.get("Authorization");
-                console.log(`mon token est ${token}`);
-                setId(responseData.user.id);
-                setUser(response.headers.get("Authorization"));
+
                 showToastSuccessLogin()
             } else {
                 showToastErrorLogin()
@@ -75,7 +70,7 @@ export default function SignIn() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Connexion
+                        Changer mon mot de passe
                     </Typography>
                     <Box
                         component="form"
@@ -83,50 +78,48 @@ export default function SignIn() {
                         noValidate
                         sx={{ mt: 1 }}
                     >
+
                         <TextField
-                            margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Adresse email"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
+                            name="currentPassword"
+                            label="Mot de passe actuel"
+                            type="password"
+                            id="currentPassword"
+                            autoComplete="new-password"
                         />
+
                         <TextField
-                            margin="normal"
                             required
                             fullWidth
                             name="password"
-                            label="Mot de passe"
+                            label="Nouveau mot de passe"
                             type="password"
                             id="password"
-                            autoComplete="current-password"
+                            autoComplete="new-password"
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Rester connecté(e)"
+
+
+                        <TextField
+                            required
+                            fullWidth
+                            name="passwordVerification"
+                            label="Confirmation mot de passe"
+                            type="password"
+                            id="passwordVerification"
+                            autoComplete="new-password"
                         />
+
+
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            onClick={showToastSuccessLogin}
                         >
-                            Se connecter
+                            Enregistrer le nouveau mot de passe
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="/reset-password" variant="body2">
-                                    Mot de passe oublié ?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="/register" variant="body2">
-                                    {"Pas de compte ? Crée-le ici"}
-                                </Link>
-                            </Grid>
-                        </Grid>
                     </Box>
                 </Box>
             </Container>
