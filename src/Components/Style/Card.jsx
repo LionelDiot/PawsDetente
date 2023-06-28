@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -17,7 +17,11 @@ import "../../App.css"; // Import CSS file for custom styles
 const CardItem = ({ item }) => {
   const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(item.favorite);
+
+  useEffect(() => {
+   
+  }, []);
 
   const handleSwitch = (item, user) => {
     handleAddToFavorites(item, user);
@@ -26,7 +30,7 @@ const CardItem = ({ item }) => {
 
   return (
     <Card
-      className="card"
+      className={`card ${isFavorite ? "pink" : ""}`}
       sx={{
         height: "100%",
         display: "flex",
@@ -84,7 +88,7 @@ const CardItem = ({ item }) => {
         {loggedIn && (
           <IconButton
             aria-label="add to favorites"
-            className={isFavorite ? "favorite-icon active" : "favorite-icon"} // Apply custom CSS class
+            className={`favorite-icon ${isFavorite ? "active" : "favorite-icon"}`}
             onClick={() => handleSwitch(item, user)}
           >
             <FavoriteIcon />

@@ -5,6 +5,9 @@ import { loggedInAtom } from "../../Atoms/loggedin";
 import {
     Typography,
 } from "@mui/material";
+import CardItem from "../Style/Card"; 
+import { Grid } from "@mui/material";
+import Container from "@mui/material/Container";
 
 export default function MyProfile() {
     const [monprofil, setMonprofil] = useState("");
@@ -42,22 +45,28 @@ export default function MyProfile() {
     }, [user, loggedIn]);
 
     return (
-        <Typography fontWeight={700} color="text.secondary">
-            {monprofil && (
-                <>
-
-                    {responseData && responseData[0].user_id}
-                    <br />
-                    <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        component="span"
-                    >
-                        item id:{" "}
-                    </Typography>
-                    {responseData && responseData[0].item_id}
-                </>
-            )}
-        </Typography>
-    )
+      <Container
+        sx={{
+          width: "1200px",
+          py: 8,
+          display: "flex",
+          flexDirection: "column",
+        }}
+        maxWidth="lg"
+      >
+        {" "}
+        <h3 style={{ textAlign: "center" }}>VOTRE SELECTION</h3>
+        <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
+          {favorites ? (
+            favorites.map((item) => (
+              <Grid item xs={2} sm={4} md={3} key={item.id}>
+                <CardItem item={item} />
+              </Grid>
+            ))
+          ) : (
+            <p>Votre liste de favoris est vide.</p>
+          )}
+        </Grid>
+      </Container>
+    );
 }
