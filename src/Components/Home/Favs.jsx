@@ -56,7 +56,9 @@ export default function MyProfile() {
         maxWidth="lg"
       >
         {" "}
-        <h3 style={{ textAlign: "center" }}>VOTRE SELECTION</h3>
+        <Typography variant="h4" marginTop={4}>
+          Bienvenue sur la page des favoris
+        </Typography>{" "}
         <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
           {favorites ? (
             favorites.map((item) => (
