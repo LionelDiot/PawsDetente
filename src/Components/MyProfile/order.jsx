@@ -8,12 +8,40 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useAtomValue } from "jotai";
+import { currentUserAtom } from "../../Atoms/currentuser";
 
 const Order = ({ order }) => {
   const [open, setOpen] = useState(false);
+  const user = useAtomValue(currentUserAtom);
+  const [orderDetails, setOrderDetail] = useState(null);
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleOpen = async () => {
+    try {
+      const response = await fetch(
+        "https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/order-details",
+        {
+          method: "POST",
+          headers: {
+            Authorization: user,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ order_id: order.id }),
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setOrderDetail(data);
+        setOpen(true);
+              console.log(data);
+
+      } else {
+        console.log("Error:", response.statusText);
+      }
+
+    } catch (error) {
+      console.log("Error:", error);
+    }
   };
 
   const handleClose = () => {
@@ -67,24 +95,27 @@ const Order = ({ order }) => {
           <Typography variant="h6" component="h2" gutterBottom>
             Détails de la commande
           </Typography>
-          <Typography variant="subtitle1" gutterBottom>
-            ID de la commande: {order.id}
-          </Typography>
-          <Typography variant="subtitle1" gutterBottom>
-            Montant total: {(order.total / 100).toFixed(2)} €
-          </Typography>
-          <Typography variant="subtitle1" gutterBottom>
-            Date de création:{" "}
-            {new Date(order.created_at).toLocaleString([], {
-              dateStyle: "short",
-              timeStyle: "short",
-            })}
-          </Typography>
-
-          <Typography variant="h6" component="h2" gutterBottom>
-            Détails de la commande: {order.items}
-          </Typography>
-          
+          {orderDetails &&
+            orderDetails.order_items.map((item, index) => (
+              <div key={index}>
+                <Typography variant="subtitle1" gutterBottom>
+                  Titre de l'article: {item.item_title}
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  Quantité: {item.quantity}
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  Prix de l'article: {(item.order_item_price / 100).toFixed(2)}{" "}
+                  €
+                </Typography>
+                <hr />
+                <Typography variant="subtitle1" gutterBottom>
+                  Prix total de la commande:{" "}
+                  {(order.total / 100).toFixed(2)}€
+                </Typography>
+                
+              </div>
+            ))}
           <Button variant="outlined" color="primary" onClick={handleClose}>
             Fermer
           </Button>

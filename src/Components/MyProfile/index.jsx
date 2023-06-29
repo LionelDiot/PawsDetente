@@ -11,12 +11,9 @@ export default function MyProfile() {
   const [orders, setOrders] = useState([]);
   const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
-  const [openOrderModal, setOpenOrderModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState({}); // Update initial value to an empty object
 
-  const handleCloseOrderModal = () => {
-    setOpenOrderModal(false);
-  };
+
 
   useEffect(() => {
     if (loggedIn) {
@@ -34,6 +31,7 @@ export default function MyProfile() {
           ).toLocaleString();
           setOrders(responseData.orders);
           setMonprofil(responseData.user);
+            console.log(responseData.order);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -75,6 +73,7 @@ export default function MyProfile() {
             <Typography variant="h5" component="h3">
               Synthèse de vos commandes
             </Typography>
+          
             {orders &&
               orders.map((order) => (
                 <Order
