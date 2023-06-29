@@ -32,6 +32,7 @@ import { loggedInAtom } from "./Atoms/loggedin";
 
 import Favs from "./Components/Home/Favs";
 import ChangePassword from "./Components/Users/change_password";
+import ChangeEmail from "./Components/Users/change_email";
 
 function App() {
   const loggedIn = useAtomValue(loggedInAtom);
@@ -84,6 +85,14 @@ function App() {
               element={
                 // <LoggedInRoute>
                 <ChangePassword />
+                // </LoggedInRoute>
+              }
+            />
+            <Route
+              path="/edit-email"
+              element={
+                // <LoggedInRoute>
+                <ChangeEmail />
                 // </LoggedInRoute>
               }
             />
