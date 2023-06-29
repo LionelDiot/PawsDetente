@@ -2,14 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
-import { Typography, Container, Box, Grid } from "@mui/material";
-import "./Myprofile.css";
+import { Typography, Container, Box, Button, Modal } from "@mui/material";
+import "../../App.css";
+import Order from "./order";
 
 export default function MyProfile() {
-  const [monprofil, setMonprofil] = useState("");
-  const [responseData, setResponseData] = useState(null);
+  const [monProfil, setMonprofil] = useState({});
+  const [orders, setOrders] = useState([]);
   const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
+  const [openOrderModal, setOpenOrderModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState({}); // Update initial value to an empty object
+
+  const handleCloseOrderModal = () => {
+    setOpenOrderModal(false);
+  };
 
   useEffect(() => {
     if (loggedIn) {
@@ -25,16 +32,8 @@ export default function MyProfile() {
           const createdAt = new Date(
             responseData.user.createdAt
           ).toLocaleString();
-          setResponseData(responseData);
-          setMonprofil(`email: ${responseData.user.email}
-                        id: ${responseData.user.id}
-                        username: ${responseData.user.username}
-                        créé le: ${JSON.stringify(createdAt)}
-                        all my data pas trié ? : ${JSON.stringify(
-                          responseData.user
-                        )}
-                        mon token JOTAI : ${user}`);
-          console.log(responseData.orders);
+          setOrders(responseData.orders);
+          setMonprofil(responseData.user);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -46,7 +45,7 @@ export default function MyProfile() {
       setMonprofil("Vous n'êtes pas connecté. Vous n'avez donc pas de profil.");
     }
   }, [user, loggedIn]);
-
+  
   return (
     <div className="containerbg">
       <Container maxWidth="md">
@@ -62,10 +61,10 @@ export default function MyProfile() {
             </Typography>
             <Box my={2}>
               <Typography variant="h6" component="h3">
-                Email: {responseData && responseData.user.email}
+                Email: {monProfil.email}
               </Typography>
               <Typography variant="h6" component="h3">
-                User ID: {responseData && responseData.user.id}
+                User ID: {monProfil.id}
               </Typography>
             </Box>
           </Box>
@@ -76,26 +75,18 @@ export default function MyProfile() {
             <Typography variant="h5" component="h3">
               Synthèse de vos commandes
             </Typography>
-            {responseData &&
-              responseData.orders &&
-              responseData.orders.map((order) => (
-                <Box
-                  key={order.id}
-                  my={2}
-                  display="flex"
-                  justifyContent="space-around"
-                >
-                  <Typography>
-                    Date et heure: {new Date(order.created_at).toLocaleString()}
-                  </Typography>
-                  <Typography>
-                    Montant Total: {order.total / 100} € TTC
-                  </Typography>
-                </Box>
-              ))}
+            {orders &&
+              orders.map((order) => (
+                <Order
+                  order={order}
+                  selectedOrder={selectedOrder}
+                  setSelectedOrder={setSelectedOrder}
+                />
+              ))}{" "}
           </Box>
         </Box>
       </Container>
+    
     </div>
   );
 }
