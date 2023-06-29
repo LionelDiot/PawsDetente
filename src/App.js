@@ -1,6 +1,8 @@
 import React from "react";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Notifications from "./Components/Style/Notifications";
+import AdminRoute from "./Components/privateRoutes/admin_route";
 import LoggedInRoute from "./Components/privateRoutes/loggedin_route";
 import LoggedOutRoute from "./Components/privateRoutes/loggedout_route";
 import PageNotFound from "./Components/PageNotFound";
@@ -20,10 +22,25 @@ import "./App.css";
 import SuccessPayment from "./Components/Checkout/successPayment";
 import FailPayment from "./Components/Checkout/failedPayment";
 import Cart from "./Components/Cart/show";
+import Dashboard from "./Components/Admin/dashboard";
+
+// Jotai
+import { useSetAtom, useAtomValue } from "jotai";
+import { currentUserAtom } from "./Atoms/currentuser";
+import { UserIdAtom } from "./Atoms/userid";
+import { loggedInAtom } from "./Atoms/loggedin";
+
 import Favs from "./Components/Home/Favs";
 import ChangePassword from "./Components/Users/change_password";
+import ChangeEmail from "./Components/Users/change_email";
 
 function App() {
+  const loggedIn = useAtomValue(loggedInAtom);
+  const user = useAtomValue(currentUserAtom);
+  const setUser = useSetAtom(currentUserAtom);
+  const setUserId = useSetAtom(UserIdAtom);
+  const userid = useAtomValue(UserIdAtom);
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -56,10 +73,26 @@ function App() {
               }
             />
             <Route
+              path="/admin/dashboard"
+              element={
+                <AdminRoute>
+                  <Dashboard />
+                </AdminRoute>
+              }
+            />
+            <Route
               path="/edit-password"
               element={
                 // <LoggedInRoute>
                 <ChangePassword />
+                // </LoggedInRoute>
+              }
+            />
+            <Route
+              path="/edit-email"
+              element={
+                // <LoggedInRoute>
+                <ChangeEmail />
                 // </LoggedInRoute>
               }
             />
