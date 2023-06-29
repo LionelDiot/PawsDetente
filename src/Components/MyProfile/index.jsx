@@ -56,13 +56,13 @@ export default function MyProfile() {
           </Typography>
         </Box>
         <Box my={4}>
-          <Box className="boxbg" border={2} borderRadius={2} p={2} my={2}>
+          <Box className="boxbg" border={1} borderRadius={2} p={2} my={2}>
             <Typography variant="h5" component="h3">
               Informations utilisateurs
             </Typography>
             <Box my={2}>
               <Typography variant="h6" component="h3">
-                email: {responseData && responseData.user.email}
+                Email: {responseData && responseData.user.email}
               </Typography>
               <Typography variant="h6" component="h3">
                 User ID: {responseData && responseData.user.id}
@@ -72,7 +72,7 @@ export default function MyProfile() {
         </Box>
 
         <Box my={4}>
-          <Box className="boxbg" border={2} borderRadius={2} p={2} my={2}>
+          <Box className="boxbg" border={1} borderRadius={2} p={2} my={2}>
             <Typography variant="h5" component="h3">
               Synthèse de vos commandes
             </Typography>
@@ -83,7 +83,7 @@ export default function MyProfile() {
                   key={order.id}
                   my={2}
                   display="flex"
-                  justifyContent="space-between"
+                  justifyContent="space-around"
                 >
                   <Typography>
                     Date et heure: {new Date(order.created_at).toLocaleString()}
