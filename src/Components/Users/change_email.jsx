@@ -3,41 +3,38 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useSetAtom } from "jotai";
+import { showToastSuccess, showToastError } from "../Style/Notifications";
+import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
-import { UserIdAtom } from "../../Atoms/userid";
-import { showToastSuccessLogin, showToastErrorLogin } from "../Style/Notifications";
-import { Navigate } from 'react-router-dom';
+
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-    const setUser = useSetAtom(currentUserAtom);
-    const setId = useSetAtom(UserIdAtom);
+export default function ChangeEmail() {
+
+    const usertoken = useAtomValue(currentUserAtom);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formUsername = event.currentTarget.email.value;
-        const formPassword = event.currentTarget.password.value;
+
+        const newEmail = event.target.elements.email.value;
+
         const data = {
             user: {
-                email: formUsername,
-                password: formPassword,
+                email: newEmail
             },
         };
-
+        console.log(usertoken);
         try {
-
-            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/users/sign_in", {
+            const response = await fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/new-email", {
                 method: "POST",
                 headers: {
+                    "Authorization": usertoken,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
@@ -45,15 +42,10 @@ export default function SignIn() {
 
             if (response.ok) {
                 const responseData = await response.json();
-                const token = await response.headers.get("Authorization");
-                console.log(`mon token est ${token}`);
-                setId(responseData.user.id);
-                setUser(response.headers.get("Authorization"));
-                showToastSuccessLogin()
-                return <Navigate to="/" replace />;
-                
+
+                showToastSuccess("Adresse email modifiée !")
             } else {
-                showToastErrorLogin()
+                showToastError("Adresse email actuelle ou de confirmation erronée")
             }
         } catch (error) {
             // Handle error
@@ -77,7 +69,7 @@ export default function SignIn() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Se connecter
+                        Changer mon adresse email
                     </Typography>
                     <Box
                         component="form"
@@ -85,50 +77,34 @@ export default function SignIn() {
                         noValidate
                         sx={{ mt: 1 }}
                     >
+
                         <TextField
-                            margin="normal"
                             required
                             fullWidth
-                            id="email"
-                            label="Adresse email"
+                            name="current_email"
+                            label="Adresse email actuelle"
+                            type="email"
+                            id="currentEmail"
+                        />
+
+                        <TextField
+                            required
+                            fullWidth
                             name="email"
-                            autoComplete="email"
-                            autoFocus
+                            label="Nouvelle adresse email"
+                            type="email"
+                            id="currentEmail"
                         />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Mot de passe"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="S'en souvenir"
-                        />
+
+
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Se connecter
+                            Enregistrer la nouvelle adresse email
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="/forgotten-password" variant="body2">
-                                    Mot de passe oublié ?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="/register" variant="body2">
-                                    {"Pas de compte ? Crée-le ici"}
-                                </Link>
-                            </Grid>
-                        </Grid>
                     </Box>
                 </Box>
             </Container>
