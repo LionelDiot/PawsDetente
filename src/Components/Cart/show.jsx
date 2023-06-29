@@ -96,7 +96,7 @@ export default function Cart() {
           }}
         >
           {items.map((item) => (
-            <li key={item.id}>
+            <li key={item.item_id}>
               <div
                 style={{
                   display: "grid",
@@ -180,15 +180,15 @@ export default function Cart() {
       <Divider />
       {items.length !== 0 ? (
         <div>
-
-          <div style={{ 
-            marginLeft: "80%", 
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            
-            }}>
+          <div
+            style={{
+              marginLeft: "80%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <p>GRAND TOTAL</p>
 
             <p>{(total / 100).toFixed(2)} €</p>
