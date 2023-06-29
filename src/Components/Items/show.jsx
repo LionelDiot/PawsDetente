@@ -8,7 +8,14 @@ import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
 import handleAddToFavorites from "../../Tools/addToFavorites";
+import LockIcon from '@mui/icons-material/Lock';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import HandshakeIcon from '@mui/icons-material/Handshake';
+import { Divider } from "@mui/material";
+import "../../App.css"
 
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const ShowItem = () => {
   const user = useAtomValue(currentUserAtom);
@@ -16,7 +23,7 @@ const ShowItem = () => {
   const { itemSlug } = useParams();
   const [item, setItem] = useState({});
 
-  const [isFavoriteButton, setIsFavoriteButton] = useState(`Ajouter à mes favoris`)
+  const [isFavoriteButton, setIsFavoriteButton] = useState(`AJOUTER À MES FAVORIS`)
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -38,8 +45,8 @@ const ShowItem = () => {
         );
         const responseData = await response.json();
         setItem(responseData);
-        if (responseData.favorite == true) {
-          setIsFavoriteButton('Retirer de mes favoris')
+        if (responseData.favorite === true) {
+          setIsFavoriteButton('RETIRER DE MES FAVORIS')
         }
       } catch (error) {
         console.error("Error:", error);
@@ -77,10 +84,10 @@ const ShowItem = () => {
 
   const handleSwitch = (item, user) => {
     handleAddToFavorites(item, user);
-    if (isFavoriteButton == `Ajouter à mes favoris`) {
-      setIsFavoriteButton(`Retirer de mes favoris`);
+    if (isFavoriteButton === `AJOUTER À MES FAVORIS`) {
+      setIsFavoriteButton(`RETIRER DE MES FAVORIS`);
     } else {
-      setIsFavoriteButton(`Ajouter à mes favoris`);
+      setIsFavoriteButton(`AJOUTER À MES FAVORIS`);
     }
   }
 
@@ -89,27 +96,70 @@ const ShowItem = () => {
       <div className="item-section1">
         <div id="container">
           <img src={item.image_url} className="zoom" alt="Item" />
+          <p className="subtitle">Passer la souris sur l'image pour zoomer</p>
         </div>
       </div>
+
 
       <div className="item-section2">
         <h1>{item.title}</h1>
         <p>{(item.price / 100).toFixed(2)}€</p>
         <p>{item.description}</p>
-        <p>Ajouter quantité produits</p>
-        <div className="display-section2">
-          {loggedIn && <button className="custom-button" onClick={() => handleSwitch(item, user)}>
-            <FavoriteBorderRoundedIcon className="custom-icon" /> {isFavoriteButton}
-          </button>}
-          <div className="display-section2">
-
+        <div className="buttons-section">
+          <div>
+            {loggedIn && <button className="custom-button" onClick={() => handleSwitch(item, user)}>
+              <FavoriteBorderRoundedIcon className="custom-icon" /> {isFavoriteButton}
+            </button>}
+          </div>
+          <div>
             {loggedIn && (<button className="custom-button" onClick={() => HandleAddToCart(item, user)}>
               <AddShoppingCartIcon className="custom-icon" /> AJOUTER AU PANIER
             </button>)}
           </div>
         </div>
+
+        <Divider />
+
+        <div className="item-section3">
+          <div className="grid-customer-service">
+            <div>
+              <h4>Sécurité garantie</h4>
+              <div className="customer-service">
+                <div>
+                  <LockIcon />
+                </div>
+                <div>
+                  <p>Site web sécurisé et paiement sécurisé par la Société Générale</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4>Livraison 48/72h</h4>
+              <div className="customer-service">
+                <div>
+                  <LocalShippingIcon />
+                </div>
+                <div>
+                  <p>La Poste, Colissimo, Mondial Relay</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4>Retours</h4>
+              <div className="customer-service">
+                <div>
+                  <HandshakeIcon />
+                </div>
+                <div>
+                  <p>14 jours pour changer d'avis.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
+    </div >
   );
 };
 

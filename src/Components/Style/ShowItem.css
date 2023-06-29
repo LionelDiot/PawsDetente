@@ -1,20 +1,41 @@
 .container-item {
   display: flex;
   flex-direction: row;
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-left: 100px;
+  margin-right: 100px;
   gap: 40px;
+}
+
+@media (min-width: 768px) {
+  .container-item {
+    flex-direction: row;
+    gap: 40px;
+  }
 }
 
 .item-section1 {
   width: 400px;
+  max-width: max-content;
   margin: 15px;
+}
+
+.item-section2,
+.item-section3 {
+  width: 600px;
+  margin: 15px;
+  text-align: center;
+}
+
+.buttons-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
 }
 
 .custom-button {
   display: flex;
   align-items: center;
-  justify-content: center;
   padding: 10px 20px;
   background: #eaeaea;
   border: none;
@@ -42,4 +63,37 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+}
+.subtitle {
+  text-align: center;
+  font-size: 10px;
+}
+
+.customer-service {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Align items vertically */
+}
+
+.customer-service > div {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+h4 {
+  text-align: center;
+}
+
+.customer-service h4,
+.customer-service p {
+  align-items: center;
+  text-align: center;
+  margin: 0;
+}
+
+.grid-customer-service {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
 }
