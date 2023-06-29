@@ -6,7 +6,7 @@ import {
     Typography,
 } from "@mui/material";
 import CardItem from "../Style/Card"; 
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import Container from "@mui/material/Container";
 
 export default function MyProfile() {
@@ -49,27 +49,29 @@ export default function MyProfile() {
       <Container
         sx={{
           width: "1200px",
-          py: 8,
+          py: 4,
           display: "flex",
           flexDirection: "column",
         }}
         maxWidth="lg"
       >
-        {" "}
-        <Typography variant="h4" marginTop={4}>
-          Bienvenue sur la page des favoris
-        </Typography>{" "}
-        <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
-          {favorites ? (
-            favorites.map((item) => (
-              <Grid item xs={2} sm={4} md={3} key={item.id}>
-                <CardItem item={item} />
-              </Grid>
-            ))
-          ) : (
-            <p>Votre liste de favoris est vide.</p>
-          )}
-        </Grid>
+        <Box textAlign="center">
+          <Typography variant="h4" marginBottom={4}>
+            Bienvenue sur la page des favoris
+          </Typography>
+
+          <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
+            {favorites ? (
+              favorites.map((item) => (
+                <Grid item xs={2} sm={4} md={3} key={item.id}>
+                  <CardItem item={item} />
+                </Grid>
+              ))
+            ) : (
+              <p>Votre liste de favoris est vide.</p>
+            )}
+          </Grid>
+        </Box>
       </Container>
     );
 }

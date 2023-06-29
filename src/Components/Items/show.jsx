@@ -16,6 +16,7 @@ import "../../App.css"
 
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const ShowItem = () => {
   const user = useAtomValue(currentUserAtom);
@@ -98,8 +99,20 @@ const ShowItem = () => {
     setIsFavorite(!isFavorite);
   };
 
+const defaultTheme = createTheme({
+  typography: {
+    fontFamily: [
+      "Nunito",
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+    ].join(","),
+  },
+});
 
   return (
+  <ThemeProvider theme={defaultTheme}>
     <div className="container-item">
       <div className="item-section1">
         <div id="container">
@@ -182,6 +195,7 @@ const ShowItem = () => {
         </div>
       </div>
     </div >
+  </ThemeProvider>
   );
 };
 

@@ -90,9 +90,6 @@ h4 {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
 }
-.pink {
-  color: pink;
-}
 
 .favorite-section {
   display: flex;
