@@ -13,8 +13,6 @@ export default function MyProfile() {
   const loggedIn = useAtomValue(loggedInAtom);
   const [selectedOrder, setSelectedOrder] = useState({}); // Update initial value to an empty object
 
-
-
   useEffect(() => {
     if (loggedIn) {
       fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/member-data", {
@@ -31,7 +29,6 @@ export default function MyProfile() {
           ).toLocaleString();
           setOrders(responseData.orders);
           setMonprofil(responseData.user);
-            console.log(responseData.order);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -43,7 +40,7 @@ export default function MyProfile() {
       setMonprofil("Vous n'êtes pas connecté. Vous n'avez donc pas de profil.");
     }
   }, [user, loggedIn]);
-  
+
   return (
     <div className="containerbg">
       <Container maxWidth="md">
@@ -73,19 +70,30 @@ export default function MyProfile() {
             <Typography variant="h5" component="h3">
               Synthèse de vos commandes
             </Typography>
-          
-            {orders &&
-              orders.map((order) => (
-                <Order
-                  order={order}
-                  selectedOrder={selectedOrder}
-                  setSelectedOrder={setSelectedOrder}
-                />
-              ))}{" "}
+            <table style={{ width: "100%", marginTop: "20px", marginBottom: "20px" }}>
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Montant</th>
+                  <th>Date</th>
+                  <th>Détail</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders &&
+                  orders.map((order) => (
+                    <Order
+                      order={order}
+                      key={order.id}
+                      selectedOrder={selectedOrder}
+                      setSelectedOrder={setSelectedOrder}
+                    />
+                  ))}
+              </tbody>
+            </table>
           </Box>
         </Box>
       </Container>
-    
     </div>
   );
 }
