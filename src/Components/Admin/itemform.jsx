@@ -64,6 +64,9 @@ const ItemForm = ({ item, onSubmit }) => {
           fullWidth
           required
           margin="normal"
+          inputProps={{
+            maxLength: 42,
+          }}
         />
         <TextField
           label="Price (in cents)"
