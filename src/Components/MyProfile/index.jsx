@@ -2,32 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
-import {
-  Typography,
-  Container,
-  Card,
-  Box,
-  Stack,
-  IconButton,
-  Divider,
-  Chip,
-  Switch,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import "./Myprofile.css";
+import { Typography, Container, Box, Button, Modal } from "@mui/material";
+import "../../App.css";
+import Order from "./order";
 
 export default function MyProfile() {
-  const [monprofil, setMonprofil] = useState("");
-  const [responseData, setResponseData] = useState(null);
+  const [monProfil, setMonprofil] = useState({});
+  const [orders, setOrders] = useState([]);
   const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
+  const [selectedOrder, setSelectedOrder] = useState({}); // Update initial value to an empty object
 
   useEffect(() => {
     if (loggedIn) {
       fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/member-data", {
         method: "get",
         headers: {
-          "Authorization": `${user}`,
+          Authorization: `${user}`,
           "Content-Type": "application/json",
         },
       })
@@ -36,16 +27,8 @@ export default function MyProfile() {
           const createdAt = new Date(
             responseData.user.createdAt
           ).toLocaleString();
-          setResponseData(responseData);
-          setMonprofil(`email: ${responseData.user.email}
-                        id: ${responseData.user.id}
-                        username: ${responseData.user.username}
-                        créé le: ${JSON.stringify(createdAt)}
-                        all my data pas trié ? : ${JSON.stringify(
-                          responseData.user
-                        )}
-                        mon token JOTAI : ${user}`);
-          console.log(responseData);
+          setOrders(responseData.orders);
+          setMonprofil(responseData.user);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -59,71 +42,58 @@ export default function MyProfile() {
   }, [user, loggedIn]);
 
   return (
-    <Box
-      className="profile-container"
-      sx={{
-        minHeight: "71vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Container maxWidth="sm">
-        <Typography variant="h4" align="center" gutterBottom></Typography>
-        <Card elevation={3} sx={{ padding: "1rem" }}>
-          <Box sx={{ p: 2 }}>
-            <Stack spacing={0.5}>
-              <Typography fontWeight={700}>Profil de l'utilisateur</Typography>
-
-              <Typography fontWeight={700} color="text.secondary">
-                {monprofil && (
-                  <>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      component="span"
-                    >
-                      email:{" "}
-                    </Typography>
-                    {responseData && responseData.user.email}
-                    <br />
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      component="span"
-                    >
-                      id:{" "}
-                    </Typography>
-                    {responseData && responseData.user.id}
-                    <br />
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      component="span"
-                    >
-                      username:{" "}
-                    </Typography>
-                    {responseData && responseData.user.username}
-                  </>
-                )}
+    <div className="containerbg">
+      <Container maxWidth="md">
+        <Box textAlign="center">
+          <Typography variant="h4" marginTop={4}>
+            Bienvenue sur la page profil
+          </Typography>
+        </Box>
+        <Box my={4}>
+          <Box className="boxbg" border={1} borderRadius={2} p={2} my={2}>
+            <Typography variant="h5" component="h3">
+              Informations utilisateurs
+            </Typography>
+            <Box my={2}>
+              <Typography variant="h6" component="h3">
+                Email: {monProfil.email}
               </Typography>
-            </Stack>
-            <IconButton>
-              <EditIcon sx={{ fontSize: 14 }} />
-            </IconButton>
+              <Typography variant="h6" component="h3">
+                User ID: {monProfil.id}
+              </Typography>
+            </Box>
           </Box>
-          <Divider />
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={{ px: 2, py: 1, bgcolor: "background.default" }}
-          >
-            <Chip label="Active account" />
-            <Switch />
-          </Stack>
-        </Card>
+        </Box>
+
+        <Box my={4}>
+          <Box className="boxbg" border={1} borderRadius={2} p={2} my={2}>
+            <Typography variant="h5" component="h3">
+              Synthèse de vos commandes
+            </Typography>
+            <table style={{ width: "100%", marginTop: "20px", marginBottom: "20px" }}>
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Montant</th>
+                  <th>Date</th>
+                  <th>Détail</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders &&
+                  orders.map((order) => (
+                    <Order
+                      order={order}
+                      key={order.id}
+                      selectedOrder={selectedOrder}
+                      setSelectedOrder={setSelectedOrder}
+                    />
+                  ))}
+              </tbody>
+            </table>
+          </Box>
+        </Box>
       </Container>
-    </Box>
+    </div>
   );
 }
