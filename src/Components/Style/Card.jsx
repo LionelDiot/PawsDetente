@@ -63,7 +63,7 @@ const CardItem = ({ item }) => {
           <div>
             <Typography sx={{ mb: 2 }}>
               {item.description.length > 100
-                ? `${item.description.slice(0, 97)}...`
+                ? `${item.description.slice(0, 90)}...`
                 : item.description}
             </Typography>
           </div>
