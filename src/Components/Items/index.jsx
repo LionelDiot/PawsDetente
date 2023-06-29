@@ -173,20 +173,23 @@ const Items = () => {
           </div>
 
           <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
-            { displayedItems.map((item) => (
-                <Grid item xs={2} sm={4} md={3} key={item.id}>
-                  <CardItem item={item} />
-                </Grid>
-              ))}
+            {displayedItems.map((item) => (
+              <Grid item xs={2} sm={4} md={3} key={item.id}>
+                <CardItem item={item} />
+              </Grid>
+            ))}
           </Grid>
-
         </Container>
 
-        <PaginationComponent
-          page={page}
-          pageCount={pageCount}
-          handleChange={handleChange}
-        />
+        <div>
+          <div>
+            <PaginationComponent
+              page={page}
+              pageCount={pageCount}
+              handleChange={handleChange}
+            />
+          </div>
+        </div>
       </div>
     </ThemeProvider>
   );
