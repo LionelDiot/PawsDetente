@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -20,7 +21,7 @@ import computeIsAdmin from "../../Tools/isAdmin";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import { useState, useEffect } from "react";
-
+import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 // Jotai
 import { useSetAtom } from "jotai";
@@ -28,14 +29,15 @@ import { UserIdAtom } from "../../Atoms/userid";
 import { useAtom } from "jotai";
 import { cartAtom } from "../../Atoms/cart";
 import { useAtomValue } from "jotai";
-import { loggedInAtom } from "../../Atoms/loggedin"
+import { loggedInAtom } from "../../Atoms/loggedin";
 import { currentUserAtom } from "../../Atoms/currentuser";
 
-const pagesloggedin = ["articles", "profil", "panier"];
+const pagesloggedin = ["articles", "profil"];
 const pagesloggedout = ["articles", "s'enregistrer", "login"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElSettings, setAnchorElSettings] = React.useState(null);
   const loggedIn = useAtomValue(loggedInAtom);
   const user = useAtomValue(currentUserAtom);
   const setUser = useSetAtom(currentUserAtom);
@@ -49,6 +51,14 @@ function Navbar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleOpenSettingsMenu = (event) => {
+    setAnchorElSettings(event.currentTarget);
+  };
+
+  const handleCloseSettingsMenu = () => {
+    setAnchorElSettings(null);
   };
 
   const [cart, setCart] = useAtom(cartAtom);
@@ -74,7 +84,7 @@ function Navbar() {
       }
     )
       .then((response) => response.json())
-      .then((responseData) => { })
+      .then((responseData) => {})
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -100,22 +110,21 @@ function Navbar() {
       .then((data) => {
         const quantities = data.line_items.map((item) => item.quantity);
         const totalQuantity = quantities.reduce(
-          (accumulator, current_quantity) =>
-            accumulator + current_quantity, 0
+          (accumulator, current_quantity) => accumulator + current_quantity,
+          0
         );
         setCart({ ...cart, quantity: totalQuantity }); // Update the cart quantity in the atom
       })
       .catch((error) => console.log(error));
   };
 
-
   useEffect(() => {
     if (loggedIn) {
       fetchCartItemCount(); // Fetch the initial cart item count if the user is logged in
-  
+
       // Update the cart item count every minute
       const intervalId = setInterval(fetchCartItemCount, 100000);
-  
+
       return () => {
         clearInterval(intervalId); // Clear the interval when the component unmounts
       };
@@ -187,15 +196,7 @@ function Navbar() {
                 </Link>
               </MenuItem>
             ))}
-            <MenuItem>
-              <Link
-                to="/favoris"
-                style={{ textDecoration: "none", color: "inherit" }}
-                onClick={handleCloseNavMenu}
-              >
-                <Typography textAlign="center">Favoris</Typography>
-              </Link>
-            </MenuItem>
+
           </Menu>
           <PetsIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
@@ -236,7 +237,7 @@ function Navbar() {
             ))}
           </Box>
 
-          <StyledBadge badgeContent={cart.quantity} color="secondary">
+          <Tooltip title="Mon panier"><StyledBadge badgeContent={cart.quantity} color="secondary">
             <IconButton
               sx={{ my: 2, color: "white", display: "block" }}
               component={Link}
@@ -244,35 +245,63 @@ function Navbar() {
             >
               <AddShoppingCartIcon />
             </IconButton>
-          </StyledBadge>
+          </StyledBadge></Tooltip>
           {/* Add the AdminDashboardIcon component */}
           {isAdmin && (
-            <IconButton
+            <Tooltip title="Dashboard Admin"><IconButton
               sx={{ my: 2, color: "white", display: "block" }}
               component={Link}
               to="/admin/dashboard"
             >
               <DashboardIcon />
-            </IconButton>
+            </IconButton></Tooltip>
           )}
 
           {loggedIn && (
             <>
-              <IconButton
+              <Tooltip title="Favoris"><IconButton
                 sx={{ my: 2, color: "white", display: "block" }}
                 component={Link}
                 to="/favoris"
               >
                 <FavoriteIcon />
-              </IconButton>
-              <Tooltip title="Logout">
-                <Button onClick={handleLogout} color="inherit">
-                  Se déconnecter
-                </Button>
-              </Tooltip>
+              </IconButton></Tooltip>
+              <Tooltip title="Se déconnecter"><IconButton
+                sx={{ my: 2, color: "white", display: "block" }}
+                onClick={handleLogout}
+              >
+                <LogoutIcon />
+              </IconButton></Tooltip>
+              <Tooltip title="Mes informations"><IconButton
+                sx={{ my: 2, color: "white", display: "block" }}
+                onClick={handleOpenSettingsMenu}
+              >
+                <SettingsIcon />
+              </IconButton></Tooltip>
             </>
           )}
         </Toolbar>
+        <Menu
+          id="settings-menu"
+          anchorEl={anchorElSettings}
+          open={Boolean(anchorElSettings)}
+          onClose={handleCloseSettingsMenu}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <MenuItem component={Link} to="/changer-email">
+            Changer mon email
+          </MenuItem>
+          <MenuItem component={Link} to="/changer-mot-de-passe">
+            Changer mon mot de passe
+          </MenuItem>
+        </Menu>
       </Container>
     </AppBar>
   );
