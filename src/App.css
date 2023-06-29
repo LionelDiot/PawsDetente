@@ -56,3 +56,9 @@ background-color: rgb(233, 232, 232);
   justify-Content: center;
   align-Items: center;
 }
+
+.my-custom-footer2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
