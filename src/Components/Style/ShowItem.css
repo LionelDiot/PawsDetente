@@ -6,13 +6,6 @@
   gap: 40px;
 }
 
-@media (min-width: 768px) {
-  .container-item {
-    flex-direction: row;
-    gap: 40px;
-  }
-}
-
 .item-section1 {
   width: 400px;
   max-width: max-content;
@@ -21,7 +14,7 @@
 
 .item-section2,
 .item-section3 {
-  width: 600px;
+  width: 700px;
   margin: 15px;
   text-align: center;
 }
@@ -96,4 +89,12 @@ h4 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
+}
+.pink {
+  color: pink;
+}
+
+.favorite-section {
+  display: flex;
+  flex-direction: row;
 }

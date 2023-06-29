@@ -82,14 +82,22 @@ const ShowItem = () => {
     };
   }, [item.image_url]);
 
-  const handleSwitch = (item, user) => {
-    handleAddToFavorites(item, user);
-    if (isFavoriteButton === `AJOUTER À MES FAVORIS`) {
-      setIsFavoriteButton(`RETIRER DE MES FAVORIS`);
+  const [isFavorite, setIsFavorite] = useState(item.favorite);
+
+  useEffect(() => {
+    setIsFavorite(item.favorite);
+  }, [item.favorite]);
+
+  const handleSwitch = async (item, user) => {
+    await handleAddToFavorites(item, user);
+    if (isFavoriteButton === "AJOUTER À MES FAVORIS") {
+      setIsFavoriteButton("RETIRER DE MES FAVORIS");
     } else {
-      setIsFavoriteButton(`AJOUTER À MES FAVORIS`);
+      setIsFavoriteButton("AJOUTER À MES FAVORIS");
     }
-  }
+    setIsFavorite(!isFavorite);
+  };
+
 
   return (
     <div className="container-item">
@@ -106,11 +114,25 @@ const ShowItem = () => {
         <p>{(item.price / 100).toFixed(2)}€</p>
         <p>{item.description}</p>
         <div className="buttons-section">
-          <div>
-            {loggedIn && <button className="custom-button" onClick={() => handleSwitch(item, user)}>
-              <FavoriteBorderRoundedIcon className="custom-icon" /> {isFavoriteButton}
-            </button>}
+          <div className="favorite-section">
+            <div className="custom-button">
+              <div onClick={() => handleSwitch(item, user)}>
+                {loggedIn && <IconButton
+                  aria-label="add to favorites"
+                  className={`favorite-icon ${isFavorite ? "active" : "favorite-icon"
+                    }`}>
+                  <FavoriteIcon />
+                </IconButton>}
+                <div className={`favorite-icon ${isFavorite ? "active" : "favorite-icon"
+                  }`} >
+                </div>
+                <div>
+                  {isFavoriteButton}
+                </div>
+              </div>
+            </div>
           </div>
+
           <div>
             {loggedIn && (<button className="custom-button" onClick={() => HandleAddToCart(item, user)}>
               <AddShoppingCartIcon className="custom-icon" /> AJOUTER AU PANIER
