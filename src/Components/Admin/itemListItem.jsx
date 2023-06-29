@@ -3,12 +3,15 @@ import * as React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ItemForm from "./itemform";
 import { currentUserAtom } from "../../Atoms/currentuser";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useAtom } from "jotai";
 import { showToastSuccess, showToastError } from "../Style/Notifications";
+import { editCountAtom } from '../../Atoms/editCount';
+
+
 const ItemListItem = ({ item }) => {
   const user = useAtomValue(currentUserAtom);
   const [open, setOpen] = React.useState(false);
-
+  const [editCount, setEditCount] = useAtom(editCountAtom);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -18,6 +21,7 @@ const ItemListItem = ({ item }) => {
   };
 
   const handleEditItem = () => {
+    
     handleOpen();
     // Handle the edit item functionality
   };
@@ -51,6 +55,7 @@ const ItemListItem = ({ item }) => {
         );
         const responseData = await response.json();
         showToastSuccess('La modification a bien été validé.');
+        setEditCount((prevCount) => prevCount + 1);
       } catch (error) {
         console.error("Error:", error);
         showToastError("Une erreur s'est produite.");

@@ -1,37 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useAtom } from 'jotai';
 import { Typography, Table, TableHead, TableBody, TableRow, TableCell} from '@mui/material';
 import ItemListItem from './itemListItem';
+import { editCountAtom } from '../../Atoms/editCount';
+
 
 const ItemIndex = () => {
-  const [items, setItems] = useState([]);
+  const [editCount, setEditCount] = useAtom(editCountAtom);
+  const [items, setItems] = React.useState([]);
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const headers = {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         };
 
-        const response = await fetch(
-          "https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/items",
-          {
-            method: "GET",
-            headers: headers,
-          }
-        );
+        const response = await fetch('https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/items', {
+          method: 'GET',
+          headers: headers,
+        });
 
         const data = await response.json();
         setItems(data);
       } catch (error) {
-        console.error("Error fetching items:", error);
+        console.error('Error fetching items:', error);
       }
     };
 
     fetchItems();
-  }, []);
-  
-
-
+  }, [editCount]);
 
   return (
     <div>
@@ -50,7 +48,7 @@ const ItemIndex = () => {
         <TableBody>
           {items.map((item) => (
             <TableRow key={item.id}>
-              <ItemListItem item={item}  />
+              <ItemListItem item={item} />
             </TableRow>
           ))}
         </TableBody>
