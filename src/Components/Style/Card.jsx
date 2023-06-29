@@ -19,9 +19,7 @@ const CardItem = ({ item }) => {
   const loggedIn = useAtomValue(loggedInAtom);
   const [isFavorite, setIsFavorite] = useState(item.favorite);
 
-  useEffect(() => {
-   
-  }, []);
+  useEffect(() => {}, []);
 
   const handleSwitch = (item, user) => {
     handleAddToFavorites(item, user);
@@ -63,7 +61,11 @@ const CardItem = ({ item }) => {
             </Typography>
           </div>
           <div>
-            <Typography sx={{ mb: 2 }}>{item.description}</Typography>
+            <Typography sx={{ mb: 2 }}>
+              {item.description.length > 100
+                ? `${item.description.slice(0, 97)}...`
+                : item.description}
+            </Typography>
           </div>
           <div>
             <Typography sx={{ mt: 2, mb: 2, fontWeight: "bold" }}>
@@ -88,7 +90,9 @@ const CardItem = ({ item }) => {
         {loggedIn && (
           <IconButton
             aria-label="add to favorites"
-            className={`favorite-icon ${isFavorite ? "active" : "favorite-icon"}`}
+            className={`favorite-icon ${
+              isFavorite ? "active" : "favorite-icon"
+            }`}
             onClick={() => handleSwitch(item, user)}
           >
             <FavoriteIcon />
