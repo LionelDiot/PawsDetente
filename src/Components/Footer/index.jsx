@@ -7,36 +7,20 @@ import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import "../../App.css";
 
-function Copyright(props) {
-  return (
-      <Typography
-          variant="body2"
-          color="text.secondary"
-          align="center"
-          {...props}
-      >
-          {"Copyright © "}
-          <Link color="inherit" href="https://mui.com/">
-              Your Website
-          </Link>{" "}
-          {new Date().getFullYear()}
-          {"."}
-      </Typography>
-  );
-}
-
 export default function Footer() {
   return (
     <Box
       component="footer"
       sx={{
         backgroundColor: "#1976d2",
-        p: 6,
+        p: 3,
         mt: "auto",
+        textAlign: "center",
       }}
+      className="my-custom-footer2"
     >
       <Container maxWidth="lg">
-        <Grid container spacing={5}>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="white" gutterBottom>
               A propos
@@ -59,27 +43,39 @@ export default function Footer() {
               Phone: +1 234 567 8901
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={4} container direction="column" alignItems="center">
             <Typography variant="h6" color="white" gutterBottom>
-              Follow Us
+              Nous suivre :
             </Typography>
-            <Link href="https://www.facebook.com/" color="inherit">
-              <Facebook />
-            </Link>
-            <Link
-              href="https://www.instagram.com/"
-              color="inherit"
-              sx={{ pl: 1, pr: 1 }}
-            >
-              <Instagram />
-            </Link>
-            <Link href="https://www.twitter.com/" color="inherit">
-              <Twitter />
-            </Link>
+            <Grid item container justifyContent="center" spacing={1}>
+              <Grid item>
+                <Link href="https://www.facebook.com/" color="inherit">
+                  <Facebook />
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="https://www.instagram.com/" color="inherit" sx={{ pl: 1, pr: 1 }}>
+                  <Instagram />
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="https://www.twitter.com/" color="inherit">
+                  <Twitter />
+                </Link>
+              </Grid>
+            </Grid>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              {"Copyright "}
+              <Link color="inherit" href="https://www.pawsdetente.com/">
+                Paws Détente
+              </Link>{" "}
+              {new Date().getFullYear()}
+              {"."}
+            </Typography>
           </Grid>
         </Grid>
-
       </Container>
     </Box>
   );
 }
+

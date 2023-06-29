@@ -45,3 +45,9 @@ background-color: rgb(233, 232, 232);
 .favorite-icon.active {
   color: #ff4081;
 }
+
+.my-custom-footer2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
