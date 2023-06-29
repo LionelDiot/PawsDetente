@@ -33,7 +33,6 @@ const Order = ({ order }) => {
         const data = await response.json();
         setOrderDetail(data);
         setOpen(true);
-              console.log(data);
 
       } else {
         console.log("Error:", response.statusText);
@@ -50,16 +49,20 @@ const Order = ({ order }) => {
 
   return (
     <>
-      <Box key={order.id} my={2} display="flex" justifyContent="space-around">
-        <TableCell>{order.id}</TableCell>
-        <TableCell>{(order.total / 100).toFixed(2)} €</TableCell>
-        <TableCell>
+      <tr>
+        <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+          {order.id}
+        </td>
+        <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+          {(order.total / 100).toFixed(2)} €
+        </td>
+        <td style={{ textAlign: "center", verticalAlign: "middle" }}>
           {new Date(order.created_at).toLocaleString([], {
             dateStyle: "short",
             timeStyle: "short",
           })}
-        </TableCell>
-        <TableCell>
+        </td>
+        <td style={{ textAlign: "center", verticalAlign: "middle" }}>
           <Button
             variant="contained"
             color="primary"
@@ -68,8 +71,8 @@ const Order = ({ order }) => {
           >
             Voir plus
           </Button>
-        </TableCell>
-      </Box>
+        </td>
+      </tr>
 
       <Modal open={open} onClose={handleClose}>
         <Box
