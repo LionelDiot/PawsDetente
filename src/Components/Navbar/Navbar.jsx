@@ -20,12 +20,16 @@ import computeIsAdmin from "../../Tools/isAdmin";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import { useState, useEffect } from "react";
+
 import FavoriteIcon from "@mui/icons-material/Favorite";
 // Jotai
-import { useSetAtom, useAtomValue } from "jotai";
-import { currentUserAtom } from "../../Atoms/currentuser";
+import { useSetAtom } from "jotai";
 import { UserIdAtom } from "../../Atoms/userid";
-import { loggedInAtom } from "../../Atoms/loggedin";
+import { useAtom } from "jotai";
+import { cartAtom } from "../../Atoms/cart";
+import { useAtomValue } from "jotai";
+import { loggedInAtom } from "../../Atoms/loggedin"
+import { currentUserAtom } from "../../Atoms/currentuser";
 
 const pagesloggedin = ["articles", "profil", "panier"];
 const pagesloggedout = ["articles", "s'enregistrer", "login"];
@@ -38,7 +42,6 @@ function Navbar() {
   const setUserId = useSetAtom(UserIdAtom);
   const userid = useAtomValue(UserIdAtom);
   const [isAdmin, setIsAdmin] = React.useState(null);
-  const [cartItemCount, setCartItemCount] = useState(0);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -47,6 +50,8 @@ function Navbar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const [cart, setCart] = useAtom(cartAtom);
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -69,7 +74,7 @@ function Navbar() {
       }
     )
       .then((response) => response.json())
-      .then((responseData) => {})
+      .then((responseData) => { })
       .catch((error) => {
         console.error("Error:", error);
       });
@@ -95,20 +100,20 @@ function Navbar() {
       .then((data) => {
         const quantities = data.line_items.map((item) => item.quantity);
         const totalQuantity = quantities.reduce(
-          (accumulator, current_quantity) => accumulator + current_quantity,
-          0
+          (accumulator, current_quantity) =>
+            accumulator + current_quantity, 0
         );
-        setCartItemCount(totalQuantity);
-        console.log(totalQuantity);
+        setCart({ ...cart, quantity: totalQuantity }); // Update the cart quantity in the atom
       })
       .catch((error) => console.log(error));
   };
+
 
   useEffect(() => {
     if (loggedIn) {
       fetchCartItemCount(); // Fetch the cart item count if the user is logged in
     }
-  }, [loggedIn, cartItemCount]);
+  }, [loggedIn, cart]);
 
   return (
     <AppBar position="static">
@@ -223,7 +228,8 @@ function Navbar() {
               </Button>
             ))}
           </Box>
-          <StyledBadge badgeContent={cartItemCount} color="secondary">
+
+          <StyledBadge badgeContent={cart.quantity} color="secondary">
             <IconButton
               sx={{ my: 2, color: "white", display: "block" }}
               component={Link}
@@ -251,13 +257,6 @@ function Navbar() {
                 to="/favoris"
               >
                 <FavoriteIcon />
-              </IconButton>
-              <IconButton
-                sx={{ my: 2, color: "white", display: "block" }}
-                component={Link}
-                to="/panier"
-              >
-                <AddShoppingCartIcon />
               </IconButton>
               <Tooltip title="Logout">
                 <Button onClick={handleLogout} color="inherit">
