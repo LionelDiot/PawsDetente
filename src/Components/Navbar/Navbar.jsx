@@ -114,7 +114,7 @@ function Navbar() {
       fetchCartItemCount(); // Fetch the initial cart item count if the user is logged in
   
       // Update the cart item count every minute
-      const intervalId = setInterval(fetchCartItemCount, 10000);
+      const intervalId = setInterval(fetchCartItemCount, 100000);
   
       return () => {
         clearInterval(intervalId); // Clear the interval when the component unmounts
