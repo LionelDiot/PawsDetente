@@ -47,7 +47,7 @@ background-color: rgb(233, 232, 232);
 }
 
 .containerbg {
-  background-image: url("/home/sbellotlecoq/THP/final/PawsDetente/public/kawai.png");
+  background-image: url("../public/kawai.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
