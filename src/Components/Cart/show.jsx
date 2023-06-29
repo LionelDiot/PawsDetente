@@ -7,6 +7,7 @@ import HandleDeleteFromCart from "../../Tools/deleteFromCart";
 import EditQuantity from "../../Tools/editQuantity";
 import Divider from "../Divider/Divider";
 import { HomeButton } from "../Buttons";
+import "../Style/Price.css"
 
 export default function Cart() {
   const user = useAtomValue(currentUserAtom);
@@ -106,28 +107,33 @@ export default function Cart() {
                   textAlign: "center",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
-                  {/* IMAGE */}
-                  <img
-                    src={item.image_url}
-                    alt={item.item_title}
+                <a href={`http://localhost:3001/item/${item.item_id}`} target="_blank" rel="noopener noreferrer">
+                  <div
                     style={{
-                      marginLeft: "50px",
-                      width: "100px",
-                      borderRadius: "33%",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      cursor: "pointer",
                     }}
-                  />
-                  {/* TITRE */}
-                  <p style={{ marginLeft: "30px", textAlign: "center" }}>
-                    {item.item_title}
-                  </p>
-                </div>
+                  >
+                    {/* IMAGE */}
+                    <img
+                      src={item.image_url}
+                      alt={item.item_title}
+                      style={{
+                        marginLeft: "50px",
+                        width: "100px",
+                        borderRadius: "33%",
+                      }}
+                    />
+
+                    {/* TITRE */}
+                    <p style={{ marginLeft: "30px", textAlign: "center" }}>
+                      {item.item_title}
+                    </p>
+                  </div>
+                </a>
+
                 {/* PRIX */}
                 <p>{(item.price / 100).toFixed(2)} €</p>
                 {/* QUANTITÉ */}
@@ -175,32 +181,35 @@ export default function Cart() {
               </div>
             </li>
           ))}
-        </ul>
-      )}
+        </ul >
+      )
+      }
       <Divider />
-      {items.length !== 0 ? (
-        <div>
-          <div
-            style={{
-              marginLeft: "80%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <p>GRAND TOTAL</p>
+      {
+        items.length !== 0 ? (
+          <div>
+            <div
+              style={{
+                marginLeft: "80%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <p>GRAND TOTAL</p>
 
-            <p>{(total / 100).toFixed(2)} €</p>
-            <CheckoutButton />
+              <p className="price">{(total / 100).toFixed(2)} €</p>
+              <CheckoutButton />
+            </div>
           </div>
-        </div>
-      ) : (
-        <>
-          <HomeButton />
-          {/* <button onClick={() => handleDeleteCart()}>Vider le panier</button> */}
-        </>
-      )}
+        ) : (
+          <>
+            <HomeButton />
+            {/* <button onClick={() => handleDeleteCart()}>Vider le panier</button> */}
+          </>
+        )
+      }
     </>
   );
 }
