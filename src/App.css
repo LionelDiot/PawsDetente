@@ -45,3 +45,20 @@ background-color: rgb(233, 232, 232);
 .favorite-icon.active {
   color: #ff4081;
 }
+
+.containerbg {
+  background-image: url("../public/kawai.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* background-color: rgba(148, 66, 28, 0.048); */
+  min-Height: 68vh;
+  justify-Content: center;
+  align-Items: center;
+}
+
+.my-custom-footer2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
