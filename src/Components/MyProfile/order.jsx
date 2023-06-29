@@ -61,7 +61,7 @@ const Order = ({ order }) => {
         </TableCell>
         <TableCell>
           <Button
-            variant="outlined"
+            variant="contained"
             color="primary"
             size="small"
             onClick={handleOpen}
@@ -110,10 +110,8 @@ const Order = ({ order }) => {
                 </Typography>
                 <hr />
                 <Typography variant="subtitle1" gutterBottom>
-                  Prix total de la commande:{" "}
-                  {(order.total / 100).toFixed(2)}€
+                  Prix total de la commande: {(order.total / 100).toFixed(2)}€
                 </Typography>
-                
               </div>
             ))}
           <Button variant="outlined" color="primary" onClick={handleClose}>
