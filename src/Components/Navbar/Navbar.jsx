@@ -111,9 +111,16 @@ function Navbar() {
 
   useEffect(() => {
     if (loggedIn) {
-      fetchCartItemCount(); // Fetch the cart item count if the user is logged in
+      fetchCartItemCount(); // Fetch the initial cart item count if the user is logged in
+  
+      // Update the cart item count every minute
+      const intervalId = setInterval(fetchCartItemCount, 10000);
+  
+      return () => {
+        clearInterval(intervalId); // Clear the interval when the component unmounts
+      };
     }
-  }, [loggedIn, cart]);
+  }, [loggedIn]);
 
   return (
     <AppBar position="static">
