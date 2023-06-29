@@ -48,7 +48,7 @@ function App() {
 
       <div
         style={{
-          minHeight: "calc(100vh - 275px)",
+          minHeight: "calc(100vh - 231px)",
           display: "flex",
           flexDirection: "column",
         }}
