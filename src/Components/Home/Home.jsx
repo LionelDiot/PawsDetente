@@ -123,14 +123,14 @@ export default function Home() {
               <Grid item xs={12} sm={6} md={6} lg={8}>
                 <Typography
                   variant="h5"
-                  align="justify-content"
+                  align="center"
                   color="text.secondary"
                   paragraph
                   style={{
                     maxWidth: "100%",
                     margin: "0 auto",
                     fontSize: "1.5rem", // Default font size
-                    "@media (max-width: 600px)": {
+                    "@media (maxWidth: 600px)": {
                       fontSize: "0.5rem", // Reduced font size for smaller screens
                     },
                   }}

@@ -4,25 +4,25 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const showToastSuccess = (message) => {
     toast.success(message, {
-        position: toast.POSITION.TOP_RIGHT
+        position: toast.POSITION.TOP_LEFT
     })
 };
 
 const showToastSuccessLogin = () => {
     toast.success('Sign in ok!', {
-        position: toast.POSITION.TOP_RIGHT
+        position: toast.POSITION.TOP_LEFT
     })
 };
 
 const showToastError = (message) => {
     toast.error(message, {
-        position: toast.POSITION.TOP_CENTER
+        position: toast.POSITION.TOP_LEFT
     });
 };
 
 const showToastErrorLogin = () => {
     toast.error('Identifiants invalides !', {
-        position: toast.POSITION.TOP_RIGHT
+        position: toast.POSITION.TOP_LEFT
     });
 };
 

@@ -83,17 +83,17 @@ function App() {
             <Route
               path="/edit-password"
               element={
-                // <LoggedInRoute>
+                 <LoggedInRoute>
                 <ChangePassword />
-                // </LoggedInRoute>
+                 </LoggedInRoute>
               }
             />
             <Route
               path="/edit-email"
               element={
-                // <LoggedInRoute>
+                 <LoggedInRoute>
                 <ChangeEmail />
-                // </LoggedInRoute>
+                 </LoggedInRoute>
               }
             />
 
@@ -122,7 +122,7 @@ function App() {
             />
             <Route path="/payment-success" element={<SuccessPayment />} />
             <Route path="/payment-fail" element={<FailPayment />} />
-            <Route path="/favoris" element={<Favs />} />
+            <Route path="/favoris" element={<LoggedInRoute><Favs /></LoggedInRoute>} />
             <Route path="/404" element={<PageNotFound />} />
             <Route path="*" element={<Navigate to="/404" />} />
             <Route path="/rechercher" element={<Search />} />
