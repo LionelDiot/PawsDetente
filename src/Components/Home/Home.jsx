@@ -147,7 +147,7 @@ export default function Home() {
         <div className="container3">
           <Container sx={{ py: 8 }}>
             <Typography variant="h4">
-              Accessoires pour nos amis à 4 pattes !
+              Accessoires pour nos compagnons
             </Typography>
             <Grid container spacing={0} sx={{ py: 8 }}>
               {items.map((item) => (

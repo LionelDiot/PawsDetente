@@ -45,7 +45,7 @@ export default function MyProfile() {
     <Box textAlign="center" marginTop={4}>
       <Typography variant="h4">Bienvenue sur la page des favoris</Typography>
       <Container sx={{ py: 4 }}>
-        <Grid container spacing={0} sx={{ justifyContent: "center" }}>
+        <Grid container spacing={0} >
           {favorites ? (
             favorites.map((item) => (
               <Grid item key={item} xs={12} sm={6} md={4} lg={3}>
