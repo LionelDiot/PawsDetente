@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../Style/ShowItem.css";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import HandleAddToCart from "../../Tools/addToCart";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
@@ -13,6 +12,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import HandshakeIcon from '@mui/icons-material/Handshake';
 import { Divider } from "@mui/material";
 import "../../App.css"
+import "../Style/Price.css"
 
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -111,14 +111,15 @@ const ShowItem = () => {
 
       <div className="item-section2">
         <h1>{item.title}</h1>
-        <p>{(item.price / 100).toFixed(2)}€</p>
+        <p className="price">{(item.price / 100).toFixed(2)}€</p>
         <p>{item.description}</p>
         <div className="buttons-section">
           <div className="favorite-section">
             <div className="custom-button">
-              <div onClick={() => handleSwitch(item, user)}>
+              <div className="favorite-icons" onClick={() => handleSwitch(item, user)}>
                 {loggedIn && <IconButton
                   aria-label="add to favorites"
+                  style={{ padding: '0' }}
                   className={`favorite-icon ${isFavorite ? "active" : "favorite-icon"
                     }`}>
                   <FavoriteIcon />
@@ -178,7 +179,6 @@ const ShowItem = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div >
