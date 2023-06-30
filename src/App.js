@@ -23,7 +23,7 @@ import SuccessPayment from "./Components/Checkout/successPayment";
 import FailPayment from "./Components/Checkout/failedPayment";
 import Cart from "./Components/Cart/show";
 import Dashboard from "./Components/Admin/dashboard";
-
+import ScrollToTopButton from './Components/Buttons/ScrollToTop';
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
 import { currentUserAtom } from "./Atoms/currentuser";
@@ -129,6 +129,8 @@ function App() {
             <Route path="/forgotten-password" element={<ForgottenPassword />} />
           </Routes>
         </main>
+        {/* Scroll-to-top button */}
+      <ScrollToTopButton />
       </div>
       <Footer />
     </BrowserRouter>
