@@ -5,6 +5,7 @@ import Container from "@mui/material/Container";
 import CardItem from "../Style/Card";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import SearchBar from "../Search/Search"; // Import the SearchBar component
+import { Typography } from "@mui/material";
 
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
@@ -40,8 +41,8 @@ const Items = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const itemsPerPage = 8;
 
-    const user = useAtomValue(currentUserAtom);
-    const loggedIn = useAtomValue(loggedInAtom);
+  const user = useAtomValue(currentUserAtom);
+  const loggedIn = useAtomValue(loggedInAtom);
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -100,16 +101,13 @@ const Items = () => {
         );
         const responseData = await response.json();
         setItems(responseData);
-
       } catch (error) {
         console.error("Error:", error);
-
       }
     };
 
     fetchItemData();
   }, [loggedIn]);
-
 
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -132,13 +130,17 @@ const Items = () => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <Typography variant="h4" sx={{ py: 4 }}>
+        Bienvenue sur la page des articles
+      </Typography>
       <div>
         <div
           style={{
             display: "flex",
             justifyContent: "center",
-            marginTop: "20px",
             flexDirection: "column",
+            maxWidth: "100%",
+            padding: "0 20px",
           }}
         >
           {/* Render the SearchBar component */}
@@ -153,12 +155,13 @@ const Items = () => {
         <Container
           sx={{ py: 8, display: "flex", flexDirection: "column" }}
           maxWidth="md"
+          style={{ padding: "0 20px" }}
         >
-          <div>
-            <strong style={{ marginBottom: "10px", display: "block" }}>
+          <Container sx={{ py: 4 }}>
+            <strong style={{ marginBottom: "10px", display: "flex" }}>
               Filtrer par catégorie:
             </strong>
-            <div style={{ display: "flex", marginBottom: "20px" }}>
+            <Container sx={{ display: "flex", marginTop: "20px" }}>
               {categories.map((category) => (
                 <label key={category.name} style={{ marginBottom: "20px" }}>
                   <input
@@ -169,16 +172,16 @@ const Items = () => {
                   {category.label}
                 </label>
               ))}
-            </div>
-          </div>
+            </Container>
 
-          <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
-            {displayedItems.map((item) => (
-              <Grid item xs={2} sm={4} md={3} key={item.id}>
-                <CardItem item={item} />
-              </Grid>
-            ))}
-          </Grid>
+            <Grid container spacing={6} sx={{ justifyContent: "center" }}>
+              {displayedItems.map((item) => (
+                <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
+                  <CardItem item={item} />
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
         </Container>
 
         <div>
