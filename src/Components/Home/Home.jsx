@@ -11,6 +11,7 @@ import CardItem from "../Style/Card";
 import { currentUserAtom } from "../../Atoms/currentuser";
 import { loggedInAtom } from "../../Atoms/loggedin";
 import { useAtomValue } from "jotai";
+import PaginationComponent from "../../Tools/Pagination";
 
 const defaultTheme = createTheme({
   typography: {
@@ -39,7 +40,20 @@ const defaultTheme = createTheme({
 export default function Home() {
   const user = useAtomValue(currentUserAtom);
   const loggedIn = useAtomValue(loggedInAtom);
-  const [items, setItems] = React.useState([]);
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 4;
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const displayedItems = items
+    .slice(startIndex, endIndex)
+    ;
+
+  const pageCount = Math.ceil(items.length / itemsPerPage);
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -145,17 +159,30 @@ export default function Home() {
           </Box>
         </Box>
         <div className="container3">
-          <Container sx={{ py: 8 }} maxWidth="md">
-            <Grid container spacing={4}>
-              {items.map((item) => (
+          <Container sx={{ py: 8 }}>
+            <Typography variant="h4">
+              Accessoires pour nos compagnons
+            </Typography>
+            <Grid container spacing={0} sx={{ py: 8 }}>
+              {displayedItems.map((item) => (
                 <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
                   <CardItem item={item} />
                 </Grid>
               ))}
             </Grid>
           </Container>
+
+          <div>
+            <div>
+              <PaginationComponent
+                page={page}
+                pageCount={pageCount}
+                handleChange={handleChange}
+              />
+            </div>
+          </div>
         </div>
       </main>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }

@@ -23,6 +23,8 @@ import SuccessPayment from "./Components/Checkout/successPayment";
 import FailPayment from "./Components/Checkout/failedPayment";
 import Cart from "./Components/Cart/show";
 import Dashboard from "./Components/Admin/dashboard";
+import ScrollToTopButton from "./Components/Buttons/ScrollToTop";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // Jotai
 import { useSetAtom, useAtomValue } from "jotai";
@@ -34,6 +36,18 @@ import Favs from "./Components/Home/Favs";
 import ChangePassword from "./Components/Users/change_password";
 import ChangeEmail from "./Components/Users/change_email";
 
+const defaultTheme = createTheme({
+  typography: {
+    fontFamily: [
+      "Nunito",
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+    ].join(","),
+  },
+});
+
 function App() {
   const loggedIn = useAtomValue(loggedInAtom);
   const user = useAtomValue(currentUserAtom);
@@ -42,96 +56,110 @@ function App() {
   const userid = useAtomValue(UserIdAtom);
 
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Notifications />
+    <ThemeProvider theme={defaultTheme}>
+      <BrowserRouter>
+        <Navbar />
+        <Notifications />
 
-      <div
-        style={{
-          minHeight: "calc(100vh - 231px)",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/profil"
-              element={
-                <LoggedInRoute>
-                  <MyProfile />
-                </LoggedInRoute>
-              }
-            />
-            <Route
-              path="/panier"
-              element={
-                <LoggedInRoute>
-                  <Cart />
-                </LoggedInRoute>
-              }
-            />
-            <Route
-              path="/admin/dashboard"
-              element={
-                <AdminRoute>
-                  <Dashboard />
-                </AdminRoute>
-              }
-            />
-            <Route
-              path="/edit-password"
-              element={
-                 <LoggedInRoute>
-                <ChangePassword />
-                 </LoggedInRoute>
-              }
-            />
-            <Route
-              path="/edit-email"
-              element={
-                 <LoggedInRoute>
-                <ChangeEmail />
-                 </LoggedInRoute>
-              }
-            />
+        <div
+          style={{
+            minHeight: "calc(100vh - 231px)",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/profil"
+                element={
+                  <LoggedInRoute>
+                    <MyProfile />
+                  </LoggedInRoute>
+                }
+              />
+              <Route
+                path="/panier"
+                element={
+                  <LoggedInRoute>
+                    <Cart />
+                  </LoggedInRoute>
+                }
+              />
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <AdminRoute>
+                    <Dashboard />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/edit-password"
+                element={
+                  <LoggedInRoute>
+                    <ChangePassword />
+                  </LoggedInRoute>
+                }
+              />
+              <Route
+                path="/edit-email"
+                element={
+                  <LoggedInRoute>
+                    <ChangeEmail />
+                  </LoggedInRoute>
+                }
+              />
 
-            <Route
-              path="/s'enregistrer"
-              element={
-                <LoggedOutRoute>
-                  <Register />
-                </LoggedOutRoute>
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <LoggedOutRoute>
-                  <LogIn />
-                </LoggedOutRoute>
-              }
-            />
-            <Route path="/panier" element={<Cart />} />
-            <Route path="/articles" element={<Items />} />
-            <Route path="/item/:itemSlug" element={<ShowItem />} />
-            <Route
-              path="/reset_password/:tokenSlug"
-              element={<ResetPassword />}
-            />
-            <Route path="/payment-success" element={<SuccessPayment />} />
-            <Route path="/payment-fail" element={<FailPayment />} />
-            <Route path="/favoris" element={<LoggedInRoute><Favs /></LoggedInRoute>} />
-            <Route path="/404" element={<PageNotFound />} />
-            <Route path="*" element={<Navigate to="/404" />} />
-            <Route path="/rechercher" element={<Search />} />
-            <Route path="/forgotten-password" element={<ForgottenPassword />} />
-          </Routes>
-        </main>
-      </div>
-      <Footer />
-    </BrowserRouter>
+              <Route
+                path="/s'enregistrer"
+                element={
+                  <LoggedOutRoute>
+                    <Register />
+                  </LoggedOutRoute>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <LoggedOutRoute>
+                    <LogIn />
+                  </LoggedOutRoute>
+                }
+              />
+              <Route path="/panier" element={<Cart />} />
+              <Route path="/articles" element={<Items />} />
+              <Route path="/item/:itemSlug" element={<ShowItem />} />
+              <Route
+                path="/reset_password/:tokenSlug"
+                element={<ResetPassword />}
+              />
+              <Route path="/payment-success" element={<SuccessPayment />} />
+              <Route path="/payment-fail" element={<FailPayment />} />
+              <Route
+                path="/favoris"
+                element={
+                  <LoggedInRoute>
+                    <Favs />
+                  </LoggedInRoute>
+                }
+              />
+              <Route path="/404" element={<PageNotFound />} />
+              <Route path="*" element={<Navigate to="/404" />} />
+              <Route path="/rechercher" element={<Search />} />
+              <Route
+                path="/forgotten-password"
+                element={<ForgottenPassword />}
+              />
+            </Routes>
+          </main>
+          {/* Scroll-to-top button */}
+          <ScrollToTopButton />
+        </div>
+        <Footer />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
