@@ -158,23 +158,25 @@ const Items = () => {
           style={{ padding: "0 20px" }}
         >
           <Container sx={{ py: 4 }}>
-            <strong style={{ marginBottom: "10px", display: "flex" }}>
-              Filtrer par catégorie:
-            </strong>
-            <Container sx={{ display: "flex", marginTop: "20px" }}>
-              {categories.map((category) => (
-                <label key={category.name} style={{ marginBottom: "20px" }}>
-                  <input
-                    type="checkbox"
-                    checked={selectedCategories.includes(category.name)}
-                    onChange={() => handleCategoryChange(category.name)}
-                  />
-                  {category.label}
-                </label>
-              ))}
-            </Container>
+            <div>
+              <strong style={{ marginBottom: "10px", display: "block" }}>
+                Filtrer par catégorie:
+              </strong>
+              <div style={{ display: "flex", marginBottom: "20px" }}>
+                {categories.map((category) => (
+                  <label key={category.name} style={{ marginBottom: "20px" }}>
+                    <input
+                      type="checkbox"
+                      checked={selectedCategories.includes(category.name)}
+                      onChange={() => handleCategoryChange(category.name)}
+                    />
+                    {category.label}
+                  </label>
+                ))}
+              </div>
+            </div>
 
-            <Grid container spacing={6} sx={{ justifyContent: "center" }}>
+            <Grid container spacing={6}>
               {displayedItems.map((item) => (
                 <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
                   <CardItem item={item} />
