@@ -159,15 +159,13 @@ export default function Home() {
           </Box>
         </Box>
         <div className="container3">
-          <Container sx={{ py: 6 }} maxWidth="md">
-            <Grid
-              container
-              spacing={2}
-              columns={{ xs: 4, sm: 8, md: 12 }}
-            >
-              {displayedItems.map((item) => (
-                <Grid item xs={4} sm={4} md={4} key={item.id}
-                >
+          <Container sx={{ py: 8 }}>
+            <Typography variant="h4">
+              Accessoires pour nos compagnons
+            </Typography>
+            <Grid container spacing={0} sx={{ py: 8 }}>
+              {items.map((item) => (
+                <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
                   <CardItem item={item} />
                 </Grid>
               ))}
