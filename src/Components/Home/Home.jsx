@@ -42,7 +42,7 @@ export default function Home() {
   const loggedIn = useAtomValue(loggedInAtom);
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 4;
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -164,7 +164,7 @@ export default function Home() {
               Accessoires pour nos compagnons
             </Typography>
             <Grid container spacing={0} sx={{ py: 8 }}>
-              {items.map((item) => (
+              {displayedItems.map((item) => (
                 <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
                   <CardItem item={item} />
                 </Grid>
