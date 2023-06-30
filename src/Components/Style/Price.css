@@ -1,0 +1,17 @@
+.price {
+  display: inline-block;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  /* Add additional styles here */
+}
+
+.price:hover {
+  background-color: #9c27b0;
+  cursor: pointer;
+}
