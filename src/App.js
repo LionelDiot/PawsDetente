@@ -23,6 +23,7 @@ import SuccessPayment from "./Components/Checkout/successPayment";
 import FailPayment from "./Components/Checkout/failedPayment";
 import Cart from "./Components/Cart/show";
 import Dashboard from "./Components/Admin/dashboard";
+import ScrollToTopButton from "./Components/Buttons/ScrollToTop";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 // Jotai
@@ -153,6 +154,8 @@ function App() {
               />
             </Routes>
           </main>
+          {/* Scroll-to-top button */}
+          <ScrollToTopButton />
         </div>
         <Footer />
       </BrowserRouter>
