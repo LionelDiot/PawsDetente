@@ -147,16 +147,12 @@ function App() {
                 }
               />
               <Route path="/404" element={<PageNotFound />} />
-              <Route path="*" element={<Navigate to="/404" />} />
-
-              <Route path="/Legal" element={<MentionsLegales />} />
-              <Route path="*" element={<Navigate to="/Legal" />} />
-
-              <Route path="/rechercher" element={<Search />} />
               <Route
                 path="/forgotten-password"
                 element={<ForgottenPassword />}
               />
+              <Route path="*" element={<Navigate to="/404" />} />
+              <Route path="/Legal" element={<MentionsLegales />} />
             </Routes>
           </main>
           {/* Scroll-to-top button */}
