@@ -35,6 +35,7 @@ import { loggedInAtom } from "./Atoms/loggedin";
 import Favs from "./Components/Home/Favs";
 import ChangePassword from "./Components/Users/change_password";
 import ChangeEmail from "./Components/Users/change_email";
+import MentionsLegales from "./Components/Home/MLegal";
 
 const defaultTheme = createTheme({
   typography: {
@@ -146,12 +147,12 @@ function App() {
                 }
               />
               <Route path="/404" element={<PageNotFound />} />
-              <Route path="*" element={<Navigate to="/404" />} />
-              <Route path="/rechercher" element={<Search />} />
               <Route
                 path="/forgotten-password"
                 element={<ForgottenPassword />}
               />
+              <Route path="/Legal" element={<MentionsLegales />} />
+              <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
           </main>
           {/* Scroll-to-top button */}
