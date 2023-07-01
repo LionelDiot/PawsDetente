@@ -20,7 +20,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import computeIsAdmin from "../../Tools/isAdmin";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 // Jotai
@@ -33,7 +33,7 @@ import { loggedInAtom } from "../../Atoms/loggedin";
 import { currentUserAtom } from "../../Atoms/currentuser";
 
 const pagesloggedin = ["articles", "profil"];
-const pagesloggedout = ["articles", "s'enregistrer", "login"];
+const pagesloggedout = ["articles", "register", "login"];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -97,33 +97,34 @@ function Navbar() {
   React.useEffect(() => {
     setIsAdmin(computeIsAdmin(userid));
   }, [userid]);
-  // Fetch the cart item count from the API
-  const fetchCartItemCount = () => {
-    fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/cart", {
-      method: "GET",
-      headers: {
-        Authorization: `${user}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const quantities = data.line_items.map((item) => item.quantity);
-        const totalQuantity = quantities.reduce(
-          (accumulator, current_quantity) => accumulator + current_quantity,
-          0
-        );
-        setCart({ ...cart, quantity: totalQuantity }); // Update the cart quantity in the atom
-      })
-      .catch((error) => console.log(error));
-  };
 
+  // Fetch the cart item count from the API
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
+    const fetchCartItemCount = () => {
+      fetch("https://api-paws-detente-6e0fafb6dbaa.herokuapp.com/cart", {
+        method: "GET",
+        headers: {
+          Authorization: `${user}`,
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const quantities = data.line_items.map((item) => item.quantity);
+          const totalQuantity = quantities.reduce(
+            (accumulator, current_quantity) => accumulator + current_quantity,
+            0
+          );
+          setCart({ ...cart, quantity: totalQuantity }); // Update the cart quantity in the atom
+        })
+        .catch((error) => console.log(error));
+    };
     if (loggedIn) {
       fetchCartItemCount(); // Fetch the initial cart item count if the user is logged in
 
       // Update the cart item count every minute
-      const intervalId = setInterval(fetchCartItemCount, 100000);
+      const intervalId = setInterval(fetchCartItemCount, 60000);
 
       return () => {
         clearInterval(intervalId); // Clear the interval when the component unmounts
@@ -196,7 +197,6 @@ function Navbar() {
                 </Link>
               </MenuItem>
             ))}
-
           </Menu>
           <PetsIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
@@ -237,47 +237,57 @@ function Navbar() {
             ))}
           </Box>
 
-          <Tooltip title="Mon panier"><StyledBadge badgeContent={cart.quantity} color="secondary">
-            <IconButton
-              sx={{ my: 2, color: "white", display: "block" }}
-              component={Link}
-              to="/panier"
-            >
-              <AddShoppingCartIcon />
-            </IconButton>
-          </StyledBadge></Tooltip>
+          <Tooltip title="Mon panier">
+            <StyledBadge badgeContent={cart.quantity} color="secondary">
+              <IconButton
+                sx={{ my: 2, color: "white", display: "block" }}
+                component={Link}
+                to="/panier"
+              >
+                <AddShoppingCartIcon />
+              </IconButton>
+            </StyledBadge>
+          </Tooltip>
           {/* Add the AdminDashboardIcon component */}
           {isAdmin && (
-            <Tooltip title="Dashboard Admin"><IconButton
-              sx={{ my: 2, color: "white", display: "block" }}
-              component={Link}
-              to="/admin/dashboard"
-            >
-              <DashboardIcon />
-            </IconButton></Tooltip>
+            <Tooltip title="Dashboard Admin">
+              <IconButton
+                sx={{ my: 2, color: "white", display: "block" }}
+                component={Link}
+                to="/admin/dashboard"
+              >
+                <DashboardIcon />
+              </IconButton>
+            </Tooltip>
           )}
 
           {loggedIn && (
             <>
-              <Tooltip title="Favoris"><IconButton
-                sx={{ my: 2, color: "white", display: "block" }}
-                component={Link}
-                to="/favoris"
-              >
-                <FavoriteIcon />
-              </IconButton></Tooltip>
-              <Tooltip title="Se déconnecter"><IconButton
-                sx={{ my: 2, color: "white", display: "block" }}
-                onClick={handleLogout}
-              >
-                <LogoutIcon />
-              </IconButton></Tooltip>
-              <Tooltip title="Mes informations"><IconButton
-                sx={{ my: 2, color: "white", display: "block" }}
-                onClick={handleOpenSettingsMenu}
-              >
-                <SettingsIcon />
-              </IconButton></Tooltip>
+              <Tooltip title="Favoris">
+                <IconButton
+                  sx={{ my: 2, color: "white", display: "block" }}
+                  component={Link}
+                  to="/favoris"
+                >
+                  <FavoriteIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Se déconnecter">
+                <IconButton
+                  sx={{ my: 2, color: "white", display: "block" }}
+                  onClick={handleLogout}
+                >
+                  <LogoutIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Mes informations">
+                <IconButton
+                  sx={{ my: 2, color: "white", display: "block" }}
+                  onClick={handleOpenSettingsMenu}
+                >
+                  <SettingsIcon />
+                </IconButton>
+              </Tooltip>
             </>
           )}
         </Toolbar>

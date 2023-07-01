@@ -130,7 +130,7 @@ export default function Home() {
               <Grid item xs={12} sm={6} md={6} lg={4}>
                 <img
                   src={"https://i.postimg.cc/ZRby0gzg/logo-paws-detente.png"}
-                  alt="Your Image"
+                  alt="Paws Detente"
                   style={{ width: "80%" }}
                 />
               </Grid>

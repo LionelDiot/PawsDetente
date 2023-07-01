@@ -6,8 +6,16 @@ import Grid from "@mui/material/Grid";
 import { Facebook, Instagram, Twitter } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import "../../App.css";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function Footer() {
+  const handleLegalLinkClick = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <Box
       component="footer"
@@ -26,7 +34,8 @@ export default function Footer() {
               A propos
             </Typography>
             <Typography variant="body2" color="white">
-              Nous sommes l'entreprise Paws Détente, pourvoyeur de bonne humeur pour vos amis les plus fidèles.
+              Nous sommes l'entreprise Paws Détente, pourvoyeur de bonne humeur
+              pour vos amis les plus fidèles.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -43,7 +52,14 @@ export default function Footer() {
               Phone: +1 234 567 8901
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4} container direction="column" alignItems="center">
+          <Grid
+            item
+            xs={12}
+            sm={4}
+            container
+            direction="column"
+            alignItems="center"
+          >
             <Typography variant="h6" color="white" gutterBottom>
               Nous suivre :
             </Typography>
@@ -54,7 +70,11 @@ export default function Footer() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="https://www.instagram.com/" color="inherit" sx={{ pl: 1, pr: 1 }}>
+                <Link
+                  href="https://www.instagram.com/"
+                  color="inherit"
+                  sx={{ pl: 1, pr: 1 }}
+                >
                   <Instagram />
                 </Link>
               </Grid>
@@ -65,12 +85,20 @@ export default function Footer() {
               </Grid>
             </Grid>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              <Link
+                color="inherit"
+                component={RouterLink}
+                to="/Legal"
+                onClick={handleLegalLinkClick}
+              >
+                Legal
+              </Link>
+              <br />
               {"Copyright "}
               <Link color="inherit" href="https://www.pawsdetente.com/">
                 Paws Détente
-              </Link>{" "}
+              </Link>
               {new Date().getFullYear()}
-              {"."}
             </Typography>
           </Grid>
         </Grid>
@@ -78,4 +106,3 @@ export default function Footer() {
     </Box>
   );
 }
-
