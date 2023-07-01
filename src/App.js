@@ -113,7 +113,7 @@ function App() {
               />
 
               <Route
-                path="/s'enregistrer"
+                path="/register"
                 element={
                   <LoggedOutRoute>
                     <Register />

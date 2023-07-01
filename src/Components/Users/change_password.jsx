@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -45,8 +44,6 @@ export default function ChangePassword() {
             });
 
             if (response.ok) {
-                const responseData = await response.json();
-
                 showToastSuccess("Mot de passe modifié !")
             } else {
                 showToastError("Mot de passe actuel ou de confirmation erroné")
