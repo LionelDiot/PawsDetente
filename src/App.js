@@ -151,8 +151,8 @@ function App() {
                 path="/forgotten-password"
                 element={<ForgottenPassword />}
               />
-              <Route path="*" element={<Navigate to="/404" />} />
               <Route path="/Legal" element={<MentionsLegales />} />
+              <Route path="*" element={<Navigate to="/404" />} />
             </Routes>
           </main>
           {/* Scroll-to-top button */}
