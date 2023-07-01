@@ -6,7 +6,7 @@ import { currentUserAtom } from "../../Atoms/currentuser";
 import HandleDeleteFromCart from "../../Tools/deleteFromCart";
 import EditQuantity from "../../Tools/editQuantity";
 import Divider from "../Divider/Divider";
-import { HomeButton } from "../Buttons";
+import { Button } from "@mui/material";
 import "../Style/Price.css"
 
 export default function Cart() {
@@ -53,14 +53,6 @@ export default function Cart() {
       .catch((error) => console.log(error));
   };
 
-  // const handleDeleteCart = (cartId) => {
-  //   HandleDeleteCart(cartId, user) // Call the imported function
-  //     .then(() => {
-  //       // After successful deletion, update the list of items
-  //       fetchCartItems();
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
 
   return (
     <>
@@ -82,10 +74,14 @@ export default function Cart() {
       </Grid>
       <Divider />
 
-      {items.length === 0 ? (
+      {items.length === 0 ? (<>
         <p style={{ textAlign: "center", padding: "10px" }}>
           Votre panier est vide.
         </p>
+        <p style={{ textAlign: "center", padding: "10px" }}>
+          <Button variant="contained" href="/articles">Commencer votre shopping</Button>
+        </p>
+      </>
       ) : (
         <ul
           style={{
@@ -107,7 +103,9 @@ export default function Cart() {
                   textAlign: "center",
                 }}
               >
-                <a href={`http://localhost:3001/item/${item.item_id}`} target="_blank" rel="noopener noreferrer">
+                <a href={`http://localhost:3001/item/${item.item_id}`} target="_blank" rel="noopener noreferrer" style={{
+                  textDecoration: "none", color: "black"
+                }}>
                   <div
                     style={{
                       display: "flex",
@@ -184,29 +182,45 @@ export default function Cart() {
         </ul >
       )
       }
-      <Divider />
       {
         items.length !== 0 ? (
           <div>
-            <div
-              style={{
-                marginLeft: "80%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <p>GRAND TOTAL</p>
+            <Divider />
 
-              <p className="price">{(total / 100).toFixed(2)} €</p>
-              <CheckoutButton />
+            <div style={{
+              marginLeft: "auto",
+              marginRight: "auto",
+              display: "flex",
+              flexDirection: "center",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "10px"
+            }}>
+              <div>
+                <p>TOTAL À PAYER : </p>
+              </div>
+              <div>
+                <p className="price">{(total / 100).toFixed(2)} €</p>
+              </div>
             </div>
-          </div>
+
+            <div style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center",
+              padding: "20px"
+            }}>
+              <div>
+                <Button variant="contained" color="inherit" href="/articles">Continuer votre shopping</Button>
+              </div>
+              <div>
+                <CheckoutButton />
+              </div>
+            </div>
+          </div >
         ) : (
           <>
-            <HomeButton />
-            {/* <button onClick={() => handleDeleteCart()}>Vider le panier</button> */}
           </>
         )
       }

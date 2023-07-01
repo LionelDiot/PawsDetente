@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom';
 
 const HomeButton = () => {
     const navigate = useNavigate();
-
     const retournerAccueil = () => {
-        navigate('/'); // Rediriger vers la page d'accueil
+        navigate('/');
     };
 
     return (
         <button onClick={retournerAccueil}>Retour accueil</button>
     );
 };
+
 
 const DeleteButton = ({ handleClick }) => {
     return (
