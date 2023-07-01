@@ -1,5 +1,6 @@
 import CheckoutButton from "../Checkout/checkoutButton";
 import * as React from "react";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import { useAtomValue } from "jotai";
 import { currentUserAtom } from "../../Atoms/currentuser";
@@ -103,9 +104,12 @@ export default function Cart() {
                   textAlign: "center",
                 }}
               >
-                <a href={`http://localhost:3001/item/${item.item_id}`} target="_blank" rel="noopener noreferrer" style={{
-                  textDecoration: "none", color: "black"
-                }}>
+                <Link
+                  to={`/item/${item.item_id}`}
+                  style={{ textDecoration: "none", color: "black" }}
+                  
+                >
+          
                   <div
                     style={{
                       display: "flex",
@@ -130,7 +134,7 @@ export default function Cart() {
                       {item.item_title}
                     </p>
                   </div>
-                </a>
+                  </Link>
 
                 {/* PRIX */}
                 <p>{(item.price / 100).toFixed(2)} €</p>
