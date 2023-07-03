@@ -32,7 +32,7 @@ const NewItemPage = () => {
       if (response.ok) {
         const data = await response.json();
         const slug = data.id;
-        console.log(` LE SLUUUUUUUUUUGG ${slug}`);
+
         // Redirect to the item show page using the slug
         navigate(`/item/${slug}`);
       } else {

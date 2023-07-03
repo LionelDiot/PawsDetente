@@ -46,9 +46,9 @@ export default function SignIn() {
             if (response.ok) {
                 const responseData = await response.json();
                 const token = await response.headers.get("Authorization");
-                console.log(`mon token est ${token}`);
+
                 setId(responseData.user.id);
-                setUser(response.headers.get("Authorization"));
+                setUser(token);
                 showToastSuccessLogin()
                 return <Navigate to="/" replace />;
                 

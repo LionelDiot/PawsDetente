@@ -34,10 +34,6 @@ export default function ForgottenPassword() {
             });
 
             if (response.ok) {
-                const responseData = await response.json();
-
-                console.log(`responseData: ${responseData}`);
-
                 showToastSuccess("email envoyé")
             } else {
                 showToastError("email non valide")
