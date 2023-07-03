@@ -34,7 +34,7 @@ export default function Cart() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+
         setItems(data.line_items);
         setTotal(data.total);
       })
