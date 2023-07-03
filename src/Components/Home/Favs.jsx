@@ -9,8 +9,6 @@ import Container from "@mui/material/Container";
 
 export default function MyProfile() {
   const [monprofil, setMonprofil] = useState("");
-  const [responseData, setResponseData] = useState(null);
-  const [userData, setUserData] = useState(null);
 
   const [favorites, setFavorites] = useState(null);
   const user = useAtomValue(currentUserAtom);
@@ -28,16 +26,18 @@ export default function MyProfile() {
         .then((response) => response.json()) // Handle the response properly
         .then((responseData) => {
           setFavorites(responseData); // Separate state for favorites data
-          console.log(responseData);
+          
         })
         .catch((error) => {
           console.error("Error:", error);
           setMonprofil(
             "Une erreur s'est produite lors de la récupération des données."
           );
+          console.log(monprofil);
         });
     } else {
       setMonprofil("Vous n'êtes pas connecté. Vous n'avez donc pas de profil.");
+      console.log(monprofil);
     }
   }, [user, loggedIn]);
 
